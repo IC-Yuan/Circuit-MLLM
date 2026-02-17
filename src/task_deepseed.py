@@ -1,7 +1,9 @@
 from PIL import Image
 import os
+import numpy as np
 
-TRAIN_IMAGE_ROOT = "/mnt/public/users/dongshuai/LVR/ILVR_PUB/COMT"
+#TRAIN_IMAGE_ROOT = "/data/jydeng/latent_visual/ILVR/data"
+TRAIN_IMAGE_ROOT = "/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16"
 TEST_IMAGE_ROOT  = ""
 
 # ====== Utility Functions ======
@@ -19,10 +21,7 @@ def _assert_exists(p: str):
     if not os.path.exists(p):
         raise FileNotFoundError(f"Image path not found: {p}")
 
-
 def interleaved_latent_cot_preprocess_function(sample):
-    
-    # Process user content (Input images)
     user_content = []
     for image_rel in _to_list(sample.get('image_input', [])):
         full_image_path = _resolve_path(TRAIN_IMAGE_ROOT, image_rel)
@@ -30,11 +29,11 @@ def interleaved_latent_cot_preprocess_function(sample):
         user_content.append({"type": "image", "image": full_image_path})
     user_content.append({"type": "text", "text": sample.get("text_input", "")})
 
-    # Process assistant content (Sequence plan with interleaved images/text)
+    # Process assistant content
     assistant_content = []
     seq = sample.get('sequence_plan', None)
     if not isinstance(seq, list):
-        raise ValueError(f"Missing or non-list 'sequence_plan' field in data sample. Sample keys: {list(sample.keys())}")
+        raise ValueError(f"Missing sequence_plan")
 
     for step in seq:
         stype = step.get('type', None)
@@ -42,11 +41,30 @@ def interleaved_latent_cot_preprocess_function(sample):
             assistant_content.append({"type": "text", "text": step.get('content', "")})
         elif stype == 'latent':
             helper_rel = step.get('helper_image', None)
+            mask_rel = step.get('mask_vector_file', None) # 获取 Mask 路径
+            
             if not helper_rel:
-                raise ValueError(f"Latent step is missing 'helper_image': {step}")
+                raise ValueError(f"Latent step missing 'helper_image'")
+            
             helper_path = _resolve_path(TRAIN_IMAGE_ROOT, helper_rel)
             _assert_exists(helper_path)
-            assistant_content.append({"type": "image", "image": helper_path})
+            
+            # 构建 Latent Item
+            item = {"type": "image", "image": helper_path}
+            
+            # --- Mask 加载逻辑 ---
+            if mask_rel:
+                mask_path = _resolve_path(TRAIN_IMAGE_ROOT, mask_rel)
+                _assert_exists(mask_path)
+                try:
+                    # 加载 float mask (假设形状 HxW)
+                    mask_arr = np.load(mask_path).astype(np.float32)
+                    item["mask_npy"] = mask_arr 
+                except Exception as e:
+                    print(f"Error loading mask {mask_path}: {e}")
+            # --------------------
+            
+            assistant_content.append(item)
         else:
             raise ValueError(f"Unknown step type: {stype}")
 
@@ -55,7 +73,6 @@ def interleaved_latent_cot_preprocess_function(sample):
         {"role": "assistant", "content": assistant_content}
     ]
     return conversations
-
 
 def single_input_image_preprocess_function(sample):
     

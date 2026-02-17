@@ -1,4 +1,3 @@
-# evaluate_deepseed.py
 import os
 import re
 import json
@@ -25,10 +24,9 @@ ACTION_MAP = {
     "L": (0, -1), "D": (1, 0), "R": (0, 1), "U": (-1, 0),
 }
 
-BASE_MODEL_ID = ""  
-
-BASE_DATASET_DIR = ''
-
+# 请根据实际路径修改以下两个常量
+BASE_MODEL_ID = ""   # 例如: "/path/to/Qwen2.5-VL-7B-Instruct"
+BASE_DATASET_DIR = "" # 例如: "/data/circuit_clip/amsbench/AMSBench/Connection_Identification_Task/imgs"
 
 
 def get_eval_args():
@@ -151,16 +149,29 @@ _yes_set = {"yes", "true", "a"}
 _no_set = {"no", "false", "b"}
 
 
+# ==================== 修改开始 ====================
+def normalize_multi_label(text: str) -> str:
+    """
+    提取文本中的独立字母 A-G，去重、排序，返回连续字符串。
+    用于 Connection_Identification_Task 的多标签答案归一化。
+    """
+    if not text:
+        return ""
+    text = str(text).upper()
+    # 策略1：单词边界匹配独立字母
+    letters = re.findall(r'\b([A-G])\b', text)
+    # 策略2：紧跟标点的字母
+    if not letters:
+        letters = re.findall(r'([A-G])[\.\, ]', text)
+    # 策略3：极短文本暴力提取
+    if not letters and len(text) < 10:
+        letters = re.findall(r'[A-G]', text)
+    return "".join(sorted(list(set(letters))))
+
+
 def extract_final_answer(text: str) -> str:
     """
-    Extract the final answer from the model output and return a simplified string.
-
-    Priority rules:
-      1) Match 'final answer is: XXX' or 'final answer: XXX' (case-insensitive)
-      2) Match 'answer is: XXX' or 'answer: XXX'
-      3) If the output contains exactly one of yes/no/true/false/a/b
-         (case-insensitive), return it directly
-      4) Otherwise, fall back to the full text (useful for debugging)
+    提取最终答案，不再截断前50字符，确保完整捕获多字母。
     """
     s = text.strip()
     patterns = [
@@ -172,8 +183,8 @@ def extract_final_answer(text: str) -> str:
         m = re.search(pat, s, flags=re.IGNORECASE)
         if m:
             cand = m.group(1).strip()
-            cand = re.split(r"[\n\r]", cand)[0]
-            return cand
+            cand = re.split(r"[\n\r]", cand)[0]   # 只取第一行
+            return cand   # 移除长度限制
 
     tokens = re.findall(r"[A-Za-z]+", s.lower())
     only = [t for t in tokens if t in (_yes_set | _no_set)]
@@ -181,6 +192,7 @@ def extract_final_answer(text: str) -> str:
         return only[0].capitalize() if only[0] in {"yes", "no"} else only[0]
 
     return s
+# ==================== 修改结束 ====================
 
 
 def _strip_special_tokens(s: str) -> str:
@@ -299,7 +311,6 @@ def run_one_example(
         if isinstance(v, torch.Tensor)
     }
 
-
     # ---- Start inference timing (generation only) ----
     if torch.cuda.is_available():
         torch.cuda.synchronize()
@@ -398,11 +409,12 @@ def main():
                 })
 
             else:
-                # Default zebra-cot branch
+                # ========== 修改：默认分支，用于 Connection_Identification_Task ==========
                 gold = sample.get("original_final_answer", "")
-                pred_norm = normalize_for_match(pred["extracted_final_answer"])
-                gold_norm = normalize_for_match(gold)
-                ok = (pred_norm == gold_norm)
+                # 使用多标签归一化
+                pred_norm = normalize_multi_label(pred["extracted_final_answer"])
+                gold_norm = normalize_multi_label(gold)
+                ok = (pred_norm == gold_norm) and (gold_norm != "")
                 if ok:
                     success += 1
 
@@ -410,11 +422,14 @@ def main():
                     "index": i,
                     "task_name": args.task_name,
                     "image_input": sample.get("image_input", []),
-                    "prediction": assistant_only,
+                    "prediction": assistant_only,          # 保留 latent token
                     "gold_final_answer": gold,
+                    "normalized_prediction": pred_norm,   # 归一化后的预测
+                    "normalized_gold": gold_norm,         # 归一化后的参考答案
                     "match": bool(ok),
                     "inference_time_sec": sample_infer_time,
                 })
+                # ========== 修改结束 ==========
 
             if (i + 1) % 10 == 0 or (i + 1) == total:
                 logging.info(
