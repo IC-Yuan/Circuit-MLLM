@@ -15,15 +15,15 @@ MODEL_NAME="/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
 TASK_NAME="zebra-cot"
 EPOCHS=15
 GRAD_ACCUM_STEPS=8
-LATENT_SIZE=6
+LATENT_SIZE=8
 CE_WEIGHT=1
-SIM_WEIGHT=0.6
+SIM_WEIGHT=0.4
 WARM_UP_STEPS=50
 SAVE_STEPS=200
 #DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence/combine/merged_5000_rl.jsonl"
 DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16/combine/merged_5000_rl.jsonl"
-SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_16_sequence_06"
-LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_16_sequence_06.log"
+SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04"
+LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_18_sequence_04.log"
 
 
 mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"

@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: hawp
+Version: 1.0
+Summary: Holistically-Attracted Wireframe Parsing
+Author: nxue
+Provides-Extra: dev
+License-File: LICENSE

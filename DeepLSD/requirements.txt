@@ -1,0 +1,20 @@
+pyyaml
+numpy
+matplotlib
+brewer2mpl
+opencv-python
+opencv-contrib-python
+tensorboard
+omegaconf
+tqdm
+future  # tensorboard dependency
+kornia>=0.6
+cython
+shapely
+scikit-image
+h5py
+flow_vis
+jupyter
+seaborn
+
+# ./third_party/pytlsd

@@ -1,0 +1,11 @@
+[
+  {"summary": true, "num_samples": 600, "valid_samples": 600, "average_inference_time_sec": 3.738124268697963, "total_inference_time_sec": 2242.8745612187777, "accuracy": 0.19, "success": 114, "avg_precision": 0.6859510582010592, "avg_recall": 0.8247624042624064, "avg_f1": 0.7257336961695239, "avg_exact_match": 0.19, "avg_jaccard": 0.6080811827061823}
+,
+  {"summary": true, "num_samples": 900, "valid_samples": 900, "average_inference_time_sec": 2.6693388125525477, "accuracy": 0.6855555555555556, "valid_accuracy": 0.6855555555555556, "success": 617}
+,
+  {"summary": true, "num_samples": 1528, "valid_samples": 1528, "accuracy": 0.7401832460732984, "valid_accuracy": 0.7401832460732984, "avg_inference_time": 2.0373090644481624}
+,
+  {"summary": true, "num_samples": 1500, "valid_samples": 1500, "accuracy": 0.37533333333333335, "valid_accuracy": 0.37533333333333335, "avg_inference_time": 1.8443803962677097}
+,
+  {"summary": true, "num_samples": 1500, "valid_samples": 1500, "accuracy": 0.5693333333333334, "valid_accuracy": 0.5693333333333334, "avg_inference_time": 1.8678899019670983}
+]

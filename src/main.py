@@ -27,6 +27,36 @@ import warnings
 # ==============================================================
 # Collate Functions
 # ==============================================================
+def _collect_latent_segment_lengths(input_ids, latent_start_idx, latent_end_idx, latent_token_idx):
+    """Collect latent_pad counts for each complete latent segment in a batch tensor."""
+    lengths = []
+    for seq in input_ids:
+        s_pos = (seq == latent_start_idx).nonzero().squeeze(-1).tolist()
+        e_pos = (seq == latent_end_idx).nonzero().squeeze(-1).tolist()
+        if not s_pos or not e_pos:
+            continue
+        for s in s_pos:
+            end_candidates = [e for e in e_pos if e > s]
+            if not end_candidates:
+                continue
+            e = end_candidates[0]
+            seg = seq[s+1:e]
+            lengths.append(int((seg == latent_token_idx).sum().item()))
+    return lengths
+
+
+def _validate_latent_template_or_raise(batch, latent_start_idx, latent_end_idx, latent_token_idx, expected_latent_size, stage_name):
+    lengths = _collect_latent_segment_lengths(
+        batch["input_ids"], latent_start_idx, latent_end_idx, latent_token_idx
+    )
+    if not lengths:
+        raise ValueError(f"[{stage_name}] No complete latent segments found in collated batch.")
+    bad = [x for x in lengths if int(x) != int(expected_latent_size)]
+    if bad:
+        raise ValueError(
+            f"[{stage_name}] Latent template mismatch: expected={expected_latent_size}, "
+            f"observed(unique)={sorted(set(lengths))}, bad_count={len(bad)}"
+        )
 
 def collate_fn_stage1(examples, processor, args):
     #读取数据，替换tab,<|vision_start|>替换为<|latent_start|>
@@ -119,6 +149,9 @@ def collate_fn_stage1(examples, processor, args):
         batch["input_ids"], latent_start_idx, latent_end_idx, latent_token_idx
     )
     batch["image_out_mask"] = image_out_mask
+        # Add user_image_inputs and assistant_image_inputs to batch
+    batch["user_image_inputs"] = user_image_inputs
+    batch["assistant_image_inputs"] = assistant_image_inputs
     return batch
 
 def collate_fn_stage2(examples, processor, args):
@@ -181,6 +214,14 @@ def collate_fn_stage2(examples, processor, args):
         latent_ce_ratio=0, # Stage 2 如果不计算 latent 的 CE Loss，保持为 0；如果需要计算，请改为 1.0 或 args.latent_ce_ratio
     )
     batch["labels"] = labels
+    _validate_latent_template_or_raise(
+        batch,
+        latent_start_idx,
+        latent_end_idx,
+        latent_token_idx,
+        int(args.latent_size),
+        "stage2",
+    )
     
     return batch
 

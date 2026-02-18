@@ -6,7 +6,14 @@ import math
 import copy
 import deepspeed
 from typing import List
+# HAWP imports
+from hawp.hawp.fsl.config import cfg as model_config
+from hawp.hawp.ssl.models import MODELS
+import numpy as np
+import cv2
+from transformers import AutoImageProcessor, AutoModel
 import logging
+from DeepLSD.deeplsd.models.deeplsd_inference import DeepLSD
 
 try:
     from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import apply_multimodal_rotary_pos_emb
@@ -101,7 +108,23 @@ class CustomTrainerStage1(SFTTrainer):
         if img_token_id is None:
             img_token_id = 151655
         return special_ids, int(img_token_id), int(latent_start_id), int(latent_end_id), int(latent_pad_id)
-
+    
+    def get_hawp_model(self, device='cuda'):
+        # Load HAWP model configuration
+        cfg_path = '/data/jydeng/latent_visual/circuit_mllm/hawp/hawp/ssl/config/hawpv3.yaml'
+        model_config.merge_from_file(cfg_path)
+        
+        # Create and load HAWP model
+        model = MODELS['HAWP'](model_config, gray_scale=True)
+        model = model.eval().to(device)
+        
+        weight_path = '/data/share/JYD/weights/hawp/hawpv3-imagenet-03a84.pth'
+        state_dict = torch.load(weight_path, map_location='cpu')
+        model.load_state_dict(state_dict)
+        
+        _hawp_model = model
+        return _hawp_model
+    
     @torch.no_grad()
     def _teacher_build_latents(self, inputs, k, p):
         # 1. 准备数据
@@ -372,10 +395,344 @@ class CustomTrainerStage1(SFTTrainer):
         
         return latents, firstK_mask
     
+    def _teacher_build_latents_sequence_circuit_expert(self, inputs, k, p):
+        # =========================================================================
+        # 1. 准备数据与环境
+        # =========================================================================
+        device = self.model.device
+        ids = inputs["input_ids"].to(device)
+        # 获取 Mask (Method 1 逻辑)
+        raw_masks = inputs.get("helper_masks", None)
+        
+        tea = self._ema.teacher.to(device).eval()
+        special_ids, image_token_id, latent_start_id, latent_end_id, latent_pad_id = self._get_special_ids()
+        seg_pad_indices = self._find_latent_segments(ids, latent_start_id, latent_end_id, latent_pad_id)
+        
+        # 定义清理函数
+        def cleanup_inputs():
+            if "helper_masks" in inputs: inputs.pop("helper_masks")
+
+        if len(seg_pad_indices) == 0:
+            cleanup_inputs(); return None, torch.zeros_like(ids, dtype=torch.bool)
+
+        # 获取 Grid 信息 (注意：我们依然需要 thw 来决定空间分辨率，但不需要原始 pixel_values)
+        thw = inputs.get("image_grid_thw_latent", None)
+        # 确保有图片输入用于专家模型
+        if thw is None or 'assistant_image_inputs' not in inputs:
+            cleanup_inputs(); return None, torch.zeros_like(ids, dtype=torch.bool)
+            
+        thw = thw.to(device)
+        num_imgs = int(thw.shape[0])
+        s_merge = int(getattr(tea.visual, "spatial_merge_size", 2))
+        thw_long = thw.to(dtype=torch.long)
+        
+        # =========================================================================
+        # 2. 多专家特征提取 (Method 2 逻辑)
+        # =========================================================================
+        
+        # --- A. HAWP (Wireframe) ---
+        hawp_model = self.get_hawp_model(device)
+        hawp_user_features_list = []
+        with torch.no_grad():
+            for img_pil in inputs['assistant_image_inputs']:
+                img_np = np.array(img_pil)
+                if len(img_np.shape) == 3:
+                    gray_img = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
+                else:
+                    gray_img = img_np
+
+                # 防止图像过小导致 HAWP 报错
+                h, w = gray_img.shape[:2]
+                min_hw = min(h, w)
+                min_required = 64 
+                if min_hw < min_required:
+                    scale = float(min_required) / float(min_hw)
+                    new_w = int(round(w * scale))
+                    new_h = int(round(h * scale))
+                    gray_img = cv2.resize(gray_img, (new_w, new_h), interpolation=cv2.INTER_LINEAR)
+
+                # Convert to tensor and normalize
+                image_tensor = torch.from_numpy(gray_img).float() / 255.0
+                image_tensor = image_tensor[None, None].to(device)  # [1, 1, H, W]
+                
+                # Get features from backbone
+                outputs, features = hawp_model.backbone(image_tensor)
+                hawp_user_features_list.append(features)
+
+        # --- B. DeepLSD (Lines) ---
+        conf = {
+            'detect_lines': True, 
+            'line_detection_params': {
+                'merge': False, 'filtering': True, 'grad_thresh': 3, 'grad_nfa': True,
+            }
+        }
+        # 建议：实际部署时不要在这里 load 模型，应在 __init__ 加载
+        ckpt_path = '/data/share/JYD/weights/deeplsd/deeplsd_md.tar'
+        ckpt = torch.load(str(ckpt_path), map_location='cpu', weights_only=False)
+        net = DeepLSD(conf)
+        net.load_state_dict(ckpt['model'])
+        net = net.to(device).eval()
+        
+        deeplsd_user_outputs = []
+        with torch.no_grad():
+            for img_pil in inputs['assistant_image_inputs']:
+                img_np = np.array(img_pil)
+                if len(img_np.shape) == 3:
+                    gray_img = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
+                else:
+                    gray_img = img_np
+                
+                a = {'image': torch.tensor(gray_img, dtype=torch.float, device=device)[None, None] / 255.}
+                base = net.backbone(a['image'])
+                deeplsd_user_outputs.append(base)
+
+        # --- C. DINOv2 (Semantic) ---
+        dinov2_processor = AutoImageProcessor.from_pretrained('/data/share/JYD/weights/dinov2-giant')
+        dinov2_model = AutoModel.from_pretrained('/data/share/JYD/weights/dinov2-giant')
+        dinov2_model = dinov2_model.to(device).eval()
+
+        inputs_dino = dinov2_processor(images=inputs['assistant_image_inputs'], return_tensors="pt")
+        inputs_dino = {k: v.to(device) for k, v in inputs_dino.items()}
+        with torch.no_grad():
+            outputs = dinov2_model(**inputs_dino)
+        last_hidden_states = outputs.last_hidden_state # [B, L, D]
+
+        # DINO Patch 分割逻辑 (处理 batch > 1 的情况)
+        dinov2_batch_size = last_hidden_states.shape[0]
+        dinov2_seq_len = last_hidden_states.shape[1]
+        
+        if dinov2_batch_size == 1 and num_imgs > 1:
+            patches_per_img = (dinov2_seq_len - 1) // num_imgs
+            dinov2_patches_list = []
+            for i in range(num_imgs):
+                start_idx = 1 + i * patches_per_img
+                end_idx = 1 + (i + 1) * patches_per_img
+                if i == num_imgs - 1: end_idx = dinov2_seq_len
+                dinov2_patches_list.append(last_hidden_states[:, start_idx:end_idx, :])
+        else:
+            dinov2_patches_list = [last_hidden_states[i:i+1, 1:, :] for i in range(min(dinov2_batch_size, num_imgs))]
+            while len(dinov2_patches_list) < num_imgs:
+                dinov2_patches_list.append(dinov2_patches_list[-1])
+
+        # =========================================================================
+        # 3. 特征融合与投影 (Expert Fusion & Projection)
+        # =========================================================================
+        
+        pv  = inputs.get("pixel_values_latent", None)
+        thw = inputs.get("image_grid_thw_latent", None)
+        if pv is None or thw is None:
+            return None, torch.zeros_like(ids, dtype=torch.bool)
+        pv  = pv.to(device).to(tea.visual.dtype)
+        thw = thw.to(device)
+        
+        # 计算目标维度信息
+        num_imgs  = int(thw.shape[0])
+        s_merge = int(getattr(tea.visual, "spatial_merge_size", 2))
+        thw_long = thw.to(dtype=torch.long)
+        tokens_per_img = (thw_long[:,0] * (thw_long[:,1]//s_merge) * (thw_long[:,2]//s_merge))
+        
+        # 直接用当前输入计算原始视觉特征
+        patch_all_original = tea.visual(pv, grid_thw=thw)
+        target_dim = patch_all_original.shape[-1]  # 例如 3584
+        
+        # 3.2 初始化投影层
+        if not hasattr(self, '_feature_projection'):
+            input_dim = 256 + 64 + 1536 # HAWP + DeepLSD + DINOv2
+            self._feature_projection = nn.Linear(input_dim, target_dim).to(device)
+            nn.init.xavier_uniform_(self._feature_projection.weight)
+            nn.init.zeros_(self._feature_projection.bias)
+        
+        dinov2_batch_size = last_hidden_states.shape[0]
+        dinov2_seq_len = last_hidden_states.shape[1]
+        dinov2_hidden_dim = last_hidden_states.shape[2]
+
+        if dinov2_batch_size == 1 and num_imgs > 1:
+            # 如果batch_size=1，可能需要手动分割
+            # 假设每张图像有 (dinov2_seq_len - 1) // num_imgs 个patches（去掉CLS token）
+            patches_per_img = (dinov2_seq_len - 1) // num_imgs
+            dinov2_patches_list = []
+            for i in range(num_imgs):
+                start_idx = 1 + i * patches_per_img  # 跳过CLS token
+                end_idx = 1 + (i + 1) * patches_per_img
+                if i == num_imgs - 1:
+                    end_idx = dinov2_seq_len  # 最后一张图像取剩余所有
+                dinov2_patches_list.append(last_hidden_states[:, start_idx:end_idx, :])  # [1, patches, 1536]
+        else:
+            # 如果batch_size等于图像数量，直接使用
+            dinov2_patches_list = [last_hidden_states[i:i+1, 1:, :] for i in range(min(dinov2_batch_size, num_imgs))]
+            # 如果图像数量更多，需要重复或处理
+            while len(dinov2_patches_list) < num_imgs:
+                dinov2_patches_list.append(dinov2_patches_list[-1])
+
+        # 3.3 逐图融合并生成 patch_all
+        patch_list = []
+        # 同时计算每个图像的 token 范围，供后续 mask 逻辑使用
+        tokens_per_img = [] 
+
+        for img_idx in range(num_imgs):
+            # 获取该图像的目标空间分辨率 (这是 Method 1 Mask 对齐的关键)
+            T, H_target, W_target = thw_long[img_idx].tolist()
+            H_spatial = H_target // s_merge
+            W_spatial = W_target // s_merge
+            
+            # 记录 token 数量
+            tokens_per_img.append(T * H_spatial * W_spatial)
+
+            # 获取特征
+            hawp_feat = hawp_user_features_list[img_idx]
+            deeplsd_feat = deeplsd_user_outputs[img_idx]
+            dinov2_patches = dinov2_patches_list[img_idx]
+
+            # 空间对齐 (Interpolate)
+            hawp_feat_aligned = F.interpolate(hawp_feat, size=(H_spatial, W_spatial), mode='bilinear', align_corners=False)
+            deeplsd_feat_aligned = F.interpolate(deeplsd_feat, size=(H_spatial, W_spatial), mode='bilinear', align_corners=False)
+            
+            # DINOv2 处理
+            num_patches = dinov2_patches.shape[1]
+            dinov2_hw = int(np.ceil(np.sqrt(num_patches)))
+            # Reshape 1D -> 2D
+            if dinov2_hw * dinov2_hw == num_patches:
+                dinov2_feat_spatial = dinov2_patches.view(1, dinov2_hw, dinov2_hw, -1).permute(0, 3, 1, 2)
+            else:
+                dinov2_feat_2d = dinov2_patches.view(1, num_patches, -1).permute(0, 2, 1)
+                dinov2_feat_spatial = F.adaptive_avg_pool1d(dinov2_feat_2d, output_size=H_spatial * W_spatial).view(1, -1, H_spatial, W_spatial)
+
+            if dinov2_feat_spatial.shape[2] != H_spatial or dinov2_feat_spatial.shape[3] != W_spatial:
+                dinov2_feat_aligned = F.interpolate(dinov2_feat_spatial, size=(H_spatial, W_spatial), mode='bilinear', align_corners=False)
+            else:
+                dinov2_feat_aligned = dinov2_feat_spatial
+
+            # Concat
+            combined_feat = torch.cat([hawp_feat_aligned, deeplsd_feat_aligned, dinov2_feat_aligned], dim=1) # [1, 1856, H, W]
+            
+            # 展平空间维度：[1, 1856, H, W] -> [1, 1856, H*W] -> [H*W, 1856]
+            combined_feat_flat = combined_feat.flatten(2).permute(0, 2, 1).squeeze(0)  # [H*W, 1856]
+            del combined_feat  # 释放原始特征
+            
+            # 投影到目标维度：[H*W, 1856] -> [H*W, target_dim]
+            combined_feat_proj = self._feature_projection(combined_feat_flat)  # [H*W, target_dim]
+            del combined_feat_flat  # 释放展平后的特征
+            
+            # 如果有多个时间步，需要重复
+            if T > 1:
+                combined_feat_proj = combined_feat_proj.repeat(T, 1)  # [T*H*W, target_dim]
+            
+            patch_list.append(combined_feat_proj)
+
+        # 外部三路特征拼接后的 token 表示
+        patch_all_ext = torch.cat(patch_list, dim=0)  # [n, target_dim]
+        
+        # 将原始视觉特征和外部三路特征在通道维度拼接，再线性融合回 target_dim
+        if not hasattr(self, '_visual_fusion'):
+            self._visual_fusion = nn.Linear(target_dim * 2, target_dim).to(device)
+            nn.init.xavier_uniform_(self._visual_fusion.weight)
+            nn.init.zeros_(self._visual_fusion.bias)
+        
+        patch_all_concat = torch.cat([patch_all_original, patch_all_ext], dim=-1)  # [n, 2*target_dim]
+        patch_all = self._visual_fusion(patch_all_concat)  # [n, target_dim]
+        
+        # 计算切片索引 (同 Method 1)
+        ends_img = torch.cumsum(torch.tensor(tokens_per_img, device=device), dim=0).tolist()
+        starts_img = [0] + ends_img[:-1]
+        slices_per_img = [(int(st), int(ed)) for st, ed in zip(starts_img, ends_img)]
+
+        # 清理中间显存
+        del hawp_user_features_list, deeplsd_user_outputs, dinov2_patches_list, patch_list
+        if torch.cuda.is_available(): torch.cuda.empty_cache()
+
+        # =========================================================================
+        # 4. Mask 序列化处理逻辑 (Method 1 核心逻辑)
+        # =========================================================================
+        latents_list = []
+        Kstars = []
+
+        for seg_idx, pad_pos in enumerate(seg_pad_indices):
+            if len(pad_pos) == 0:
+                Kstars.append(0); continue
+            
+            assert seg_idx < num_imgs
+            st_img, ed_img = slices_per_img[seg_idx]
+            # 这里拿到的 ei 已经是投影后的专家混合特征了
+            ei = patch_all[st_img:ed_img, :] # [N_tokens, Dim]
+
+            selected_tokens = None
+            
+            # --- Mask 处理 ---
+            if raw_masks is not None and seg_idx < len(raw_masks) and raw_masks[seg_idx] is not None:
+                curr_mask = raw_masks[seg_idx].to(device).float()
+                
+                if curr_mask.dim() == 2: curr_mask = curr_mask.unsqueeze(0).unsqueeze(0)
+                elif curr_mask.dim() == 3: curr_mask = curr_mask.unsqueeze(0)
+
+                # 计算 Feature Map 的 Grid 尺寸 (必须与 ei 的空间尺寸一致)
+                grid_h = int(thw_long[seg_idx, 1] // s_merge)
+                grid_w = int(thw_long[seg_idx, 2] // s_merge)
+
+                # 【关键点 1】Adaptive Max Pool 确保不漏掉细微 Mask
+                resized_mask = F.adaptive_max_pool2d(curr_mask, output_size=(grid_h, grid_w))
+                flat_mask_values = resized_mask.flatten() 
+
+                # 长度对齐
+                if flat_mask_values.shape[0] > ei.shape[0]:
+                    flat_mask_values = flat_mask_values[:ei.shape[0]]
+                elif flat_mask_values.shape[0] < ei.shape[0]:
+                    padding = torch.zeros(ei.shape[0] - flat_mask_values.shape[0], device=device)
+                    flat_mask_values = torch.cat([flat_mask_values, padding])
+
+                # 【关键点 2】筛选有效区域
+                valid_indices = torch.nonzero(flat_mask_values > 0.0).squeeze(1)
+                
+                if valid_indices.numel() == 0:
+                    selected_tokens = ei[:k]
+                else:
+                    valid_tokens = ei[valid_indices]
+                    valid_values = flat_mask_values[valid_indices]
+
+                    # 【关键点 3】根据 Mask 值排序 (拓扑顺序：1.0 -> 2.x -> 3.x)
+                    if valid_values.max() > 1.0 + 1e-4:
+                        sort_idx = torch.argsort(valid_values, descending=False)
+                        sorted_tokens = valid_tokens[sort_idx]
+                    else:
+                        sorted_tokens = valid_tokens
+
+                    # 【关键点 4】特征压缩
+                    num_cand = sorted_tokens.shape[0]
+                    if num_cand <= k:
+                        selected_tokens = sorted_tokens
+                    else:
+                        # 有序压缩
+                        input_tensor = sorted_tokens.transpose(0, 1).unsqueeze(0)
+                        pooled = F.adaptive_avg_pool1d(input_tensor, output_size=k)
+                        selected_tokens = pooled.squeeze(0).transpose(0, 1)
+
+            else:
+                # 无 Mask 兜底
+                selected_tokens = ei[:k]
+
+            # --- 结果收集 ---
+            Kstar = min(len(pad_pos), selected_tokens.shape[0])
+            Kstars.append(Kstar)
+
+            if Kstar > 0:
+                latents_list.append(selected_tokens[:Kstar])
+        
+        # 清理 Mask 输入
+        cleanup_inputs()
+
+        if len(latents_list) == 0:
+             return None, torch.zeros_like(ids, dtype=torch.bool)
+             
+        latents = torch.cat(latents_list, dim=0).unsqueeze(0)
+        # 生成 Mask
+        firstK_mask = self._build_firstK_mask(ids, seg_pad_indices, Kstars)
+        
+        return latents, firstK_mask
+    
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         k = getattr(self.model.config, "latent_size", 8)
         #teacher_latents, firstK_mask = self._teacher_build_latents(inputs, k=k, p=self.coverage_p)
-        teacher_latents, firstK_mask = self._teacher_build_latents_sequence(inputs, k=k, p=self.coverage_p)
+        #teacher_latents, firstK_mask = self._teacher_build_latents_sequence(inputs, k=k, p=self.coverage_p)
+        teacher_latents, firstK_mask = self._teacher_build_latents_sequence_circuit_expert(inputs, k=k, p=self.coverage_p)
         if "helper_masks" in inputs:
             inputs.pop("helper_masks")
         with torch.no_grad():
