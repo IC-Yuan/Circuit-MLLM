@@ -4,6 +4,7 @@ import numpy as np
 
 #TRAIN_IMAGE_ROOT = "/data/jydeng/latent_visual/ILVR/data"
 TRAIN_IMAGE_ROOT = "/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16"
+#TRAIN_IMAGE_ROOT = "/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence"
 TEST_IMAGE_ROOT  = ""
 
 # ====== Utility Functions ======

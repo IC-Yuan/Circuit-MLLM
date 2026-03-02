@@ -12,16 +12,16 @@ export HF_HUB_OFFLINE=1
 
 MODEL_NAME="/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
 TASK_NAME="zebra-cot"
-EPOCHS=2
+EPOCHS=4
 GRAD_ACCUM_STEPS=8
-LATENT_SIZE=8
-CE_WEIGHT=1
-WARM_UP_STEPS=50
-SAVE_STEPS=2
-DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence/combine/merged_5000_rl.jsonl"
-LOAD_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_11/checkpoint-1000"
-SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2"
-LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_12_stage2.log"
+LATENT_SIZE=6
+CE_WEIGHT=0.6
+WARM_UP_STEPS=20
+SAVE_STEPS=100
+DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16/combine/merged_5000_rl.jsonl"
+LOAD_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_19_sequence_circuit_expert_06/checkpoint-1560"
+SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_22_stage2_latent_ce_ratio_01"
+LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_22_stage2_latent_ce_ratio_01.log"
 
 
 mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"

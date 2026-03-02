@@ -4,12 +4,12 @@ set -e  # 任何命令失败即退出
 # ------------------------------
 # 默认配置（可通过命令行覆盖）
 # ------------------------------
-DEFAULT_MODEL_DIR="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_16_sequence_06/checkpoint-1560"
+DEFAULT_MODEL_DIR="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_27_sequence_size_8_sim_1_ilvr/checkpoint-1335"
+DEFAULT_OUTPUT_DIR="/data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_27_sequence_size_8_sim_1_ilvr"
 DEFAULT_INPUT_DIR="/data/jydeng/circuit_clip/amsbench/AMSBench/Element_Classification_Task"
-DEFAULT_OUTPUT_DIR="/data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_16_sequence_06_step_1560"
 DEFAULT_EVAL_SCRIPT="/data/jydeng/latent_visual/circuit_mllm/benchresults/Element_Classification_eval.py"
 DEFAULT_CACHE_DIR="/data/jydeng/hugging_face_project"
-DEFAULT_GPU_ID="3"
+DEFAULT_GPU_ID="4"
 DEFAULT_TASK_NAME="zebra-cot"          # 非 vsp 任务走多标签字母评估分支
 DEFAULT_MAX_NEW_TOKENS=4096
 DEFAULT_TEMPERATURE=0.0

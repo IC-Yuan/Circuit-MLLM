@@ -1,0 +1,21 @@
+[
+  {"summary": true, "num_samples": 600, "valid_samples": 600, "average_inference_time_sec": 1.8240397381565223, "total_inference_time_sec": 1094.4238428939134, "accuracy": 0.2, "success": 120, "avg_precision": 0.701874939874941, "avg_recall": 0.8331604922854934, "avg_f1": 0.7377914199520258, "avg_exact_match": 0.2, "avg_jaccard": 0.6212193500943507}
+,
+  {"summary": true, "num_samples": 900, "valid_samples": 900, "average_inference_time_sec": 1.193909942549136, "accuracy": 0.6866666666666666, "valid_accuracy": 0.6866666666666666, "success": 618}
+,
+  {"summary": true, "num_samples": 1528, "valid_samples": 1528, "accuracy": 0.7068062827225131, "valid_accuracy": 0.7068062827225131, "avg_inference_time": 1.3310506878023314}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "accuracy": 0.966, "valid_accuracy": 0.966, "avg_inference_time": 1.104877557730768}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 1.1805859161089174, "accuracy": 0.698, "valid_accuracy": 0.698, "success": 698}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 1.6194659305722452, "total_inference_time_sec": 1619.4659305722453, "accuracy": 0.544, "success": 544, "avg_precision": 0.8848821428571417, "avg_recall": 0.900778571428569, "avg_f1": 0.875778227328224, "avg_exact_match": 0.544, "avg_jaccard": 0.8111916666666652}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "accuracy": 0.622, "valid_accuracy": 0.622, "avg_inference_time": 1.270051354432013}
+,
+  {"summary": true, "num_samples": 1500, "valid_samples": 1500, "valid_mse_samples": 1500, "accuracy": 0.354, "valid_accuracy": 0.354, "mse": 38.294, "avg_inference_time": 1.2818615855065485}
+,
+  {"summary": true, "num_samples": 945, "valid_samples": 945, "accuracy": 0.725925925925926, "valid_accuracy": 0.725925925925926, "avg_inference_time": 1.017830053491705}
+,
+  {"summary": true, "num_samples": 1500, "valid_samples": 1500, "valid_mse_samples": 1500, "accuracy": 0.5206666666666667, "valid_accuracy": 0.5206666666666667, "mse": 11.828666666666667, "avg_inference_time": 1.1387954627914976}
+]

@@ -1,0 +1,182 @@
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 16:50:38 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+Traceback (most recent call last):
+  File "/data/jydeng/latent_visual/circuit_mllm/benchresults/Connection_Identification_eval.py", line 16, in <module>
+    from src.utils_deepseed import LatentTemplateLogitsProcessor  
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'src'
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 16:51:15 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+Traceback (most recent call last):
+  File "/data/jydeng/latent_visual/circuit_mllm/benchresults/Connection_Identification_eval.py", line 16, in <module>
+    from utils_deepseed import LatentTemplateLogitsProcessor  
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'utils_deepseed'
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 16:51:25 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+Traceback (most recent call last):
+  File "/data/jydeng/latent_visual/circuit_mllm/benchresults/Connection_Identification_eval.py", line 16, in <module>
+    from src.utils_deepseed import LatentTemplateLogitsProcessor  
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'src'
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 16:51:44 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+Traceback (most recent call last):
+  File "/data/jydeng/latent_visual/circuit_mllm/benchresults/Connection_Identification_eval.py", line 16, in <module>
+    from src.utils_deepseed import LatentTemplateLogitsProcessor  
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'src'
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 16:53:02 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+Traceback (most recent call last):
+  File "/data/jydeng/latent_visual/circuit_mllm/benchresults/Connection_Identification_eval.py", line 16, in <module>
+    from src.utils_deepseed import LatentTemplateLogitsProcessor  
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'src'
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 16:54:39 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_12_stage2_checkpoint-208/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-19 16:54:43,429 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_12_stage2/checkpoint-208
+2026-02-19 16:54:43,754 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.33s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.25s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.17s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.15it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.00s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-19 16:54:48,629 - INFO - Starting evaluation: num_samples=600
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-19 16:55:05,650 - INFO - [10/600] Current accuracy = 0.2000
+2026-02-19 16:55:21,368 - INFO - [20/600] Current accuracy = 0.2000
+2026-02-19 16:55:37,720 - INFO - [30/600] Current accuracy = 0.1667
+2026-02-19 16:55:53,557 - INFO - [40/600] Current accuracy = 0.2250
+2026-02-19 16:56:09,361 - INFO - [50/600] Current accuracy = 0.2200
+2026-02-19 16:56:26,115 - INFO - [60/600] Current accuracy = 0.2167
+2026-02-19 16:56:42,397 - INFO - [70/600] Current accuracy = 0.2286
+2026-02-19 16:56:59,081 - INFO - [80/600] Current accuracy = 0.2250
+2026-02-19 16:57:15,679 - INFO - [90/600] Current accuracy = 0.2222
+2026-02-19 16:57:30,927 - INFO - [100/600] Current accuracy = 0.2300
+2026-02-19 16:57:46,924 - INFO - [110/600] Current accuracy = 0.2273
+2026-02-19 16:58:02,419 - INFO - [120/600] Current accuracy = 0.2417
+2026-02-19 16:58:18,046 - INFO - [130/600] Current accuracy = 0.2615
+2026-02-19 16:58:34,179 - INFO - [140/600] Current accuracy = 0.2643
+2026-02-19 16:58:49,613 - INFO - [150/600] Current accuracy = 0.2667
+2026-02-19 16:59:05,145 - INFO - [160/600] Current accuracy = 0.2687
+2026-02-19 16:59:21,568 - INFO - [170/600] Current accuracy = 0.2765
+2026-02-19 16:59:36,993 - INFO - [180/600] Current accuracy = 0.2778
+2026-02-19 16:59:52,435 - INFO - [190/600] Current accuracy = 0.2737
+2026-02-19 17:00:08,703 - INFO - [200/600] Current accuracy = 0.2800
+2026-02-19 17:00:25,895 - INFO - [210/600] Current accuracy = 0.2810
+2026-02-19 17:00:44,013 - INFO - [220/600] Current accuracy = 0.2727
+2026-02-19 17:01:01,617 - INFO - [230/600] Current accuracy = 0.2652
+2026-02-19 17:01:19,564 - INFO - [240/600] Current accuracy = 0.2542
+2026-02-19 17:01:37,335 - INFO - [250/600] Current accuracy = 0.2560
+2026-02-19 17:01:55,366 - INFO - [260/600] Current accuracy = 0.2500
+2026-02-19 17:02:12,813 - INFO - [270/600] Current accuracy = 0.2519
+2026-02-19 17:02:30,152 - INFO - [280/600] Current accuracy = 0.2429
+2026-02-19 17:02:47,112 - INFO - [290/600] Current accuracy = 0.2379
+2026-02-19 17:03:05,762 - INFO - [300/600] Current accuracy = 0.2300
+2026-02-19 17:03:23,843 - INFO - [310/600] Current accuracy = 0.2290
+2026-02-19 17:05:18,668 - INFO - [320/600] Current accuracy = 0.2219
+2026-02-19 17:05:35,978 - INFO - [330/600] Current accuracy = 0.2182
+2026-02-19 17:05:53,192 - INFO - [340/600] Current accuracy = 0.2206
+2026-02-19 17:06:10,350 - INFO - [350/600] Current accuracy = 0.2171
+2026-02-19 17:06:28,065 - INFO - [360/600] Current accuracy = 0.2139
+2026-02-19 17:06:46,304 - INFO - [370/600] Current accuracy = 0.2081
+2026-02-19 17:07:04,121 - INFO - [380/600] Current accuracy = 0.2053
+2026-02-19 17:07:21,410 - INFO - [390/600] Current accuracy = 0.2026
+2026-02-19 17:07:38,658 - INFO - [400/600] Current accuracy = 0.2025
+2026-02-19 17:07:58,532 - INFO - [410/600] Current accuracy = 0.1976
+2026-02-19 17:08:17,679 - INFO - [420/600] Current accuracy = 0.1952
+2026-02-19 17:08:36,497 - INFO - [430/600] Current accuracy = 0.1907
+2026-02-19 17:08:55,331 - INFO - [440/600] Current accuracy = 0.1864
+2026-02-19 17:09:15,477 - INFO - [450/600] Current accuracy = 0.1822
+2026-02-19 17:09:33,917 - INFO - [460/600] Current accuracy = 0.1783
+2026-02-19 17:09:51,940 - INFO - [470/600] Current accuracy = 0.1745
+2026-02-19 17:10:10,347 - INFO - [480/600] Current accuracy = 0.1750
+2026-02-19 17:10:28,259 - INFO - [490/600] Current accuracy = 0.1735
+2026-02-19 17:10:47,689 - INFO - [500/600] Current accuracy = 0.1700
+2026-02-19 17:11:07,447 - INFO - [510/600] Current accuracy = 0.1667
+2026-02-19 17:11:25,484 - INFO - [520/600] Current accuracy = 0.1635
+2026-02-19 17:11:44,043 - INFO - [530/600] Current accuracy = 0.1604
+2026-02-19 17:12:03,553 - INFO - [540/600] Current accuracy = 0.1574
+2026-02-19 17:12:22,476 - INFO - [550/600] Current accuracy = 0.1545
+2026-02-19 17:12:41,645 - INFO - [560/600] Current accuracy = 0.1518
+2026-02-19 17:12:59,669 - INFO - [570/600] Current accuracy = 0.1509
+2026-02-19 17:13:17,920 - INFO - [580/600] Current accuracy = 0.1500
+2026-02-19 17:13:35,572 - INFO - [590/600] Current accuracy = 0.1492
+2026-02-19 17:13:54,674 - INFO - [600/600] Current accuracy = 0.1467
+2026-02-19 17:13:54,680 - INFO - Evaluation finished: 88/600 correct; accuracy=0.1467
+
+========== Final Metrics ==========
+Exact Match Accuracy = 0.1467 (88/600)
+Avg Precision         = 0.6982
+Avg Recall            = 0.7952
+Avg F1 Score          = 0.7150
+Avg Jaccard / IoU     = 0.5922
+====================================
+
+✅ Finished: Connection_Identification_transformed.jsonl
+/data/jydeng/latent_visual/circuit_mllm/benchresults/Connection_Identification_eval.sh: 行 166: 寻找匹配的 `"' 时遇到了未预期的 EOF

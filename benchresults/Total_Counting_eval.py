@@ -284,12 +284,13 @@ def main():
 
     total = len(data)
     success = 0                     # 完全匹配且gold非空的样本数
-    valid_samples = 0              # gold非空的样本数（用于计算平均指标）
-    sum_precision = 0.0
-    sum_recall = 0.0
-    sum_f1 = 0.0
-    sum_exact_match = 0.0
-    sum_jaccard = 0.0
+    valid_samples = 0               # gold非空的样本数（用于计算平均指标）
+    
+    # === 新增 MSE 初始化 ===
+    sum_squared_error = 0.0         # 误差平方和
+    valid_mse_samples = 0           # 预测值和真实值都有数字的样本数
+    # =======================
+
     results = []
     total_inference_time = 0.0
 
@@ -325,10 +326,14 @@ def main():
                     ok = False
                 # 情况 B: 数值比较 (允许极小误差以处理浮点精度，如 3.0 vs 3)
                 else:
-                    # 这里的 < 1e-9 即代表“严格相等”
                     if abs(pred_val - gold_val) < 1e-9:
                         ok = True
                         success += 1
+                        
+                    # === 新增：计算累加误差平方 ===
+                    sum_squared_error += (pred_val - gold_val) ** 2
+                    valid_mse_samples += 1
+                    # ==========================
 
             results.append({
                 "index": i,
@@ -360,6 +365,10 @@ def main():
     acc = success / total if total > 0 else 0.0
     valid_acc = success / valid_samples if valid_samples > 0 else 0.0
     avg_inference_time = total_inference_time / total if total > 0 else 0.0
+    
+    # === 新增：计算最终的 MSE ===
+    mse = sum_squared_error / valid_mse_samples if valid_mse_samples > 0 else 0.0
+    # ==========================
 
     # 写入文件
     with open(args.output_json_path, "w", encoding="utf-8") as fout:
@@ -370,20 +379,27 @@ def main():
             "summary": True,
             "num_samples": total,
             "valid_samples": valid_samples,
+            "valid_mse_samples": valid_mse_samples,
             "accuracy": acc,
             "valid_accuracy": valid_acc,
+            "mse": mse,
             "avg_inference_time": avg_inference_time
         }, ensure_ascii=False) + "\n")
 
     # 打印最终指标
     logging.info(f"Evaluation finished: {success}/{total} correct.")
     print(f"\n========== Final Metrics (Numeric) ==========")
-    print(f"Total Samples    = {total}")
-    print(f"Valid Targets    = {valid_samples} (Parsable numbers)")
-    print(f"Correct Count    = {success}")
-    print(f"Accuracy         = {acc:.4f}")
+    print(f"Total Samples      = {total}")
+    print(f"Valid Targets      = {valid_samples} (Parsable numbers)")
+    print(f"Valid Predictions  = {valid_mse_samples} (For MSE calculation)")
+    print(f"Correct Count      = {success}")
+    print(f"Accuracy           = {acc:.4f}")
     if valid_samples != total:
-        print(f"Valid Accuracy   = {valid_acc:.4f} (excluding invalid golds)")
+        print(f"Valid Accuracy     = {valid_acc:.4f} (excluding invalid golds)")
+    
+    # === 新增：打印 MSE ===
+    print(f"MSE                = {mse:.4f}")
+    # ======================
     print(f"=============================================\n")
 
 def extract_path_from_text(generated_text: str) -> str:

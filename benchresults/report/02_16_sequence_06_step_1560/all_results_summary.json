@@ -1,11 +1,29 @@
 [
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 1.563511339708697, "total_inference_time_sec": 1563.511339708697, "accuracy": 0.352, "success": 352, "avg_precision": 0.9304452380952367, "avg_recall": 0.8145238095238094, "avg_f1": 0.8564517815517824, "avg_exact_match": 0.352, "avg_jaccard": 0.7743976190476195}
+,
   {"summary": true, "num_samples": 600, "valid_samples": 600, "average_inference_time_sec": 3.738124268697963, "total_inference_time_sec": 2242.8745612187777, "accuracy": 0.19, "success": 114, "avg_precision": 0.6859510582010592, "avg_recall": 0.8247624042624064, "avg_f1": 0.7257336961695239, "avg_exact_match": 0.19, "avg_jaccard": 0.6080811827061823}
+,
+  {"summary": true, "num_samples": 456, "valid_samples": 456, "average_inference_time_sec": 2.281852830247341, "total_inference_time_sec": 1040.5248905927874, "accuracy": 0.18640350877192982, "success": 85, "avg_precision": 0.6813178780284048, "avg_recall": 0.8218730465441012, "avg_f1": 0.7204840282362771, "avg_exact_match": 0.18640350877192982, "avg_jaccard": 0.6021483815891711}
 ,
   {"summary": true, "num_samples": 900, "valid_samples": 900, "average_inference_time_sec": 2.6693388125525477, "accuracy": 0.6855555555555556, "valid_accuracy": 0.6855555555555556, "success": 617}
 ,
+  {"summary": true, "num_samples": 804, "valid_samples": 804, "average_inference_time_sec": 1.5582868143121493, "accuracy": 0.6915422885572139, "valid_accuracy": 0.6915422885572139, "success": 556}
+,
   {"summary": true, "num_samples": 1528, "valid_samples": 1528, "accuracy": 0.7401832460732984, "valid_accuracy": 0.7401832460732984, "avg_inference_time": 2.0373090644481624}
 ,
+  {"summary": true, "num_samples": 1301, "valid_samples": 1301, "accuracy": 0.8155265180630284, "valid_accuracy": 0.8155265180630284, "avg_inference_time": 1.2318794870692564}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "accuracy": 0.947, "valid_accuracy": 0.947, "avg_inference_time": 1.6265026297322474}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 1.1986074794400483, "accuracy": 0.68, "valid_accuracy": 0.68, "success": 680}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 1.5505301156360656, "total_inference_time_sec": 1550.5301156360656, "accuracy": 0.548, "success": 548, "avg_precision": 0.8939738095238088, "avg_recall": 0.8998059523809504, "avg_f1": 0.8816934232434213, "avg_exact_match": 0.548, "avg_jaccard": 0.8202559523809514}
+,
   {"summary": true, "num_samples": 1500, "valid_samples": 1500, "accuracy": 0.37533333333333335, "valid_accuracy": 0.37533333333333335, "avg_inference_time": 1.8443803962677097}
+,
+  {"summary": true, "num_samples": 945, "valid_samples": 945, "accuracy": 0.7523809523809524, "valid_accuracy": 0.7523809523809524, "avg_inference_time": 1.7727089041587774}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "accuracy": 0.912, "valid_accuracy": 0.912, "avg_inference_time": 1.7736256189662962}
 ,
   {"summary": true, "num_samples": 1500, "valid_samples": 1500, "accuracy": 0.5693333333333334, "valid_accuracy": 0.5693333333333334, "avg_inference_time": 1.8678899019670983}
 ]

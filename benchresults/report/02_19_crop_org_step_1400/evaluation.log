@@ -1,0 +1,22 @@
+========================================================
+🚀 Starting evaluation at 2026年 02月 19日 星期四 18:20:42 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/checkpoint-1400
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_19_crop_org_step_1400
+   Task name      : zebra-cot
+   GPU ID         : 3
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_19_crop_org_step_1400/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-19 18:20:46,553 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/checkpoint-1400
+2026-02-19 18:20:46,875 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.15s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.52s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.41s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  1.81s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.10s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-19 18:20:56,103 - INFO - Starting evaluation: num_samples=600
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-19 18:21:13,123 - INFO - [10/600] Current accuracy = 0.0000
+2026-02-19 18:21:28,376 - INFO - [20/600] Current accuracy = 0.0000

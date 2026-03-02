@@ -1,0 +1,19 @@
+[
+  {"summary": true, "num_samples": 600, "valid_samples": 600, "average_inference_time_sec": 1.768229859721226, "total_inference_time_sec": 1060.9379158327356, "accuracy": 0.24833333333333332, "success": 149, "avg_precision": 0.7377850529100547, "avg_recall": 0.844863941613943, "avg_f1": 0.7641721470250898, "avg_exact_match": 0.24833333333333332, "avg_jaccard": 0.6571373210123213}
+,
+  {"summary": true, "num_samples": 900, "valid_samples": 900, "average_inference_time_sec": 2.363587809942352, "accuracy": 0.7455555555555555, "valid_accuracy": 0.7455555555555555, "success": 671}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "accuracy": 0.965, "valid_accuracy": 0.965, "avg_inference_time": 1.2183285596552305}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 2.311476098018233, "accuracy": 0.698, "valid_accuracy": 0.698, "success": 698}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "average_inference_time_sec": 1.8037074125111103, "total_inference_time_sec": 1803.7074125111103, "accuracy": 0.56, "success": 560, "avg_precision": 0.8955952380952369, "avg_recall": 0.9033809523809511, "avg_f1": 0.8820133866133841, "avg_exact_match": 0.56, "avg_jaccard": 0.8208249999999997}
+,
+  {"summary": true, "num_samples": 1000, "valid_samples": 1000, "accuracy": 0.656, "valid_accuracy": 0.656, "avg_inference_time": 2.1757298228032886}
+,
+  {"summary": true, "num_samples": 1500, "valid_samples": 1500, "valid_mse_samples": 1500, "accuracy": 0.3393333333333333, "valid_accuracy": 0.3393333333333333, "mse": 45.78, "avg_inference_time": 1.270944730084079}
+,
+  {"summary": true, "num_samples": 945, "valid_samples": 945, "accuracy": 0.7312169312169312, "valid_accuracy": 0.7312169312169312, "avg_inference_time": 1.1871529919243167}
+,
+  {"summary": true, "num_samples": 1500, "valid_samples": 1500, "valid_mse_samples": 1500, "accuracy": 0.5686666666666667, "valid_accuracy": 0.5686666666666667, "mse": 10.694, "avg_inference_time": 1.9345608383851747}
+]

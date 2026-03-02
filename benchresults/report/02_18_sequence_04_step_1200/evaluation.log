@@ -1,0 +1,783 @@
+========================================================
+🚀 Starting evaluation at 2026年 02月 18日 星期三 23:14:33 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Task name      : zebra-cot
+   GPU ID         : 3
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-18 23:14:36,563 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+2026-02-18 23:14:36,873 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.20s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.05s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.29it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.12it/s]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-18 23:14:41,225 - INFO - Starting evaluation: num_samples=600
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-18 23:14:58,115 - INFO - [10/600] Current accuracy = 0.5000
+========================================================
+🚀 Starting evaluation at 2026年 02月 18日 星期三 23:15:02 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Judgment_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Task name      : zebra-cot
+   GPU ID         : 3
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Judgment_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/Connection_Judgment_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-18 23:15:05,471 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+2026-02-18 23:15:05,824 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.24s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.03s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.32it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.13it/s]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-18 23:15:10,135 - INFO - Starting evaluation: num_samples=900
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-18 23:15:14,737 - INFO - [20/600] Current accuracy = 0.5000
+2026-02-18 23:15:30,651 - INFO - [10/900] Current Accuracy = 0.9000
+2026-02-18 23:15:39,640 - INFO - [30/600] Current accuracy = 0.4333
+========================================================
+🚀 Starting evaluation at 2026年 02月 18日 星期三 23:15:46 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Element_Classification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Task name      : zebra-cot
+   GPU ID         : 3
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Element_Classification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/Element_Classification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-18 23:15:48,861 - INFO - [20/900] Current Accuracy = 0.7500
+2026-02-18 23:15:49,756 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+2026-02-18 23:15:50,174 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:05,  1.74s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.36s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.25s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.11it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.08s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-18 23:15:55,344 - INFO - Starting evaluation: num_samples=1528
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-18 23:16:06,988 - INFO - [40/600] Current accuracy = 0.4250
+2026-02-18 23:16:13,934 - INFO - [30/900] Current Accuracy = 0.7000
+========================================================
+🚀 Starting evaluation at 2026年 02月 18日 星期三 23:16:20 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Total_Counting_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Total_Counting_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/Total_Counting_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-18 23:16:22,422 - INFO - [10/1528] Current Accuracy = 0.9000
+2026-02-18 23:16:23,117 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+2026-02-18 23:16:23,437 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.09s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.02it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.42it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.23it/s]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-18 23:16:27,480 - INFO - Starting evaluation: num_samples=1500
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-18 23:16:39,706 - INFO - [10/1500] Current Accuracy = 0.7000
+2026-02-18 23:16:42,235 - INFO - [40/900] Current Accuracy = 0.6500
+2026-02-18 23:16:42,581 - INFO - [50/600] Current accuracy = 0.4400
+2026-02-18 23:16:50,008 - INFO - [20/1528] Current Accuracy = 0.9500
+2026-02-18 23:16:50,843 - INFO - [20/1500] Current Accuracy = 0.7500
+========================================================
+🚀 Starting evaluation at 2026年 02月 18日 星期三 23:16:51 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Type_wise_Counting_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Type_wise_Counting_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/Type_wise_Counting_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-18 23:16:53,876 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_04/checkpoint-1200
+2026-02-18 23:16:54,264 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.17s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.05s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.02s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.31it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.15it/s]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-18 23:16:58,518 - INFO - Starting evaluation: num_samples=1500
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-18 23:17:03,890 - INFO - [30/1500] Current Accuracy = 0.6000
+2026-02-18 23:17:11,302 - INFO - [50/900] Current Accuracy = 0.6600
+2026-02-18 23:17:16,602 - INFO - [30/1528] Current Accuracy = 0.9000
+2026-02-18 23:17:17,893 - INFO - [10/1500] Current Accuracy = 0.6000
+2026-02-18 23:17:20,316 - INFO - [60/600] Current accuracy = 0.3667
+2026-02-18 23:17:21,467 - INFO - [40/1500] Current Accuracy = 0.6000
+2026-02-18 23:17:36,245 - INFO - [20/1500] Current Accuracy = 0.8000
+2026-02-18 23:17:38,566 - INFO - [60/900] Current Accuracy = 0.7000
+2026-02-18 23:17:38,721 - INFO - [50/1500] Current Accuracy = 0.6200
+2026-02-18 23:17:44,157 - INFO - [40/1528] Current Accuracy = 0.8000
+2026-02-18 23:17:53,678 - INFO - [30/1500] Current Accuracy = 0.8000
+2026-02-18 23:17:55,584 - INFO - [60/1500] Current Accuracy = 0.6000
+2026-02-18 23:17:56,616 - INFO - [70/600] Current accuracy = 0.3571
+2026-02-18 23:18:07,158 - INFO - [70/900] Current Accuracy = 0.7000
+2026-02-18 23:18:11,646 - INFO - [50/1528] Current Accuracy = 0.7600
+2026-02-18 23:18:12,254 - INFO - [40/1500] Current Accuracy = 0.8000
+2026-02-18 23:18:13,201 - INFO - [70/1500] Current Accuracy = 0.5857
+2026-02-18 23:18:30,110 - INFO - [50/1500] Current Accuracy = 0.8200
+2026-02-18 23:18:30,667 - INFO - [80/1500] Current Accuracy = 0.6000
+2026-02-18 23:18:34,896 - INFO - [80/600] Current accuracy = 0.3625
+2026-02-18 23:18:36,258 - INFO - [80/900] Current Accuracy = 0.6625
+2026-02-18 23:18:49,785 - INFO - [60/1500] Current Accuracy = 0.8167
+2026-02-18 23:18:50,693 - INFO - [90/1500] Current Accuracy = 0.5889
+2026-02-18 23:18:52,489 - INFO - [60/1528] Current Accuracy = 0.7833
+2026-02-18 23:19:07,686 - INFO - [100/1500] Current Accuracy = 0.6000
+2026-02-18 23:19:08,050 - INFO - [70/1500] Current Accuracy = 0.8286
+2026-02-18 23:19:08,493 - INFO - [90/900] Current Accuracy = 0.6333
+2026-02-18 23:19:13,606 - INFO - [90/600] Current accuracy = 0.3556
+2026-02-18 23:19:24,608 - INFO - [70/1528] Current Accuracy = 0.7286
+2026-02-18 23:19:25,619 - INFO - [110/1500] Current Accuracy = 0.6000
+2026-02-18 23:19:26,730 - INFO - [80/1500] Current Accuracy = 0.8250
+2026-02-18 23:19:37,370 - INFO - [100/900] Current Accuracy = 0.6200
+2026-02-18 23:19:43,675 - INFO - [120/1500] Current Accuracy = 0.6000
+2026-02-18 23:19:46,784 - INFO - [90/1500] Current Accuracy = 0.8111
+2026-02-18 23:19:48,128 - INFO - [100/600] Current accuracy = 0.3700
+2026-02-18 23:19:58,206 - INFO - [80/1528] Current Accuracy = 0.7500
+2026-02-18 23:20:01,291 - INFO - [130/1500] Current Accuracy = 0.6154
+2026-02-18 23:20:05,663 - INFO - [100/1500] Current Accuracy = 0.8100
+2026-02-18 23:20:06,755 - INFO - [110/900] Current Accuracy = 0.6091
+2026-02-18 23:20:19,031 - INFO - [140/1500] Current Accuracy = 0.6143
+2026-02-18 23:20:24,584 - INFO - [90/1528] Current Accuracy = 0.7222
+2026-02-18 23:20:24,718 - INFO - [110/1500] Current Accuracy = 0.8182
+2026-02-18 23:20:25,663 - INFO - [110/600] Current accuracy = 0.3545
+2026-02-18 23:20:34,445 - INFO - [120/900] Current Accuracy = 0.6083
+2026-02-18 23:20:36,624 - INFO - [150/1500] Current Accuracy = 0.6133
+2026-02-18 23:20:43,650 - INFO - [120/1500] Current Accuracy = 0.8167
+2026-02-18 23:20:52,257 - INFO - [100/1528] Current Accuracy = 0.7500
+2026-02-18 23:20:54,669 - INFO - [160/1500] Current Accuracy = 0.6188
+2026-02-18 23:21:00,872 - INFO - [120/600] Current accuracy = 0.3583
+2026-02-18 23:21:02,935 - INFO - [130/1500] Current Accuracy = 0.8231
+2026-02-18 23:21:04,461 - INFO - [130/900] Current Accuracy = 0.5923
+2026-02-18 23:21:13,666 - INFO - [170/1500] Current Accuracy = 0.6059
+2026-02-18 23:21:20,197 - INFO - [110/1528] Current Accuracy = 0.7364
+2026-02-18 23:21:21,643 - INFO - [140/1500] Current Accuracy = 0.8143
+2026-02-18 23:21:31,977 - INFO - [180/1500] Current Accuracy = 0.6111
+2026-02-18 23:21:34,109 - INFO - [140/900] Current Accuracy = 0.5714
+2026-02-18 23:21:37,457 - INFO - [130/600] Current accuracy = 0.3538
+2026-02-18 23:21:40,875 - INFO - [150/1500] Current Accuracy = 0.8067
+2026-02-18 23:21:49,315 - INFO - [190/1500] Current Accuracy = 0.6158
+2026-02-18 23:21:49,651 - INFO - [120/1528] Current Accuracy = 0.7333
+2026-02-18 23:22:00,294 - INFO - [160/1500] Current Accuracy = 0.8063
+2026-02-18 23:22:03,164 - INFO - [150/900] Current Accuracy = 0.5667
+2026-02-18 23:22:08,951 - INFO - [200/1500] Current Accuracy = 0.6150
+2026-02-18 23:22:13,628 - INFO - [140/600] Current accuracy = 0.3643
+2026-02-18 23:22:19,418 - INFO - [170/1500] Current Accuracy = 0.8118
+2026-02-18 23:22:19,492 - INFO - [130/1528] Current Accuracy = 0.7231
+2026-02-18 23:22:26,492 - INFO - [210/1500] Current Accuracy = 0.6000
+2026-02-18 23:22:32,816 - INFO - [160/900] Current Accuracy = 0.5813
+2026-02-18 23:22:38,590 - INFO - [180/1500] Current Accuracy = 0.7944
+2026-02-18 23:22:45,870 - INFO - [220/1500] Current Accuracy = 0.6091
+2026-02-18 23:22:50,589 - INFO - [150/600] Current accuracy = 0.3533
+2026-02-18 23:22:56,382 - INFO - [140/1528] Current Accuracy = 0.7214
+2026-02-18 23:22:57,638 - INFO - [190/1500] Current Accuracy = 0.8000
+2026-02-18 23:23:01,763 - INFO - [170/900] Current Accuracy = 0.5882
+2026-02-18 23:23:03,619 - INFO - [230/1500] Current Accuracy = 0.6000
+2026-02-18 23:23:16,210 - INFO - [200/1500] Current Accuracy = 0.8050
+2026-02-18 23:23:21,574 - INFO - [240/1500] Current Accuracy = 0.5958
+2026-02-18 23:23:27,181 - INFO - [160/600] Current accuracy = 0.3500
+2026-02-18 23:23:30,722 - INFO - [150/1528] Current Accuracy = 0.7200
+2026-02-18 23:23:30,840 - INFO - [180/900] Current Accuracy = 0.5889
+2026-02-18 23:23:35,147 - INFO - [210/1500] Current Accuracy = 0.8000
+2026-02-18 23:23:39,225 - INFO - [250/1500] Current Accuracy = 0.6080
+2026-02-18 23:23:55,118 - INFO - [220/1500] Current Accuracy = 0.7909
+2026-02-18 23:23:57,475 - INFO - [260/1500] Current Accuracy = 0.6077
+2026-02-18 23:23:59,860 - INFO - [190/900] Current Accuracy = 0.5947
+2026-02-18 23:24:03,247 - INFO - [160/1528] Current Accuracy = 0.7125
+2026-02-18 23:24:05,528 - INFO - [170/600] Current accuracy = 0.3529
+2026-02-18 23:24:12,946 - INFO - [230/1500] Current Accuracy = 0.7870
+2026-02-18 23:24:14,979 - INFO - [270/1500] Current Accuracy = 0.6111
+2026-02-18 23:24:28,333 - INFO - [200/900] Current Accuracy = 0.6050
+2026-02-18 23:24:29,063 - INFO - [170/1528] Current Accuracy = 0.7294
+2026-02-18 23:24:30,941 - INFO - [240/1500] Current Accuracy = 0.7833
+2026-02-18 23:24:32,142 - INFO - [280/1500] Current Accuracy = 0.6000
+2026-02-18 23:24:39,568 - INFO - [180/600] Current accuracy = 0.3556
+2026-02-18 23:24:49,623 - INFO - [250/1500] Current Accuracy = 0.7880
+2026-02-18 23:24:50,030 - INFO - [290/1500] Current Accuracy = 0.6034
+2026-02-18 23:24:54,760 - INFO - [180/1528] Current Accuracy = 0.7444
+2026-02-18 23:24:56,482 - INFO - [210/900] Current Accuracy = 0.5952
+2026-02-18 23:25:08,012 - INFO - [300/1500] Current Accuracy = 0.5967
+2026-02-18 23:25:08,724 - INFO - [260/1500] Current Accuracy = 0.7962
+2026-02-18 23:25:14,614 - INFO - [190/600] Current accuracy = 0.3632
+2026-02-18 23:25:20,174 - INFO - [190/1528] Current Accuracy = 0.7579
+2026-02-18 23:25:24,161 - INFO - [220/900] Current Accuracy = 0.6136
+2026-02-18 23:25:26,553 - INFO - [310/1500] Current Accuracy = 0.6032
+2026-02-18 23:25:28,078 - INFO - [270/1500] Current Accuracy = 0.8000
+2026-02-18 23:25:43,977 - INFO - [320/1500] Current Accuracy = 0.6031
+2026-02-18 23:25:45,559 - INFO - [200/1528] Current Accuracy = 0.7700
+2026-02-18 23:25:46,152 - INFO - [280/1500] Current Accuracy = 0.7964
+2026-02-18 23:25:51,183 - INFO - [200/600] Current accuracy = 0.3700
+2026-02-18 23:25:51,442 - INFO - [230/900] Current Accuracy = 0.6130
+2026-02-18 23:26:01,859 - INFO - [330/1500] Current Accuracy = 0.6061
+2026-02-18 23:26:06,148 - INFO - [290/1500] Current Accuracy = 0.7966
+2026-02-18 23:26:12,628 - INFO - [210/1528] Current Accuracy = 0.7810
+2026-02-18 23:26:19,656 - INFO - [340/1500] Current Accuracy = 0.6059
+2026-02-18 23:26:21,518 - INFO - [240/900] Current Accuracy = 0.6250
+2026-02-18 23:26:25,457 - INFO - [300/1500] Current Accuracy = 0.8000
+2026-02-18 23:26:32,141 - INFO - [210/600] Current accuracy = 0.3619
+2026-02-18 23:26:37,325 - INFO - [350/1500] Current Accuracy = 0.6086
+2026-02-18 23:26:43,553 - INFO - [310/1500] Current Accuracy = 0.8065
+2026-02-18 23:26:44,726 - INFO - [220/1528] Current Accuracy = 0.7909
+2026-02-18 23:26:50,537 - INFO - [250/900] Current Accuracy = 0.6200
+2026-02-18 23:26:55,084 - INFO - [360/1500] Current Accuracy = 0.6056
+2026-02-18 23:27:01,568 - INFO - [320/1500] Current Accuracy = 0.8094
+2026-02-18 23:27:12,747 - INFO - [230/1528] Current Accuracy = 0.8000
+2026-02-18 23:27:12,749 - INFO - [370/1500] Current Accuracy = 0.6135
+2026-02-18 23:27:13,368 - INFO - [220/600] Current accuracy = 0.3500
+2026-02-18 23:27:19,839 - INFO - [260/900] Current Accuracy = 0.6231
+2026-02-18 23:27:20,108 - INFO - [330/1500] Current Accuracy = 0.8121
+2026-02-18 23:27:30,319 - INFO - [380/1500] Current Accuracy = 0.6184
+2026-02-18 23:27:38,355 - INFO - [340/1500] Current Accuracy = 0.8118
+2026-02-18 23:27:47,340 - INFO - [390/1500] Current Accuracy = 0.6205
+2026-02-18 23:27:49,171 - INFO - [240/1528] Current Accuracy = 0.8083
+2026-02-18 23:27:50,388 - INFO - [270/900] Current Accuracy = 0.6111
+2026-02-18 23:27:56,261 - INFO - [350/1500] Current Accuracy = 0.8086
+2026-02-18 23:27:56,793 - INFO - [230/600] Current accuracy = 0.3348
+2026-02-18 23:28:05,805 - INFO - [400/1500] Current Accuracy = 0.6175
+2026-02-18 23:28:15,055 - INFO - [360/1500] Current Accuracy = 0.8056
+2026-02-18 23:28:16,831 - INFO - [250/1528] Current Accuracy = 0.7960
+2026-02-18 23:28:17,925 - INFO - [280/900] Current Accuracy = 0.6179
+2026-02-18 23:28:23,771 - INFO - [410/1500] Current Accuracy = 0.6195
+2026-02-18 23:28:33,295 - INFO - [370/1500] Current Accuracy = 0.8081
+2026-02-18 23:28:37,214 - INFO - [240/600] Current accuracy = 0.3292
+2026-02-18 23:28:41,396 - INFO - [420/1500] Current Accuracy = 0.6238
+2026-02-18 23:28:43,323 - INFO - [260/1528] Current Accuracy = 0.7923
+2026-02-18 23:28:45,961 - INFO - [290/900] Current Accuracy = 0.6172
+2026-02-18 23:28:51,499 - INFO - [380/1500] Current Accuracy = 0.8079
+2026-02-18 23:28:59,721 - INFO - [430/1500] Current Accuracy = 0.6256
+2026-02-18 23:29:10,506 - INFO - [390/1500] Current Accuracy = 0.8077
+2026-02-18 23:29:12,084 - INFO - [270/1528] Current Accuracy = 0.7963
+2026-02-18 23:29:15,862 - INFO - [300/900] Current Accuracy = 0.6167
+2026-02-18 23:29:17,591 - INFO - [440/1500] Current Accuracy = 0.6227
+2026-02-18 23:29:18,871 - INFO - [250/600] Current accuracy = 0.3160
+2026-02-18 23:29:28,849 - INFO - [400/1500] Current Accuracy = 0.8050
+2026-02-18 23:29:35,196 - INFO - [450/1500] Current Accuracy = 0.6244
+2026-02-18 23:29:44,413 - INFO - [280/1528] Current Accuracy = 0.7964
+2026-02-18 23:29:44,979 - INFO - [310/900] Current Accuracy = 0.6161
+2026-02-18 23:29:47,631 - INFO - [410/1500] Current Accuracy = 0.8098
+2026-02-18 23:29:53,784 - INFO - [460/1500] Current Accuracy = 0.6283
+2026-02-18 23:30:02,229 - INFO - [260/600] Current accuracy = 0.3038
+2026-02-18 23:30:06,321 - INFO - [420/1500] Current Accuracy = 0.8095
+2026-02-18 23:30:11,769 - INFO - [470/1500] Current Accuracy = 0.6277
+2026-02-18 23:30:14,351 - INFO - [320/900] Current Accuracy = 0.6031
+2026-02-18 23:30:15,874 - INFO - [290/1528] Current Accuracy = 0.7793
+2026-02-18 23:30:25,727 - INFO - [430/1500] Current Accuracy = 0.8047
+2026-02-18 23:30:29,747 - INFO - [480/1500] Current Accuracy = 0.6271
+2026-02-18 23:30:42,660 - INFO - [300/1528] Current Accuracy = 0.7667
+2026-02-18 23:30:42,917 - INFO - [330/900] Current Accuracy = 0.6000
+2026-02-18 23:30:42,997 - INFO - [270/600] Current accuracy = 0.3000
+2026-02-18 23:30:44,521 - INFO - [440/1500] Current Accuracy = 0.7977
+2026-02-18 23:30:48,087 - INFO - [490/1500] Current Accuracy = 0.6265
+2026-02-18 23:31:03,386 - INFO - [450/1500] Current Accuracy = 0.7956
+2026-02-18 23:31:06,807 - INFO - [500/1500] Current Accuracy = 0.6260
+2026-02-18 23:31:09,588 - INFO - [310/1528] Current Accuracy = 0.7710
+2026-02-18 23:31:12,727 - INFO - [340/900] Current Accuracy = 0.6029
+2026-02-18 23:31:22,399 - INFO - [280/600] Current accuracy = 0.2964
+2026-02-18 23:31:22,757 - INFO - [460/1500] Current Accuracy = 0.8000
+2026-02-18 23:31:25,051 - INFO - [510/1500] Current Accuracy = 0.6157
+2026-02-18 23:31:41,079 - INFO - [470/1500] Current Accuracy = 0.7957
+2026-02-18 23:31:42,836 - INFO - [320/1528] Current Accuracy = 0.7656
+2026-02-18 23:31:43,158 - INFO - [520/1500] Current Accuracy = 0.6096
+2026-02-18 23:31:43,198 - INFO - [350/900] Current Accuracy = 0.6086
+2026-02-18 23:31:59,741 - INFO - [480/1500] Current Accuracy = 0.8000
+2026-02-18 23:32:01,645 - INFO - [530/1500] Current Accuracy = 0.6038
+2026-02-18 23:32:01,761 - INFO - [290/600] Current accuracy = 0.3000
+2026-02-18 23:32:09,295 - INFO - [330/1528] Current Accuracy = 0.7606
+2026-02-18 23:32:11,527 - INFO - [360/900] Current Accuracy = 0.6028
+2026-02-18 23:32:19,631 - INFO - [490/1500] Current Accuracy = 0.8041
+2026-02-18 23:32:20,349 - INFO - [540/1500] Current Accuracy = 0.6019
+2026-02-18 23:32:35,569 - INFO - [340/1528] Current Accuracy = 0.7618
+2026-02-18 23:32:38,696 - INFO - [500/1500] Current Accuracy = 0.8020
+2026-02-18 23:32:38,696 - INFO - [550/1500] Current Accuracy = 0.5982
+2026-02-18 23:32:40,170 - INFO - [370/900] Current Accuracy = 0.6027
+2026-02-18 23:32:44,127 - INFO - [300/600] Current accuracy = 0.2967
+2026-02-18 23:32:57,595 - INFO - [560/1500] Current Accuracy = 0.5929
+2026-02-18 23:32:58,398 - INFO - [510/1500] Current Accuracy = 0.7980
+2026-02-18 23:33:05,097 - INFO - [350/1528] Current Accuracy = 0.7571
+2026-02-18 23:33:09,756 - INFO - [380/900] Current Accuracy = 0.5947
+2026-02-18 23:33:16,350 - INFO - [570/1500] Current Accuracy = 0.5965
+2026-02-18 23:33:18,617 - INFO - [520/1500] Current Accuracy = 0.7962
+2026-02-18 23:33:28,499 - INFO - [310/600] Current accuracy = 0.2871
+2026-02-18 23:33:31,593 - INFO - [360/1528] Current Accuracy = 0.7611
+2026-02-18 23:33:35,585 - INFO - [580/1500] Current Accuracy = 0.5897
+2026-02-18 23:33:39,365 - INFO - [530/1500] Current Accuracy = 0.7906
+2026-02-18 23:33:39,685 - INFO - [390/900] Current Accuracy = 0.5821
+2026-02-18 23:33:53,372 - INFO - [590/1500] Current Accuracy = 0.5831
+2026-02-18 23:33:57,910 - INFO - [540/1500] Current Accuracy = 0.7852
+2026-02-18 23:33:58,250 - INFO - [370/1528] Current Accuracy = 0.7595
+2026-02-18 23:34:08,652 - INFO - [400/900] Current Accuracy = 0.5825
+2026-02-18 23:34:08,819 - INFO - [320/600] Current accuracy = 0.2812
+2026-02-18 23:34:12,632 - INFO - [600/1500] Current Accuracy = 0.5767
+2026-02-18 23:34:17,449 - INFO - [550/1500] Current Accuracy = 0.7818
+2026-02-18 23:34:26,003 - INFO - [380/1528] Current Accuracy = 0.7526
+2026-02-18 23:34:31,058 - INFO - [610/1500] Current Accuracy = 0.5689
+2026-02-18 23:34:36,958 - INFO - [560/1500] Current Accuracy = 0.7750
+2026-02-18 23:34:38,812 - INFO - [410/900] Current Accuracy = 0.5854
+2026-02-18 23:34:50,581 - INFO - [620/1500] Current Accuracy = 0.5677
+2026-02-18 23:34:50,603 - INFO - [330/600] Current accuracy = 0.2788
+2026-02-18 23:34:56,324 - INFO - [570/1500] Current Accuracy = 0.7719
+2026-02-18 23:34:57,074 - INFO - [390/1528] Current Accuracy = 0.7410
+2026-02-18 23:35:08,224 - INFO - [420/900] Current Accuracy = 0.5905
+2026-02-18 23:35:09,852 - INFO - [630/1500] Current Accuracy = 0.5635
+2026-02-18 23:35:17,073 - INFO - [580/1500] Current Accuracy = 0.7707
+2026-02-18 23:35:24,691 - INFO - [400/1528] Current Accuracy = 0.7450
+2026-02-18 23:35:29,977 - INFO - [640/1500] Current Accuracy = 0.5625
+2026-02-18 23:35:32,471 - INFO - [340/600] Current accuracy = 0.2765
+2026-02-18 23:35:36,740 - INFO - [590/1500] Current Accuracy = 0.7661
+2026-02-18 23:35:36,817 - INFO - [430/900] Current Accuracy = 0.5884
+2026-02-18 23:35:48,137 - INFO - [650/1500] Current Accuracy = 0.5600
+2026-02-18 23:35:51,979 - INFO - [410/1528] Current Accuracy = 0.7512
+2026-02-18 23:35:56,204 - INFO - [600/1500] Current Accuracy = 0.7667
+2026-02-18 23:36:05,998 - INFO - [440/900] Current Accuracy = 0.5841
+2026-02-18 23:36:06,622 - INFO - [660/1500] Current Accuracy = 0.5576
+2026-02-18 23:36:11,572 - INFO - [350/600] Current accuracy = 0.2771
+2026-02-18 23:36:15,479 - INFO - [610/1500] Current Accuracy = 0.7574
+2026-02-18 23:36:18,895 - INFO - [420/1528] Current Accuracy = 0.7571
+2026-02-18 23:36:24,925 - INFO - [670/1500] Current Accuracy = 0.5507
+2026-02-18 23:36:34,322 - INFO - [620/1500] Current Accuracy = 0.7548
+2026-02-18 23:36:35,467 - INFO - [450/900] Current Accuracy = 0.5800
+2026-02-18 23:36:43,196 - INFO - [680/1500] Current Accuracy = 0.5456
+2026-02-18 23:36:49,945 - INFO - [430/1528] Current Accuracy = 0.7628
+2026-02-18 23:36:53,639 - INFO - [360/600] Current accuracy = 0.2722
+2026-02-18 23:36:54,267 - INFO - [630/1500] Current Accuracy = 0.7508
+2026-02-18 23:37:01,322 - INFO - [690/1500] Current Accuracy = 0.5406
+2026-02-18 23:37:06,006 - INFO - [460/900] Current Accuracy = 0.5761
+2026-02-18 23:37:13,677 - INFO - [640/1500] Current Accuracy = 0.7484
+2026-02-18 23:37:19,485 - INFO - [700/1500] Current Accuracy = 0.5386
+2026-02-18 23:37:19,974 - INFO - [440/1528] Current Accuracy = 0.7682
+2026-02-18 23:37:33,118 - INFO - [650/1500] Current Accuracy = 0.7462
+2026-02-18 23:37:35,149 - INFO - [470/900] Current Accuracy = 0.5745
+2026-02-18 23:37:35,413 - INFO - [370/600] Current accuracy = 0.2703
+2026-02-18 23:37:39,440 - INFO - [710/1500] Current Accuracy = 0.5352
+2026-02-18 23:37:47,119 - INFO - [450/1528] Current Accuracy = 0.7711
+2026-02-18 23:37:52,183 - INFO - [660/1500] Current Accuracy = 0.7424
+2026-02-18 23:37:59,420 - INFO - [720/1500] Current Accuracy = 0.5292
+2026-02-18 23:38:03,988 - INFO - [480/900] Current Accuracy = 0.5792
+2026-02-18 23:38:12,516 - INFO - [670/1500] Current Accuracy = 0.7373
+2026-02-18 23:38:17,457 - INFO - [380/600] Current accuracy = 0.2684
+2026-02-18 23:38:19,553 - INFO - [730/1500] Current Accuracy = 0.5260
+2026-02-18 23:38:20,824 - INFO - [460/1528] Current Accuracy = 0.7761
+2026-02-18 23:38:32,757 - INFO - [680/1500] Current Accuracy = 0.7309
+2026-02-18 23:38:33,955 - INFO - [490/900] Current Accuracy = 0.5796
+2026-02-18 23:38:38,378 - INFO - [740/1500] Current Accuracy = 0.5270
+2026-02-18 23:38:49,566 - INFO - [470/1528] Current Accuracy = 0.7809
+2026-02-18 23:38:51,307 - INFO - [690/1500] Current Accuracy = 0.7275
+2026-02-18 23:38:55,741 - INFO - [390/600] Current accuracy = 0.2641
+2026-02-18 23:38:56,570 - INFO - [750/1500] Current Accuracy = 0.5227
+2026-02-18 23:39:02,046 - INFO - [500/900] Current Accuracy = 0.5800
+2026-02-18 23:39:11,902 - INFO - [700/1500] Current Accuracy = 0.7229
+2026-02-18 23:39:15,852 - INFO - [760/1500] Current Accuracy = 0.5171
+2026-02-18 23:39:17,055 - INFO - [480/1528] Current Accuracy = 0.7854
+2026-02-18 23:39:31,007 - INFO - [510/900] Current Accuracy = 0.5804
+2026-02-18 23:39:31,493 - INFO - [710/1500] Current Accuracy = 0.7183
+2026-02-18 23:39:34,422 - INFO - [770/1500] Current Accuracy = 0.5143
+2026-02-18 23:39:35,632 - INFO - [400/600] Current accuracy = 0.2575
+2026-02-18 23:39:46,328 - INFO - [490/1528] Current Accuracy = 0.7898
+2026-02-18 23:39:51,540 - INFO - [720/1500] Current Accuracy = 0.7181
+2026-02-18 23:39:53,651 - INFO - [780/1500] Current Accuracy = 0.5115
+2026-02-18 23:40:00,422 - INFO - [520/900] Current Accuracy = 0.5808
+2026-02-18 23:40:11,662 - INFO - [730/1500] Current Accuracy = 0.7164
+2026-02-18 23:40:12,523 - INFO - [790/1500] Current Accuracy = 0.5076
+2026-02-18 23:40:14,618 - INFO - [500/1528] Current Accuracy = 0.7940
+2026-02-18 23:40:21,247 - INFO - [410/600] Current accuracy = 0.2512
+2026-02-18 23:40:29,540 - INFO - [530/900] Current Accuracy = 0.5792
+2026-02-18 23:40:31,925 - INFO - [800/1500] Current Accuracy = 0.5038
+2026-02-18 23:40:32,154 - INFO - [740/1500] Current Accuracy = 0.7108
+2026-02-18 23:40:41,178 - INFO - [510/1528] Current Accuracy = 0.7980
+2026-02-18 23:40:51,439 - INFO - [810/1500] Current Accuracy = 0.4988
+2026-02-18 23:40:53,087 - INFO - [750/1500] Current Accuracy = 0.7053
+2026-02-18 23:40:59,416 - INFO - [540/900] Current Accuracy = 0.5778
+2026-02-18 23:41:03,558 - INFO - [420/600] Current accuracy = 0.2452
+2026-02-18 23:41:07,716 - INFO - [520/1528] Current Accuracy = 0.8019
+2026-02-18 23:41:09,708 - INFO - [820/1500] Current Accuracy = 0.4927
+2026-02-18 23:41:12,566 - INFO - [760/1500] Current Accuracy = 0.7039
+2026-02-18 23:41:27,617 - INFO - [550/900] Current Accuracy = 0.5800
+2026-02-18 23:41:28,400 - INFO - [830/1500] Current Accuracy = 0.4880
+2026-02-18 23:41:32,658 - INFO - [770/1500] Current Accuracy = 0.7039
+2026-02-18 23:41:34,701 - INFO - [530/1528] Current Accuracy = 0.8057
+2026-02-18 23:41:46,049 - INFO - [430/600] Current accuracy = 0.2419
+2026-02-18 23:41:47,480 - INFO - [840/1500] Current Accuracy = 0.4893
+2026-02-18 23:41:51,209 - INFO - [780/1500] Current Accuracy = 0.7013
+2026-02-18 23:41:57,533 - INFO - [560/900] Current Accuracy = 0.5786
+2026-02-18 23:42:04,257 - INFO - [540/1528] Current Accuracy = 0.8093
+2026-02-18 23:42:07,282 - INFO - [850/1500] Current Accuracy = 0.4859
+2026-02-18 23:42:10,212 - INFO - [790/1500] Current Accuracy = 0.7025
+2026-02-18 23:42:26,676 - INFO - [860/1500] Current Accuracy = 0.4814
+2026-02-18 23:42:27,772 - INFO - [570/900] Current Accuracy = 0.5754
+2026-02-18 23:42:28,564 - INFO - [440/600] Current accuracy = 0.2409
+2026-02-18 23:42:29,374 - INFO - [800/1500] Current Accuracy = 0.7025
+2026-02-18 23:42:32,923 - INFO - [550/1528] Current Accuracy = 0.8127
+2026-02-18 23:42:45,578 - INFO - [870/1500] Current Accuracy = 0.4816
+2026-02-18 23:42:49,256 - INFO - [810/1500] Current Accuracy = 0.6975
+2026-02-18 23:42:58,106 - INFO - [580/900] Current Accuracy = 0.5793
+2026-02-18 23:43:04,556 - INFO - [880/1500] Current Accuracy = 0.4784
+2026-02-18 23:43:06,640 - INFO - [560/1528] Current Accuracy = 0.8161
+2026-02-18 23:43:09,814 - INFO - [820/1500] Current Accuracy = 0.6976
+2026-02-18 23:43:14,506 - INFO - [450/600] Current accuracy = 0.2356
+2026-02-18 23:43:24,244 - INFO - [890/1500] Current Accuracy = 0.4787
+2026-02-18 23:43:28,015 - INFO - [590/900] Current Accuracy = 0.5763
+2026-02-18 23:43:29,635 - INFO - [830/1500] Current Accuracy = 0.6976
+2026-02-18 23:43:33,985 - INFO - [570/1528] Current Accuracy = 0.8193
+2026-02-18 23:43:43,129 - INFO - [900/1500] Current Accuracy = 0.4778
+2026-02-18 23:43:48,747 - INFO - [840/1500] Current Accuracy = 0.6988
+2026-02-18 23:43:56,583 - INFO - [600/900] Current Accuracy = 0.5783
+2026-02-18 23:43:59,319 - INFO - [460/600] Current accuracy = 0.2326
+2026-02-18 23:44:00,867 - INFO - [580/1528] Current Accuracy = 0.8224
+2026-02-18 23:44:04,621 - INFO - [910/1500] Current Accuracy = 0.4758
+2026-02-18 23:44:09,965 - INFO - [850/1500] Current Accuracy = 0.6965
+2026-02-18 23:44:23,002 - INFO - [920/1500] Current Accuracy = 0.4750
+2026-02-18 23:44:26,764 - INFO - [610/900] Current Accuracy = 0.5770
+2026-02-18 23:44:28,570 - INFO - [860/1500] Current Accuracy = 0.6919
+2026-02-18 23:44:32,062 - INFO - [590/1528] Current Accuracy = 0.8254
+2026-02-18 23:44:41,121 - INFO - [470/600] Current accuracy = 0.2298
+2026-02-18 23:44:42,486 - INFO - [930/1500] Current Accuracy = 0.4763
+2026-02-18 23:44:47,861 - INFO - [870/1500] Current Accuracy = 0.6885
+2026-02-18 23:44:57,014 - INFO - [620/900] Current Accuracy = 0.5758
+2026-02-18 23:45:00,314 - INFO - [940/1500] Current Accuracy = 0.4745
+2026-02-18 23:45:02,631 - INFO - [600/1528] Current Accuracy = 0.8283
+2026-02-18 23:45:08,222 - INFO - [880/1500] Current Accuracy = 0.6841
+2026-02-18 23:45:20,183 - INFO - [950/1500] Current Accuracy = 0.4716
+2026-02-18 23:45:25,711 - INFO - [480/600] Current accuracy = 0.2271
+2026-02-18 23:45:27,385 - INFO - [890/1500] Current Accuracy = 0.6820
+2026-02-18 23:45:27,855 - INFO - [630/900] Current Accuracy = 0.5762
+2026-02-18 23:45:34,531 - INFO - [610/1528] Current Accuracy = 0.8311
+2026-02-18 23:45:39,333 - INFO - [960/1500] Current Accuracy = 0.4688
+2026-02-18 23:45:47,135 - INFO - [900/1500] Current Accuracy = 0.6800
+2026-02-18 23:45:58,092 - INFO - [970/1500] Current Accuracy = 0.4649
+2026-02-18 23:45:58,522 - INFO - [640/900] Current Accuracy = 0.5750
+2026-02-18 23:46:02,750 - INFO - [620/1528] Current Accuracy = 0.8339
+2026-02-18 23:46:06,796 - INFO - [490/600] Current accuracy = 0.2286
+2026-02-18 23:46:07,715 - INFO - [910/1500] Current Accuracy = 0.6769
+2026-02-18 23:46:16,884 - INFO - [980/1500] Current Accuracy = 0.4653
+2026-02-18 23:46:27,411 - INFO - [920/1500] Current Accuracy = 0.6772
+2026-02-18 23:46:29,166 - INFO - [650/900] Current Accuracy = 0.5754
+2026-02-18 23:46:31,763 - INFO - [630/1528] Current Accuracy = 0.8349
+2026-02-18 23:46:35,272 - INFO - [990/1500] Current Accuracy = 0.4646
+2026-02-18 23:46:47,356 - INFO - [930/1500] Current Accuracy = 0.6774
+2026-02-18 23:46:52,840 - INFO - [500/600] Current accuracy = 0.2240
+2026-02-18 23:46:54,879 - INFO - [1000/1500] Current Accuracy = 0.4630
+2026-02-18 23:46:59,257 - INFO - [660/900] Current Accuracy = 0.5773
+2026-02-18 23:47:03,685 - INFO - [640/1528] Current Accuracy = 0.8375
+2026-02-18 23:47:07,516 - INFO - [940/1500] Current Accuracy = 0.6766
+2026-02-18 23:47:14,779 - INFO - [1010/1500] Current Accuracy = 0.4594
+2026-02-18 23:47:26,491 - INFO - [950/1500] Current Accuracy = 0.6768
+2026-02-18 23:47:29,304 - INFO - [670/900] Current Accuracy = 0.5806
+2026-02-18 23:47:31,922 - INFO - [650/1528] Current Accuracy = 0.8323
+2026-02-18 23:47:34,332 - INFO - [1020/1500] Current Accuracy = 0.4559
+2026-02-18 23:47:37,876 - INFO - [510/600] Current accuracy = 0.2196
+2026-02-18 23:47:47,641 - INFO - [960/1500] Current Accuracy = 0.6750
+2026-02-18 23:47:56,998 - INFO - [1030/1500] Current Accuracy = 0.4515
+2026-02-18 23:47:58,502 - INFO - [680/900] Current Accuracy = 0.5794
+2026-02-18 23:47:59,658 - INFO - [660/1528] Current Accuracy = 0.8288
+2026-02-18 23:48:08,435 - INFO - [970/1500] Current Accuracy = 0.6753
+2026-02-18 23:48:17,926 - INFO - [520/600] Current accuracy = 0.2173
+2026-02-18 23:48:19,587 - INFO - [1040/1500] Current Accuracy = 0.4471
+2026-02-18 23:48:28,989 - INFO - [690/900] Current Accuracy = 0.5797
+2026-02-18 23:48:30,289 - INFO - [670/1528] Current Accuracy = 0.8269
+2026-02-18 23:48:30,549 - INFO - [980/1500] Current Accuracy = 0.6745
+2026-02-18 23:48:40,052 - INFO - [1050/1500] Current Accuracy = 0.4429
+2026-02-18 23:48:50,289 - INFO - [990/1500] Current Accuracy = 0.6717
+2026-02-18 23:48:59,875 - INFO - [700/900] Current Accuracy = 0.5743
+2026-02-18 23:49:01,591 - INFO - [530/600] Current accuracy = 0.2151
+2026-02-18 23:49:03,207 - INFO - [680/1528] Current Accuracy = 0.8265
+2026-02-18 23:49:05,432 - INFO - [1060/1500] Current Accuracy = 0.4387
+2026-02-18 23:49:11,091 - INFO - [1000/1500] Current Accuracy = 0.6710
+2026-02-18 23:49:26,320 - INFO - [1070/1500] Current Accuracy = 0.4346
+2026-02-18 23:49:30,152 - INFO - [710/900] Current Accuracy = 0.5732
+2026-02-18 23:49:32,478 - INFO - [690/1528] Current Accuracy = 0.8261
+2026-02-18 23:49:32,532 - INFO - [1010/1500] Current Accuracy = 0.6683
+2026-02-18 23:49:45,488 - INFO - [540/600] Current accuracy = 0.2148
+2026-02-18 23:49:46,089 - INFO - [1080/1500] Current Accuracy = 0.4315
+2026-02-18 23:49:53,777 - INFO - [1020/1500] Current Accuracy = 0.6637
+2026-02-18 23:50:01,529 - INFO - [720/900] Current Accuracy = 0.5653
+2026-02-18 23:50:04,342 - INFO - [700/1528] Current Accuracy = 0.8214
+2026-02-18 23:50:05,918 - INFO - [1090/1500] Current Accuracy = 0.4275
+2026-02-18 23:50:16,218 - INFO - [1030/1500] Current Accuracy = 0.6612
+2026-02-18 23:50:25,976 - INFO - [1100/1500] Current Accuracy = 0.4245
+2026-02-18 23:50:30,089 - INFO - [550/600] Current accuracy = 0.2127
+2026-02-18 23:50:32,256 - INFO - [730/900] Current Accuracy = 0.5658
+2026-02-18 23:50:37,736 - INFO - [1040/1500] Current Accuracy = 0.6567
+2026-02-18 23:50:38,442 - INFO - [710/1528] Current Accuracy = 0.8211
+2026-02-18 23:50:45,669 - INFO - [1110/1500] Current Accuracy = 0.4207
+2026-02-18 23:51:00,284 - INFO - [1050/1500] Current Accuracy = 0.6533
+2026-02-18 23:51:02,890 - INFO - [740/900] Current Accuracy = 0.5662
+2026-02-18 23:51:09,187 - INFO - [1120/1500] Current Accuracy = 0.4188
+2026-02-18 23:51:12,628 - INFO - [720/1528] Current Accuracy = 0.8222
+2026-02-18 23:51:14,827 - INFO - [560/600] Current accuracy = 0.2089
+2026-02-18 23:51:23,785 - INFO - [1060/1500] Current Accuracy = 0.6509
+2026-02-18 23:51:28,955 - INFO - [1130/1500] Current Accuracy = 0.4150
+2026-02-18 23:51:32,969 - INFO - [750/900] Current Accuracy = 0.5653
+2026-02-18 23:51:40,123 - INFO - [730/1528] Current Accuracy = 0.8233
+2026-02-18 23:51:45,626 - INFO - [1070/1500] Current Accuracy = 0.6467
+2026-02-18 23:51:49,259 - INFO - [1140/1500] Current Accuracy = 0.4132
+2026-02-18 23:51:56,971 - INFO - [570/600] Current accuracy = 0.2088
+2026-02-18 23:52:02,558 - INFO - [760/900] Current Accuracy = 0.5658
+2026-02-18 23:52:06,421 - INFO - [740/1528] Current Accuracy = 0.8243
+2026-02-18 23:52:08,484 - INFO - [1080/1500] Current Accuracy = 0.6426
+2026-02-18 23:52:09,058 - INFO - [1150/1500] Current Accuracy = 0.4104
+2026-02-18 23:52:28,763 - INFO - [1160/1500] Current Accuracy = 0.4069
+2026-02-18 23:52:30,411 - INFO - [1090/1500] Current Accuracy = 0.6413
+2026-02-18 23:52:32,644 - INFO - [770/900] Current Accuracy = 0.5675
+2026-02-18 23:52:33,720 - INFO - [750/1528] Current Accuracy = 0.8227
+2026-02-18 23:52:42,379 - INFO - [580/600] Current accuracy = 0.2052
+2026-02-18 23:52:53,148 - INFO - [1170/1500] Current Accuracy = 0.4043
+2026-02-18 23:52:54,255 - INFO - [1100/1500] Current Accuracy = 0.6373
+2026-02-18 23:53:01,145 - INFO - [760/1528] Current Accuracy = 0.8224
+2026-02-18 23:53:02,346 - INFO - [780/900] Current Accuracy = 0.5679
+2026-02-18 23:53:15,659 - INFO - [1180/1500] Current Accuracy = 0.4017
+2026-02-18 23:53:19,875 - INFO - [1110/1500] Current Accuracy = 0.6369
+2026-02-18 23:53:23,386 - INFO - [590/600] Current accuracy = 0.2034
+2026-02-18 23:53:28,794 - INFO - [770/1528] Current Accuracy = 0.8234
+2026-02-18 23:53:33,450 - INFO - [790/900] Current Accuracy = 0.5684
+2026-02-18 23:53:36,685 - INFO - [1190/1500] Current Accuracy = 0.3983
+2026-02-18 23:53:43,906 - INFO - [1120/1500] Current Accuracy = 0.6321
+2026-02-18 23:53:56,940 - INFO - [1200/1500] Current Accuracy = 0.3958
+2026-02-18 23:53:58,513 - INFO - [780/1528] Current Accuracy = 0.8205
+2026-02-18 23:54:03,221 - INFO - [800/900] Current Accuracy = 0.5675
+2026-02-18 23:54:07,223 - INFO - [600/600] Current accuracy = 0.2000
+2026-02-18 23:54:07,229 - INFO - Evaluation finished: 120/600 correct; accuracy=0.2000
+
+========== Final Metrics ==========
+Exact Match Accuracy = 0.2000 (120/600)
+Avg Precision         = 0.7100
+Avg Recall            = 0.7936
+Avg F1 Score          = 0.7244
+Avg Jaccard / IoU     = 0.6081
+====================================
+
+✅ Finished: Connection_Identification_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/evaluation.log
+========================================================
+2026-02-18 23:54:11,181 - INFO - [1130/1500] Current Accuracy = 0.6274
+2026-02-18 23:54:18,962 - INFO - [1210/1500] Current Accuracy = 0.3926
+2026-02-18 23:54:19,632 - INFO - [790/1528] Current Accuracy = 0.8203
+2026-02-18 23:54:24,452 - INFO - [810/900] Current Accuracy = 0.5691
+2026-02-18 23:54:34,442 - INFO - [1140/1500] Current Accuracy = 0.6254
+2026-02-18 23:54:40,012 - INFO - [800/1528] Current Accuracy = 0.8213
+2026-02-18 23:54:41,487 - INFO - [1220/1500] Current Accuracy = 0.3893
+2026-02-18 23:54:45,222 - INFO - [820/900] Current Accuracy = 0.5683
+2026-02-18 23:54:56,788 - INFO - [1150/1500] Current Accuracy = 0.6226
+2026-02-18 23:54:58,650 - INFO - [810/1528] Current Accuracy = 0.8185
+2026-02-18 23:55:04,434 - INFO - [1230/1500] Current Accuracy = 0.3862
+2026-02-18 23:55:04,856 - INFO - [830/900] Current Accuracy = 0.5651
+2026-02-18 23:55:17,687 - INFO - [820/1528] Current Accuracy = 0.8171
+2026-02-18 23:55:19,486 - INFO - [1160/1500] Current Accuracy = 0.6198
+2026-02-18 23:55:24,975 - INFO - [1240/1500] Current Accuracy = 0.3831
+2026-02-18 23:55:25,321 - INFO - [840/900] Current Accuracy = 0.5679
+2026-02-18 23:55:40,546 - INFO - [830/1528] Current Accuracy = 0.8157
+2026-02-18 23:55:42,448 - INFO - [1170/1500] Current Accuracy = 0.6188
+2026-02-18 23:55:47,478 - INFO - [850/900] Current Accuracy = 0.5647
+2026-02-18 23:55:48,078 - INFO - [1250/1500] Current Accuracy = 0.3808
+2026-02-18 23:56:04,479 - INFO - [1180/1500] Current Accuracy = 0.6144
+2026-02-18 23:56:04,647 - INFO - [840/1528] Current Accuracy = 0.8155
+2026-02-18 23:56:08,644 - INFO - [1260/1500] Current Accuracy = 0.3778
+2026-02-18 23:56:09,940 - INFO - [860/900] Current Accuracy = 0.5663
+2026-02-18 23:56:26,242 - INFO - [1190/1500] Current Accuracy = 0.6126
+2026-02-18 23:56:28,935 - INFO - [850/1528] Current Accuracy = 0.8129
+2026-02-18 23:56:30,247 - INFO - [1270/1500] Current Accuracy = 0.3756
+2026-02-18 23:56:30,837 - INFO - [870/900] Current Accuracy = 0.5644
+2026-02-18 23:56:52,299 - INFO - [860/1528] Current Accuracy = 0.8116
+2026-02-18 23:56:52,396 - INFO - [880/900] Current Accuracy = 0.5625
+2026-02-18 23:56:52,548 - INFO - [1200/1500] Current Accuracy = 0.6108
+2026-02-18 23:56:54,770 - INFO - [1280/1500] Current Accuracy = 0.3727
+2026-02-18 23:57:12,286 - INFO - [1210/1500] Current Accuracy = 0.6091
+2026-02-18 23:57:12,634 - INFO - [890/900] Current Accuracy = 0.5640
+2026-02-18 23:57:12,845 - INFO - [870/1528] Current Accuracy = 0.8138
+2026-02-18 23:57:20,382 - INFO - [1290/1500] Current Accuracy = 0.3698
+2026-02-18 23:57:32,147 - INFO - [880/1528] Current Accuracy = 0.8102
+2026-02-18 23:57:32,652 - INFO - [900/900] Current Accuracy = 0.5633
+2026-02-18 23:57:32,657 - INFO - Evaluation finished: 507/900 correct; Accuracy=0.5633
+
+========== Final Metrics ==========
+Total Samples    = 900
+Correct Count    = 507
+Accuracy         = 0.5633
+====================================
+
+✅ Finished: Connection_Judgment_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/evaluation.log
+========================================================
+2026-02-18 23:57:37,084 - INFO - [1220/1500] Current Accuracy = 0.6066
+2026-02-18 23:57:40,744 - INFO - [1300/1500] Current Accuracy = 0.3677
+2026-02-18 23:57:46,738 - INFO - [890/1528] Current Accuracy = 0.8124
+2026-02-18 23:57:59,118 - INFO - [1230/1500] Current Accuracy = 0.6024
+2026-02-18 23:57:59,801 - INFO - [900/1528] Current Accuracy = 0.8122
+2026-02-18 23:58:01,409 - INFO - [1310/1500] Current Accuracy = 0.3656
+2026-02-18 23:58:12,679 - INFO - [910/1528] Current Accuracy = 0.8099
+2026-02-18 23:58:22,508 - INFO - [1320/1500] Current Accuracy = 0.3629
+2026-02-18 23:58:24,691 - INFO - [1240/1500] Current Accuracy = 0.5992
+2026-02-18 23:58:29,818 - INFO - [920/1528] Current Accuracy = 0.8076
+2026-02-18 23:58:43,519 - INFO - [930/1528] Current Accuracy = 0.8054
+2026-02-18 23:58:44,122 - INFO - [1330/1500] Current Accuracy = 0.3617
+2026-02-18 23:58:45,544 - INFO - [1250/1500] Current Accuracy = 0.5976
+2026-02-18 23:59:00,639 - INFO - [940/1528] Current Accuracy = 0.8021
+2026-02-18 23:59:05,241 - INFO - [1340/1500] Current Accuracy = 0.3590
+2026-02-18 23:59:08,727 - INFO - [1260/1500] Current Accuracy = 0.5929
+2026-02-18 23:59:12,948 - INFO - [950/1528] Current Accuracy = 0.8032
+2026-02-18 23:59:25,226 - INFO - [960/1528] Current Accuracy = 0.8052
+2026-02-18 23:59:26,720 - INFO - [1350/1500] Current Accuracy = 0.3563
+2026-02-18 23:59:31,942 - INFO - [1270/1500] Current Accuracy = 0.5898
+2026-02-18 23:59:37,676 - INFO - [970/1528] Current Accuracy = 0.8072
+2026-02-18 23:59:48,365 - INFO - [1360/1500] Current Accuracy = 0.3537
+2026-02-18 23:59:50,543 - INFO - [980/1528] Current Accuracy = 0.8092
+2026-02-18 23:59:54,768 - INFO - [1280/1500] Current Accuracy = 0.5891
+2026-02-19 00:00:03,035 - INFO - [990/1528] Current Accuracy = 0.8101
+2026-02-19 00:00:14,396 - INFO - [1370/1500] Current Accuracy = 0.3511
+2026-02-19 00:00:15,379 - INFO - [1000/1528] Current Accuracy = 0.8120
+2026-02-19 00:00:16,847 - INFO - [1290/1500] Current Accuracy = 0.5860
+2026-02-19 00:00:27,562 - INFO - [1010/1528] Current Accuracy = 0.8139
+2026-02-19 00:00:35,259 - INFO - [1380/1500] Current Accuracy = 0.3493
+2026-02-19 00:00:37,544 - INFO - [1300/1500] Current Accuracy = 0.5854
+2026-02-19 00:00:40,682 - INFO - [1020/1528] Current Accuracy = 0.8157
+2026-02-19 00:00:53,119 - INFO - [1030/1528] Current Accuracy = 0.8146
+2026-02-19 00:00:57,899 - INFO - [1390/1500] Current Accuracy = 0.3468
+2026-02-19 00:00:59,026 - INFO - [1310/1500] Current Accuracy = 0.5840
+2026-02-19 00:01:05,702 - INFO - [1040/1528] Current Accuracy = 0.8144
+2026-02-19 00:01:18,431 - INFO - [1050/1528] Current Accuracy = 0.8133
+2026-02-19 00:01:18,983 - INFO - [1400/1500] Current Accuracy = 0.3443
+2026-02-19 00:01:21,850 - INFO - [1320/1500] Current Accuracy = 0.5811
+2026-02-19 00:01:30,768 - INFO - [1060/1528] Current Accuracy = 0.8132
+2026-02-19 00:01:39,612 - INFO - [1410/1500] Current Accuracy = 0.3418
+2026-02-19 00:01:43,573 - INFO - [1070/1528] Current Accuracy = 0.8140
+2026-02-19 00:01:43,772 - INFO - [1330/1500] Current Accuracy = 0.5789
+2026-02-19 00:01:58,290 - INFO - [1080/1528] Current Accuracy = 0.8148
+2026-02-19 00:02:02,528 - INFO - [1420/1500] Current Accuracy = 0.3408
+2026-02-19 00:02:07,529 - INFO - [1340/1500] Current Accuracy = 0.5776
+2026-02-19 00:02:13,097 - INFO - [1090/1528] Current Accuracy = 0.8156
+2026-02-19 00:02:23,268 - INFO - [1430/1500] Current Accuracy = 0.3385
+2026-02-19 00:02:25,991 - INFO - [1100/1528] Current Accuracy = 0.8136
+2026-02-19 00:02:28,481 - INFO - [1350/1500] Current Accuracy = 0.5756
+2026-02-19 00:02:38,392 - INFO - [1110/1528] Current Accuracy = 0.8153
+2026-02-19 00:02:47,570 - INFO - [1440/1500] Current Accuracy = 0.3368
+2026-02-19 00:02:49,785 - INFO - [1360/1500] Current Accuracy = 0.5728
+2026-02-19 00:02:50,561 - INFO - [1120/1528] Current Accuracy = 0.8161
+2026-02-19 00:03:02,734 - INFO - [1130/1528] Current Accuracy = 0.8177
+2026-02-19 00:03:08,253 - INFO - [1450/1500] Current Accuracy = 0.3345
+2026-02-19 00:03:13,717 - INFO - [1370/1500] Current Accuracy = 0.5715
+2026-02-19 00:03:15,011 - INFO - [1140/1528] Current Accuracy = 0.8184
+2026-02-19 00:03:27,466 - INFO - [1150/1528] Current Accuracy = 0.8191
+2026-02-19 00:03:29,050 - INFO - [1460/1500] Current Accuracy = 0.3322
+2026-02-19 00:03:35,053 - INFO - [1380/1500] Current Accuracy = 0.5681
+2026-02-19 00:03:39,872 - INFO - [1160/1528] Current Accuracy = 0.8207
+2026-02-19 00:03:48,950 - INFO - [1470/1500] Current Accuracy = 0.3299
+2026-02-19 00:03:52,183 - INFO - [1170/1528] Current Accuracy = 0.8222
+2026-02-19 00:03:57,274 - INFO - [1390/1500] Current Accuracy = 0.5662
+2026-02-19 00:04:05,130 - INFO - [1180/1528] Current Accuracy = 0.8229
+2026-02-19 00:04:10,697 - INFO - [1480/1500] Current Accuracy = 0.3277
+2026-02-19 00:04:18,437 - INFO - [1190/1528] Current Accuracy = 0.8218
+2026-02-19 00:04:21,272 - INFO - [1400/1500] Current Accuracy = 0.5621
+2026-02-19 00:04:30,504 - INFO - [1490/1500] Current Accuracy = 0.3255
+2026-02-19 00:04:30,588 - INFO - [1200/1528] Current Accuracy = 0.8217
+2026-02-19 00:04:42,359 - INFO - [1410/1500] Current Accuracy = 0.5610
+2026-02-19 00:04:42,364 - INFO - [1210/1528] Current Accuracy = 0.8223
+2026-02-19 00:04:49,975 - INFO - [1500/1500] Current Accuracy = 0.3233
+2026-02-19 00:04:49,986 - INFO - Evaluation finished: 485/1500 correct.
+
+========== Final Metrics (Numeric) ==========
+Total Samples    = 1500
+Valid Targets    = 1500 (Parsable numbers)
+Correct Count    = 485
+Accuracy         = 0.3233
+=============================================
+
+✅ Finished: Total_Counting_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/evaluation.log
+========================================================
+2026-02-19 00:04:55,735 - INFO - [1220/1528] Current Accuracy = 0.8205
+2026-02-19 00:04:58,061 - INFO - [1420/1500] Current Accuracy = 0.5606
+2026-02-19 00:05:08,401 - INFO - [1230/1528] Current Accuracy = 0.8220
+2026-02-19 00:05:11,556 - INFO - [1430/1500] Current Accuracy = 0.5587
+2026-02-19 00:05:20,927 - INFO - [1240/1528] Current Accuracy = 0.8210
+2026-02-19 00:05:26,871 - INFO - [1440/1500] Current Accuracy = 0.5569
+2026-02-19 00:05:34,179 - INFO - [1250/1528] Current Accuracy = 0.8208
+2026-02-19 00:05:39,764 - INFO - [1450/1500] Current Accuracy = 0.5566
+2026-02-19 00:05:48,017 - INFO - [1260/1528] Current Accuracy = 0.8198
+2026-02-19 00:05:56,605 - INFO - [1460/1500] Current Accuracy = 0.5555
+2026-02-19 00:06:00,904 - INFO - [1270/1528] Current Accuracy = 0.8205
+2026-02-19 00:06:09,742 - INFO - [1470/1500] Current Accuracy = 0.5531
+2026-02-19 00:06:12,681 - INFO - [1280/1528] Current Accuracy = 0.8203
+2026-02-19 00:06:23,522 - INFO - [1480/1500] Current Accuracy = 0.5520
+2026-02-19 00:06:26,420 - INFO - [1290/1528] Current Accuracy = 0.8209
+2026-02-19 00:06:35,489 - INFO - [1490/1500] Current Accuracy = 0.5497
+2026-02-19 00:06:39,386 - INFO - [1300/1528] Current Accuracy = 0.8200
+2026-02-19 00:06:48,574 - INFO - [1500/1500] Current Accuracy = 0.5487
+2026-02-19 00:06:48,585 - INFO - Evaluation finished: 823/1500 correct.
+
+========== Final Metrics (Numeric) ==========
+Total Samples    = 1500
+Valid Targets    = 1500 (Parsable numbers)
+Correct Count    = 823
+Accuracy         = 0.5487
+=============================================
+
+✅ Finished: Type_wise_Counting_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/evaluation.log
+========================================================
+2026-02-19 00:06:52,247 - INFO - [1310/1528] Current Accuracy = 0.8191
+2026-02-19 00:07:05,263 - INFO - [1320/1528] Current Accuracy = 0.8159
+2026-02-19 00:07:17,868 - INFO - [1330/1528] Current Accuracy = 0.8105
+2026-02-19 00:07:31,311 - INFO - [1340/1528] Current Accuracy = 0.8075
+2026-02-19 00:07:42,981 - INFO - [1350/1528] Current Accuracy = 0.8037
+2026-02-19 00:07:54,877 - INFO - [1360/1528] Current Accuracy = 0.8007
+2026-02-19 00:08:08,341 - INFO - [1370/1528] Current Accuracy = 0.7956
+2026-02-19 00:08:20,432 - INFO - [1380/1528] Current Accuracy = 0.7913
+2026-02-19 00:08:33,054 - INFO - [1390/1528] Current Accuracy = 0.7863
+2026-02-19 00:08:46,671 - INFO - [1400/1528] Current Accuracy = 0.7814
+2026-02-19 00:08:59,160 - INFO - [1410/1528] Current Accuracy = 0.7773
+2026-02-19 00:09:11,976 - INFO - [1420/1528] Current Accuracy = 0.7725
+2026-02-19 00:09:23,599 - INFO - [1430/1528] Current Accuracy = 0.7720
+2026-02-19 00:09:35,767 - INFO - [1440/1528] Current Accuracy = 0.7736
+2026-02-19 00:09:49,677 - INFO - [1450/1528] Current Accuracy = 0.7752
+2026-02-19 00:10:02,693 - INFO - [1460/1528] Current Accuracy = 0.7767
+2026-02-19 00:10:15,520 - INFO - [1470/1528] Current Accuracy = 0.7782
+2026-02-19 00:10:30,819 - INFO - [1480/1528] Current Accuracy = 0.7791
+2026-02-19 00:10:46,689 - INFO - [1490/1528] Current Accuracy = 0.7805
+2026-02-19 00:11:01,114 - INFO - [1500/1528] Current Accuracy = 0.7820
+2026-02-19 00:11:12,728 - INFO - [1510/1528] Current Accuracy = 0.7821
+2026-02-19 00:11:25,781 - INFO - [1520/1528] Current Accuracy = 0.7822
+2026-02-19 00:11:36,467 - INFO - [1528/1528] Current Accuracy = 0.7821
+2026-02-19 00:11:36,478 - INFO - Evaluation finished: 1195/1528 correct.
+
+========== Final Metrics (Single Choice) ==========
+Total Samples    = 1528
+Valid Targets    = 1528
+Correct Count    = 1195
+Accuracy         = 0.7821
+===================================================
+
+✅ Finished: Element_Classification_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_18_sequence_04_step_1200/evaluation.log
+========================================================

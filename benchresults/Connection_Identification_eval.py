@@ -11,7 +11,9 @@ from PIL import Image
 from transformers import (
     Qwen2_5_VLForConditionalGeneration,
     AutoProcessor,
+    LogitsProcessorList,
 )
+from src.utils_deepseed import LatentTemplateLogitsProcessor  
 
 try:
     from mathruler.grader import extract_boxed_content
@@ -242,13 +244,26 @@ def run_one_example(
         padding=True,
     )
     inputs = {k: v.to(model.device) for k, v in inputs.items() if isinstance(v, torch.Tensor)}
+    
+    latent_pad_id   = processor.tokenizer("<|latent_pad|>", return_tensors="pt")["input_ids"][0,0].item()
+    latent_start_id = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0,0].item()
+    latent_end_id   = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0,0].item()
+    K = int(getattr(model.config, "latent_size", 8))
+    lp = LogitsProcessorList([
+        LatentTemplateLogitsProcessor(latent_start_id, latent_end_id, latent_pad_id, K)
+    ])
 
     # 生成
     if torch.cuda.is_available():
         torch.cuda.synchronize()
     start_time = time.perf_counter()
     with torch.inference_mode():
-        out_ids = model.generate(**inputs, **gen_kwargs, tokenizer=processor.tokenizer)
+        out_ids = model.generate(
+            **inputs,
+            **gen_kwargs,
+            #logits_processor=lp,
+            tokenizer=processor.tokenizer,
+        )
     if torch.cuda.is_available():
         torch.cuda.synchronize()
     inference_time = time.perf_counter() - start_time
@@ -281,6 +296,7 @@ def main():
     if not data:
         logging.error("Test dataset is empty. Exiting.")
         return
+    
 
     gen_kwargs = dict(
         max_new_tokens=args.max_new_tokens,

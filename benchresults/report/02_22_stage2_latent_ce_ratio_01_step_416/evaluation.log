@@ -1,0 +1,118 @@
+========================================================
+🚀 Starting evaluation at 2026年 02月 23日 星期一 18:47:42 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_22_stage2_latent_ce_ratio_01/checkpoint-416
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416
+   Task name      : zebra-cot
+   GPU ID         : 3
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-23 18:47:46,217 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_22_stage2_latent_ce_ratio_01/checkpoint-416
+2026-02-23 18:47:46,529 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.00it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.87it/s]
+2026-02-23 18:47:47,705 - WARNING - Some parameters are on the meta device because they were offloaded to the cpu.
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-23 18:47:48,415 - INFO - Starting evaluation: num_samples=600
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+========================================================
+🚀 Starting evaluation at 2026年 02月 23日 星期一 18:49:00 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_22_stage2_latent_ce_ratio_01/checkpoint-416
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416
+   Task name      : zebra-cot
+   GPU ID         : 1
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-23 18:49:04,256 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_22_stage2_latent_ce_ratio_01/checkpoint-416
+2026-02-23 18:49:04,577 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.11s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.02s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.03it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.38it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.20it/s]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-23 18:49:08,636 - INFO - Starting evaluation: num_samples=600
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-23 18:49:25,758 - INFO - [10/600] Current accuracy = 0.2000
+2026-02-23 18:49:41,304 - INFO - [20/600] Current accuracy = 0.3000
+2026-02-23 18:49:58,034 - INFO - [30/600] Current accuracy = 0.3000
+2026-02-23 18:50:14,340 - INFO - [40/600] Current accuracy = 0.2750
+2026-02-23 18:50:31,003 - INFO - [50/600] Current accuracy = 0.2800
+2026-02-23 18:50:47,848 - INFO - [60/600] Current accuracy = 0.2667
+2026-02-23 18:51:03,988 - INFO - [70/600] Current accuracy = 0.3143
+2026-02-23 18:51:20,981 - INFO - [80/600] Current accuracy = 0.3250
+2026-02-23 18:51:38,047 - INFO - [90/600] Current accuracy = 0.3000
+2026-02-23 18:51:53,576 - INFO - [100/600] Current accuracy = 0.3200
+2026-02-23 18:52:09,729 - INFO - [110/600] Current accuracy = 0.3182
+2026-02-23 18:52:25,848 - INFO - [120/600] Current accuracy = 0.3000
+2026-02-23 18:52:42,208 - INFO - [130/600] Current accuracy = 0.2846
+2026-02-23 18:52:58,219 - INFO - [140/600] Current accuracy = 0.2929
+2026-02-23 18:53:14,359 - INFO - [150/600] Current accuracy = 0.2933
+2026-02-23 18:53:30,537 - INFO - [160/600] Current accuracy = 0.2938
+2026-02-23 18:53:46,643 - INFO - [170/600] Current accuracy = 0.2941
+2026-02-23 18:54:01,963 - INFO - [180/600] Current accuracy = 0.3000
+2026-02-23 18:54:18,186 - INFO - [190/600] Current accuracy = 0.3053
+2026-02-23 18:54:34,595 - INFO - [200/600] Current accuracy = 0.3150
+2026-02-23 18:54:51,971 - INFO - [210/600] Current accuracy = 0.3095
+2026-02-23 18:55:10,780 - INFO - [220/600] Current accuracy = 0.3000
+2026-02-23 18:55:29,398 - INFO - [230/600] Current accuracy = 0.2913
+2026-02-23 18:55:48,254 - INFO - [240/600] Current accuracy = 0.2833
+2026-02-23 18:56:06,131 - INFO - [250/600] Current accuracy = 0.2760
+2026-02-23 18:56:24,261 - INFO - [260/600] Current accuracy = 0.2692
+2026-02-23 18:56:42,310 - INFO - [270/600] Current accuracy = 0.2667
+2026-02-23 18:57:00,192 - INFO - [280/600] Current accuracy = 0.2643
+2026-02-23 18:57:17,902 - INFO - [290/600] Current accuracy = 0.2552
+2026-02-23 18:57:36,653 - INFO - [300/600] Current accuracy = 0.2500
+2026-02-23 18:57:55,062 - INFO - [310/600] Current accuracy = 0.2452
+2026-02-23 18:58:13,144 - INFO - [320/600] Current accuracy = 0.2469
+2026-02-23 18:58:31,795 - INFO - [330/600] Current accuracy = 0.2394
+2026-02-23 18:58:50,345 - INFO - [340/600] Current accuracy = 0.2324
+2026-02-23 18:59:08,097 - INFO - [350/600] Current accuracy = 0.2257
+2026-02-23 18:59:26,951 - INFO - [360/600] Current accuracy = 0.2222
+2026-02-23 18:59:45,364 - INFO - [370/600] Current accuracy = 0.2162
+2026-02-23 19:00:04,227 - INFO - [380/600] Current accuracy = 0.2158
+2026-02-23 19:00:21,497 - INFO - [390/600] Current accuracy = 0.2128
+2026-02-23 19:00:38,729 - INFO - [400/600] Current accuracy = 0.2075
+2026-02-23 19:00:59,881 - INFO - [410/600] Current accuracy = 0.2049
+2026-02-23 19:01:19,584 - INFO - [420/600] Current accuracy = 0.2048
+2026-02-23 19:01:39,330 - INFO - [430/600] Current accuracy = 0.2023
+2026-02-23 19:01:59,038 - INFO - [440/600] Current accuracy = 0.2000
+2026-02-23 19:02:19,591 - INFO - [450/600] Current accuracy = 0.1956
+2026-02-23 19:02:40,920 - INFO - [460/600] Current accuracy = 0.1913
+2026-02-23 19:03:00,703 - INFO - [470/600] Current accuracy = 0.1872
+2026-02-23 19:03:20,475 - INFO - [480/600] Current accuracy = 0.1875
+2026-02-23 19:03:38,651 - INFO - [490/600] Current accuracy = 0.1878
+2026-02-23 19:03:59,822 - INFO - [500/600] Current accuracy = 0.1840
+2026-02-23 19:04:20,633 - INFO - [510/600] Current accuracy = 0.1824
+2026-02-23 19:04:40,165 - INFO - [520/600] Current accuracy = 0.1788
+2026-02-23 19:05:00,006 - INFO - [530/600] Current accuracy = 0.1755
+2026-02-23 19:05:20,071 - INFO - [540/600] Current accuracy = 0.1741
+2026-02-23 19:05:39,360 - INFO - [550/600] Current accuracy = 0.1727
+2026-02-23 19:06:00,651 - INFO - [560/600] Current accuracy = 0.1696
+2026-02-23 19:06:20,919 - INFO - [570/600] Current accuracy = 0.1667
+2026-02-23 19:06:41,567 - INFO - [580/600] Current accuracy = 0.1655
+2026-02-23 19:07:00,361 - INFO - [590/600] Current accuracy = 0.1627
+2026-02-23 19:07:21,045 - INFO - [600/600] Current accuracy = 0.1600
+2026-02-23 19:07:21,050 - INFO - Evaluation finished: 96/600 correct; accuracy=0.1600
+
+========== Final Metrics ==========
+Exact Match Accuracy = 0.1600 (96/600)
+Avg Precision         = 0.6678
+Avg Recall            = 0.8354
+Avg F1 Score          = 0.7161
+Avg Jaccard / IoU     = 0.5938
+====================================
+
+✅ Finished: Connection_Identification_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_22_stage2_latent_ce_ratio_01_step_416/evaluation.log
+========================================================

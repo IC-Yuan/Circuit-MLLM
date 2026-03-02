@@ -15,15 +15,15 @@ MODEL_NAME="/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
 TASK_NAME="zebra-cot"
 EPOCHS=15
 GRAD_ACCUM_STEPS=8
-LATENT_SIZE=8
+LATENT_SIZE=6
 CE_WEIGHT=1
-SIM_WEIGHT=0.4
-WARM_UP_STEPS=50
+SIM_WEIGHT=0.6
+WARM_UP_STEPS=100
 SAVE_STEPS=200
 #DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence/combine/merged_5000_rl.jsonl"
 DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16/combine/merged_5000_rl.jsonl"
-SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_18_sequence_circuit_expert_04"
-LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_18_sequence_circuit_expert_04.log"
+SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_24_sequence_circuit_expert_06_visual"
+LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_24_sequence_circuit_expert_06_visual.log"
 
 
 mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"
@@ -39,7 +39,7 @@ PY
 )}
 echo "Using ${NUM_PROCESSES} processes"
 
-CUDA_VISIBLE_DEVICES="0,1,4,5,6,7" accelerate launch \
+CUDA_VISIBLE_DEVICES="0,1,2,4,5,6,7" accelerate launch \
   src/main.py \
   --model "${MODEL_NAME}" \
   --epochs "${EPOCHS}" \

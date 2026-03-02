@@ -1,0 +1,100 @@
+========================================================
+🚀 Starting evaluation at 2026年 02月 25日 星期三 02:06:03 CST
+   Model dir      : /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_24_sequence_circuit_expert_06_visual/checkpoint-1400
+   Input dir      : /data/jydeng/circuit_clip/amsbench/AMSBench/Connection_Identification_Task
+   Output dir     : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_24_sequence_circuit_expert_06_visual_step_1400
+   Task name      : zebra-cot
+   GPU ID         : 2
+   Max new tokens : 4096
+========================================================
+--------------------------------------------------------
+📄 Evaluating: Connection_Identification_transformed.jsonl
+   → Output: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_24_sequence_circuit_expert_06_visual_step_1400/Connection_Identification_transformed_results.jsonl
+--------------------------------------------------------
+2026-02-25 02:06:06,559 - INFO - Loading model from: /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_24_sequence_circuit_expert_06_visual/checkpoint-1400
+2026-02-25 02:06:06,879 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.05it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.15it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.19it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.60it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.40it/s]
+Some weights of the model checkpoint at /data/jydeng/latent_visual/circuit_mllm/circuit/output/02_24_sequence_circuit_expert_06_visual/checkpoint-1400 were not used when initializing Qwen2_5_VLForConditionalGeneration: ['helper_feature_projection.bias', 'helper_feature_projection.weight', 'helper_visual_fusion.bias', 'helper_visual_fusion.weight']
+- This IS expected if you are initializing Qwen2_5_VLForConditionalGeneration from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Qwen2_5_VLForConditionalGeneration from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2026-02-25 02:06:10,521 - INFO - Starting evaluation: num_samples=600
+/data/jydeng/latent_visual/ILVR/transformers/src/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+2026-02-25 02:06:28,119 - INFO - [10/600] Current accuracy = 0.4000
+2026-02-25 02:06:44,157 - INFO - [20/600] Current accuracy = 0.4000
+2026-02-25 02:07:00,529 - INFO - [30/600] Current accuracy = 0.3333
+2026-02-25 02:07:16,296 - INFO - [40/600] Current accuracy = 0.3500
+2026-02-25 02:07:32,237 - INFO - [50/600] Current accuracy = 0.3400
+2026-02-25 02:07:48,990 - INFO - [60/600] Current accuracy = 0.3167
+2026-02-25 02:08:05,164 - INFO - [70/600] Current accuracy = 0.3286
+2026-02-25 02:08:21,584 - INFO - [80/600] Current accuracy = 0.3500
+2026-02-25 02:08:38,285 - INFO - [90/600] Current accuracy = 0.3333
+2026-02-25 02:08:53,388 - INFO - [100/600] Current accuracy = 0.3200
+2026-02-25 02:09:09,686 - INFO - [110/600] Current accuracy = 0.3182
+2026-02-25 02:09:24,817 - INFO - [120/600] Current accuracy = 0.3250
+2026-02-25 02:09:41,438 - INFO - [130/600] Current accuracy = 0.3154
+2026-02-25 02:09:57,302 - INFO - [140/600] Current accuracy = 0.3143
+2026-02-25 02:10:13,019 - INFO - [150/600] Current accuracy = 0.3133
+2026-02-25 02:10:28,677 - INFO - [160/600] Current accuracy = 0.3063
+2026-02-25 02:10:45,421 - INFO - [170/600] Current accuracy = 0.3059
+2026-02-25 02:11:00,713 - INFO - [180/600] Current accuracy = 0.3056
+2026-02-25 02:11:16,184 - INFO - [190/600] Current accuracy = 0.3053
+2026-02-25 02:11:32,988 - INFO - [200/600] Current accuracy = 0.3000
+2026-02-25 02:11:51,059 - INFO - [210/600] Current accuracy = 0.2905
+2026-02-25 02:12:09,962 - INFO - [220/600] Current accuracy = 0.2773
+2026-02-25 02:12:28,241 - INFO - [230/600] Current accuracy = 0.2739
+2026-02-25 02:12:47,406 - INFO - [240/600] Current accuracy = 0.2625
+2026-02-25 02:13:05,810 - INFO - [250/600] Current accuracy = 0.2520
+2026-02-25 02:13:24,256 - INFO - [260/600] Current accuracy = 0.2423
+2026-02-25 02:13:42,634 - INFO - [270/600] Current accuracy = 0.2333
+2026-02-25 02:14:01,018 - INFO - [280/600] Current accuracy = 0.2321
+2026-02-25 02:14:18,265 - INFO - [290/600] Current accuracy = 0.2276
+2026-02-25 02:14:37,731 - INFO - [300/600] Current accuracy = 0.2200
+2026-02-25 02:14:56,270 - INFO - [310/600] Current accuracy = 0.2129
+2026-02-25 02:15:15,284 - INFO - [320/600] Current accuracy = 0.2062
+2026-02-25 02:15:34,149 - INFO - [330/600] Current accuracy = 0.2000
+2026-02-25 02:15:52,177 - INFO - [340/600] Current accuracy = 0.1971
+2026-02-25 02:16:10,727 - INFO - [350/600] Current accuracy = 0.1914
+2026-02-25 02:16:29,994 - INFO - [360/600] Current accuracy = 0.1861
+2026-02-25 02:16:47,982 - INFO - [370/600] Current accuracy = 0.1811
+2026-02-25 02:17:06,479 - INFO - [380/600] Current accuracy = 0.1763
+2026-02-25 02:17:24,507 - INFO - [390/600] Current accuracy = 0.1744
+2026-02-25 02:17:41,899 - INFO - [400/600] Current accuracy = 0.1750
+2026-02-25 02:18:03,395 - INFO - [410/600] Current accuracy = 0.1707
+2026-02-25 02:18:22,978 - INFO - [420/600] Current accuracy = 0.1667
+2026-02-25 02:18:42,439 - INFO - [430/600] Current accuracy = 0.1651
+2026-02-25 02:19:03,048 - INFO - [440/600] Current accuracy = 0.1614
+2026-02-25 02:19:23,775 - INFO - [450/600] Current accuracy = 0.1578
+2026-02-25 02:19:43,130 - INFO - [460/600] Current accuracy = 0.1565
+2026-02-25 02:20:01,837 - INFO - [470/600] Current accuracy = 0.1532
+2026-02-25 02:20:21,290 - INFO - [480/600] Current accuracy = 0.1542
+2026-02-25 02:20:39,680 - INFO - [490/600] Current accuracy = 0.1531
+2026-02-25 02:20:59,620 - INFO - [500/600] Current accuracy = 0.1500
+2026-02-25 02:21:20,021 - INFO - [510/600] Current accuracy = 0.1471
+2026-02-25 02:21:39,227 - INFO - [520/600] Current accuracy = 0.1442
+2026-02-25 02:21:57,530 - INFO - [530/600] Current accuracy = 0.1415
+2026-02-25 02:22:17,008 - INFO - [540/600] Current accuracy = 0.1389
+2026-02-25 02:22:36,307 - INFO - [550/600] Current accuracy = 0.1364
+2026-02-25 02:22:55,843 - INFO - [560/600] Current accuracy = 0.1339
+2026-02-25 02:23:14,715 - INFO - [570/600] Current accuracy = 0.1316
+2026-02-25 02:23:35,055 - INFO - [580/600] Current accuracy = 0.1310
+2026-02-25 02:23:53,134 - INFO - [590/600] Current accuracy = 0.1288
+2026-02-25 02:24:13,510 - INFO - [600/600] Current accuracy = 0.1267
+2026-02-25 02:24:13,515 - INFO - Evaluation finished: 76/600 correct; accuracy=0.1267
+
+========== Final Metrics ==========
+Exact Match Accuracy = 0.1267 (76/600)
+Avg Precision         = 0.6508
+Avg Recall            = 0.8280
+Avg F1 Score          = 0.7022
+Avg Jaccard / IoU     = 0.5728
+====================================
+
+✅ Finished: Connection_Identification_transformed.jsonl
+========================================================
+🎉 All evaluations completed!
+   Results saved in: /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_24_sequence_circuit_expert_06_visual_step_1400
+   Summary file    : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_24_sequence_circuit_expert_06_visual_step_1400/all_results_summary.json
+   Log file        : /data/jydeng/latent_visual/circuit_mllm/benchresults/report/02_24_sequence_circuit_expert_06_visual_step_1400/evaluation.log
+========================================================

@@ -24,40 +24,6 @@ from task_deepseed import *
 from trainer import CustomTrainerStage1, CustomTrainerStage2
 import warnings
 
-# ==============================================================
-# Collate Functions
-# ==============================================================
-def _collect_latent_segment_lengths(input_ids, latent_start_idx, latent_end_idx, latent_token_idx):
-    """Collect latent_pad counts for each complete latent segment in a batch tensor."""
-    lengths = []
-    for seq in input_ids:
-        s_pos = (seq == latent_start_idx).nonzero().squeeze(-1).tolist()
-        e_pos = (seq == latent_end_idx).nonzero().squeeze(-1).tolist()
-        if not s_pos or not e_pos:
-            continue
-        for s in s_pos:
-            end_candidates = [e for e in e_pos if e > s]
-            if not end_candidates:
-                continue
-            e = end_candidates[0]
-            seg = seq[s+1:e]
-            lengths.append(int((seg == latent_token_idx).sum().item()))
-    return lengths
-
-
-def _validate_latent_template_or_raise(batch, latent_start_idx, latent_end_idx, latent_token_idx, expected_latent_size, stage_name):
-    lengths = _collect_latent_segment_lengths(
-        batch["input_ids"], latent_start_idx, latent_end_idx, latent_token_idx
-    )
-    if not lengths:
-        raise ValueError(f"[{stage_name}] No complete latent segments found in collated batch.")
-    bad = [x for x in lengths if int(x) != int(expected_latent_size)]
-    if bad:
-        raise ValueError(
-            f"[{stage_name}] Latent template mismatch: expected={expected_latent_size}, "
-            f"observed(unique)={sorted(set(lengths))}, bad_count={len(bad)}"
-        )
-
 def collate_fn_stage1(examples, processor, args):
     #读取数据，替换tab,<|vision_start|>替换为<|latent_start|>
     texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
@@ -141,7 +107,7 @@ def collate_fn_stage1(examples, processor, args):
         int(latent_start_idx),
         int(latent_end_idx),
         int(latent_token_idx),
-        latent_ce_ratio=0,
+        latent_ce_ratio=0.0,
     )
     batch["labels"] = labels
 
@@ -154,77 +120,145 @@ def collate_fn_stage1(examples, processor, args):
     batch["assistant_image_inputs"] = assistant_image_inputs
     return batch
 
-def collate_fn_stage2(examples, processor, args):
-    # 1. 基础文本处理 (与 Stage 1 保持一致)
-    texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
-    texts = [place_input_image(text) for text in texts]
-    texts = [place_output_image(text) for text in texts]
-    texts = replace_visual_spectial_tokens(texts)
+# def collate_fn_stage2(examples, processor, args):
+#     # 1. 基础文本处理 (与 Stage 1 保持一致)
+#     texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
+#     texts = [place_input_image(text) for text in texts]
+#     texts = [place_output_image(text) for text in texts]
+#     texts = replace_visual_spectial_tokens(texts)
     
-    # 2. 处理所有输入图像
-    image_inputs, _ = process_vision_info(examples)
+#     # 2. 处理所有输入图像
+#     image_inputs, _ = process_vision_info(examples)
 
-    # 3. 处理 User 部分 (用于多模态理解，与 Stage 1 保持一致)
+#     # 3. 处理 User 部分 (用于多模态理解，与 Stage 1 保持一致)
+#     user_examples = remove_assistant_images(examples)
+#     user_text = [processor.apply_chat_template(example, tokenize=False) for example in user_examples]
+#     user_text = replace_visual_spectial_tokens(user_text)
+#     user_image_inputs, _ = process_vision_info(user_examples)
+#     user_batch = processor(text=user_text, images=user_image_inputs, return_tensors="pt", padding=True)
+
+#     # 4. 生成主 Batch
+#     batch = processor(text=texts, images=image_inputs, return_tensors="pt", padding=True)
+    
+#     # 5. 转移 User 图片信息
+#     if 'pixel_values' in user_batch:
+#         batch['pixel_values'] = user_batch['pixel_values']
+#         batch['image_grid_thw'] = user_batch['image_grid_thw']
+
+#     # ---------------------------------------------------------------------------------
+#     # 注意：Stage 2 通常不需要 assistant_batch 的像素级监督 (pixel_values_latent) 和 Masks，
+#     # 因此这里跳过了 Stage 1 中关于 assistant_batch 和 helper_masks 的逻辑。
+#     # ---------------------------------------------------------------------------------
+
+#     # 6. 提取 Special Tokens (同步 Stage 1 的 .item() 写法，防止 Tensor 维度问题)
+#     latent_token_idx = processor.tokenizer("<|latent_pad|>", return_tensors="pt")["input_ids"][0,0].item()
+#     latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0,0].item()
+#     latent_end_idx   = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0,0].item()
+#     pad_token_idx    = processor.tokenizer("<|endoftext|>", return_tensors="pt")["input_ids"][0,0].item()
+
+#     # 7. 处理 Latent 占位符 (同步 Stage 1 的参数写法)
+#     new_input_ids, new_attention_mask = process_batch(
+#         batch["input_ids"], batch["attention_mask"], 
+#         start_token=latent_start_idx, end_token=latent_end_idx, 
+#         replacement_token=latent_token_idx, replacement_length=args.latent_size, 
+#         pad_token=pad_token_idx
+#     )
+
+#     batch["input_ids"] = new_input_ids
+#     batch["attention_mask"] = new_attention_mask
+
+#     # 8. 生成 Labels (同步 Stage 1 使用的新函数 generate_labels_with_latent_template)
+#     answer_start_token_pattern = processor.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0]
+
+#     labels = generate_labels_with_latent_template(
+#         batch["input_ids"], 
+#         answer_start_token_pattern, 
+#         pad_token_idx, 
+#         int(latent_start_idx),
+#         int(latent_end_idx),
+#         int(latent_token_idx),
+#         latent_ce_ratio=0.0, # Stage 2 如果不计算 latent 的 CE Loss，保持为 0；如果需要计算，请改为 1.0 或 args.latent_ce_ratio
+#     )
+#     batch["labels"] = labels
+#     _validate_latent_template_or_raise(
+#         batch,
+#         latent_start_idx,
+#         latent_end_idx,
+#         latent_token_idx,
+#         int(args.latent_size),
+#         "stage2",
+#     )
+    
+#     return batch
+
+def collate_fn_stage2(examples, processor, args):
+    #读取数据，替换tab,<|vision_start|>替换为<|latent_start|>
+    texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
+    texts = [place_input_image(t) for t in texts]
+    texts = [place_output_image(t) for t in texts]
+    texts = replace_visual_spectial_tokens(texts)
+    #提取需要处理的图片
+    image_inputs, _ = process_vision_info(examples)
+    #遍历所有的对话数据，把“Assistant（助手）”回复内容里的图片全部删掉，只保留文本；而“User（用户）”输入的内容保持不变。
     user_examples = remove_assistant_images(examples)
     user_text = [processor.apply_chat_template(example, tokenize=False) for example in user_examples]
     user_text = replace_visual_spectial_tokens(user_text)
+    #提取user的图片，也就是输入图片
     user_image_inputs, _ = process_vision_info(user_examples)
+    #用processor处理文字和图片，使用的是
     user_batch = processor(text=user_text, images=user_image_inputs, return_tensors="pt", padding=True)
 
-    # 4. 生成主 Batch
+    assistant_examples = remove_user_images(examples)
+    assistant_text = [processor.apply_chat_template(example, tokenize=False) for example in assistant_examples]
+    assistant_text = replace_visual_spectial_tokens(assistant_text)
+    assistant_image_inputs, _ = process_vision_info(assistant_examples)
+    assistant_batch = processor(text=assistant_text, images=assistant_image_inputs, return_tensors="pt", padding=True)
+
     batch = processor(text=texts, images=image_inputs, return_tensors="pt", padding=True)
     
-    # 5. 转移 User 图片信息
     if 'pixel_values' in user_batch:
         batch['pixel_values'] = user_batch['pixel_values']
         batch['image_grid_thw'] = user_batch['image_grid_thw']
+    
+    if 'pixel_values' in assistant_batch:
+        batch['pixel_values_latent'] = assistant_batch['pixel_values']
+        batch['image_grid_thw_latent'] = assistant_batch['image_grid_thw']
 
-    # ---------------------------------------------------------------------------------
-    # 注意：Stage 2 通常不需要 assistant_batch 的像素级监督 (pixel_values_latent) 和 Masks，
-    # 因此这里跳过了 Stage 1 中关于 assistant_batch 和 helper_masks 的逻辑。
-    # ---------------------------------------------------------------------------------
-
-    # 6. 提取 Special Tokens (同步 Stage 1 的 .item() 写法，防止 Tensor 维度问题)
     latent_token_idx = processor.tokenizer("<|latent_pad|>", return_tensors="pt")["input_ids"][0,0].item()
     latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0,0].item()
     latent_end_idx   = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0,0].item()
     pad_token_idx    = processor.tokenizer("<|endoftext|>", return_tensors="pt")["input_ids"][0,0].item()
 
-    # 7. 处理 Latent 占位符 (同步 Stage 1 的参数写法)
     new_input_ids, new_attention_mask = process_batch(
-        batch["input_ids"], batch["attention_mask"], 
-        start_token=latent_start_idx, end_token=latent_end_idx, 
-        replacement_token=latent_token_idx, replacement_length=args.latent_size, 
+        batch["input_ids"], batch["attention_mask"],
+        start_token=latent_start_idx, end_token=latent_end_idx,
+        replacement_token=latent_token_idx, replacement_length=args.latent_size,
         pad_token=pad_token_idx
     )
-
     batch["input_ids"] = new_input_ids
     batch["attention_mask"] = new_attention_mask
-
-    # 8. 生成 Labels (同步 Stage 1 使用的新函数 generate_labels_with_latent_template)
+    
     answer_start_token_pattern = processor.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0]
 
     labels = generate_labels_with_latent_template(
-        batch["input_ids"], 
-        answer_start_token_pattern, 
-        pad_token_idx, 
+        batch["input_ids"],
+        answer_start_token_pattern,
+        pad_token_idx,
         int(latent_start_idx),
         int(latent_end_idx),
         int(latent_token_idx),
-        latent_ce_ratio=0, # Stage 2 如果不计算 latent 的 CE Loss，保持为 0；如果需要计算，请改为 1.0 或 args.latent_ce_ratio
+        latent_ce_ratio=0.1,
     )
     batch["labels"] = labels
-    _validate_latent_template_or_raise(
-        batch,
-        latent_start_idx,
-        latent_end_idx,
-        latent_token_idx,
-        int(args.latent_size),
-        "stage2",
-    )
-    
-    return batch
 
+    image_out_mask = mask_latent_output_tokens_all_segments(
+        batch["input_ids"], latent_start_idx, latent_end_idx, latent_token_idx
+    )
+    batch["image_out_mask"] = image_out_mask
+        # Add user_image_inputs and assistant_image_inputs to batch
+    batch["user_image_inputs"] = user_image_inputs
+    batch["assistant_image_inputs"] = assistant_image_inputs
+    return batch
     
 
 # ==============================================================
@@ -249,21 +283,25 @@ def main_train():
 
     cache_dir = args.cache_dir
     os.environ['HF_HOME'] = cache_dir
-    
-    logging.info(f"Loading processor from: {args.model}")
-    processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)
-    
-    new_tokens = ["<|latent_pad|>", "<|latent_start|>", "<|latent_end|>"]
-    processor.tokenizer.add_tokens(new_tokens, special_tokens=True)
 
     if args.stage in ['stage1']: 
+        
+        logging.info(f"Loading processor from: {args.model}")
+        processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)
+    
+        new_tokens = ["<|latent_pad|>", "<|latent_start|>", "<|latent_end|>"]
+        processor.tokenizer.add_tokens(new_tokens, special_tokens=True)
+
         logging.info(f"Loading model (Stage 1) from: {args.model}")
         model_path = args.model
         config = Qwen2_5_VLConfig.from_pretrained(model_path, cache_dir=cache_dir, trust_remote_code=True)
         grad_checkpointing = True
     
     if args.stage in ['stage2']: 
-        logging.info(f"Loading model (Stage 2) from: {args.model}")
+        logging.info(f"Loading processor from: {args.load_model_path}")
+        processor = AutoProcessor.from_pretrained(args.load_model_path, cache_dir=cache_dir, trust_remote_code=True)
+        
+        logging.info(f"Loading model (Stage 2) from: {args.load_model_path}")
         model_path = args.load_model_path
         config = Qwen2_5_VLConfig.from_pretrained(model_path, trust_remote_code=True)
         grad_checkpointing = False
@@ -287,7 +325,6 @@ def main_train():
         cache_dir=cache_dir if args.stage == 'stage1' else None,
         trust_remote_code=True
     )
-    print("load over")
     if args.stage in ['stage1']: model.resize_token_embeddings(len(processor.tokenizer))
 
     for param in model.visual.parameters():
@@ -340,10 +377,10 @@ def main_train():
         warmup_steps=args.warm_up_steps,
         learning_rate=1e-5,
         weight_decay=0.01,
-        logging_steps=20,
+        logging_steps=1,
         save_strategy="steps",
         save_steps=args.save_steps,
-        save_total_limit=4,
+        save_total_limit=3,
         optim="adamw_torch_fused" if args.stage == 'stage1' else "adamw_torch",
         bf16=True,
         push_to_hub=False,
