@@ -18,27 +18,42 @@ from peft import LoraConfig, get_peft_model
 from datasets import load_dataset
 
 from qwen_vl_utils import process_vision_info
-
-from utils_deepseed import *
 from task_deepseed import *
-from trainer import CustomTrainerStage1, CustomTrainerStage2
+
+from utils_deepseed import (
+    get_args,
+    seed_everything,
+    place_input_image,
+    place_output_image,
+    replace_visual_spectial_tokens,
+    remove_assistant_images,
+    remove_user_images,
+    load_jsonl_dataset,
+    generate_labels_with_latent_template,
+)
+from utils_deepseed_new import (
+    get_ordered_latent_pad_token_ids,
+    build_ordered_latent_pad_pattern,
+    process_batch_with_latent_pattern,
+    generate_labels_with_ordered_latent_template,
+    mask_latent_output_tokens_ordered_segments,
+)
+from trainer_new import CustomTrainerStage1New, CustomTrainerStage2New
 import warnings
 
-def collate_fn_stage1(examples, processor, args):
-    #读取数据，替换tab,<|vision_start|>替换为<|latent_start|>
+
+def collate_fn_stage1_new(examples, processor, args):
     texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
     texts = [place_input_image(t) for t in texts]
     texts = [place_output_image(t) for t in texts]
     texts = replace_visual_spectial_tokens(texts)
-    #提取需要处理的图片
+
     image_inputs, _ = process_vision_info(examples)
-    #遍历所有的对话数据，把“Assistant（助手）”回复内容里的图片全部删掉，只保留文本；而“User（用户）”输入的内容保持不变。
+
     user_examples = remove_assistant_images(examples)
     user_text = [processor.apply_chat_template(example, tokenize=False) for example in user_examples]
     user_text = replace_visual_spectial_tokens(user_text)
-    #提取user的图片，也就是输入图片
     user_image_inputs, _ = process_vision_info(user_examples)
-    #用processor处理文字和图片，使用的是
     user_batch = processor(text=user_text, images=user_image_inputs, return_tensors="pt", padding=True)
 
     assistant_examples = remove_user_images(examples)
@@ -46,10 +61,7 @@ def collate_fn_stage1(examples, processor, args):
     assistant_text = replace_visual_spectial_tokens(assistant_text)
     assistant_image_inputs, _ = process_vision_info(assistant_examples)
     assistant_batch = processor(text=assistant_text, images=assistant_image_inputs, return_tensors="pt", padding=True)
-    
-    # ================== 【新增】Mask 提取逻辑开始 ==================
-    # 目标：生成一个 List[Tensor]，顺序必须与 assistant_image_inputs 里的图片顺序严格一致
-    # 假设 assistant_examples 结构是 [{"role": "assistant", "content": [{"type": "image", "mask_npy": ...}, ...]}, ...]
+
     helper_masks = []
     for example in assistant_examples:
         for message in example:
@@ -71,129 +83,86 @@ def collate_fn_stage1(examples, processor, args):
         num_helper_imgs = assistant_batch['image_grid_thw'].shape[0]
         assert len(helper_masks) == num_helper_imgs, \
             f"Mask数量 ({len(helper_masks)}) 与 Helper图片数量 ({num_helper_imgs}) 不一致！请检查 remove_user_images 是否误删了数据。"
-    # ================== 【新增】Mask 提取逻辑结束 ==================
 
     batch = processor(text=texts, images=image_inputs, return_tensors="pt", padding=True)
-    
-    if 'pixel_values' in user_batch:
-        batch['pixel_values'] = user_batch['pixel_values']
-        batch['image_grid_thw'] = user_batch['image_grid_thw']
-    
-    if 'pixel_values' in assistant_batch:
-        batch['pixel_values_latent'] = assistant_batch['pixel_values']
-        batch['image_grid_thw_latent'] = assistant_batch['image_grid_thw']
-        batch['helper_masks'] = helper_masks
-    #latent_pad_token_ids = _get_ordered_latent_pad_token_ids(processor.tokenizer)
-    latent_token_idx = processor.tokenizer("<|latent_pad|>", return_tensors="pt")["input_ids"][0,0].item()
-    latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0,0].item()
-    latent_end_idx   = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0,0].item()
-    pad_token_idx    = processor.tokenizer("<|endoftext|>", return_tensors="pt")["input_ids"][0,0].item()
+    if "pixel_values" in user_batch:
+        batch["pixel_values"] = user_batch["pixel_values"]
+        batch["image_grid_thw"] = user_batch["image_grid_thw"]
+    if "pixel_values" in assistant_batch:
+        batch["pixel_values_latent"] = assistant_batch["pixel_values"]
+        batch["image_grid_thw_latent"] = assistant_batch["image_grid_thw"]
+        batch["helper_masks"] = helper_masks
 
-    new_input_ids, new_attention_mask = process_batch(
+    latent_pad_token_ids = get_ordered_latent_pad_token_ids(processor.tokenizer)
+    latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0, 0].item()
+    latent_end_idx = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0, 0].item()
+    pad_token_idx = processor.tokenizer("<|endoftext|>", return_tensors="pt")["input_ids"][0, 0].item()
+
+    ordered_pattern = build_ordered_latent_pad_pattern(latent_pad_token_ids)
+    new_input_ids, new_attention_mask = process_batch_with_latent_pattern(
         batch["input_ids"], batch["attention_mask"],
-        start_token=latent_start_idx, end_token=latent_end_idx,
-        replacement_token=latent_token_idx, replacement_length=args.latent_size,
-        pad_token=pad_token_idx
+        start_token=latent_start_idx,
+        end_token=latent_end_idx,
+        replacement_pattern=ordered_pattern,
+        pad_token=pad_token_idx,
     )
     batch["input_ids"] = new_input_ids
     batch["attention_mask"] = new_attention_mask
-    
+
     answer_start_token_pattern = processor.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0]
-
-    labels = generate_labels_with_latent_template(
-        batch["input_ids"],
-        answer_start_token_pattern,
-        pad_token_idx,
-        int(latent_start_idx),
-        int(latent_end_idx),
-        int(latent_token_idx),
-        latent_ce_ratio=0.0,
+    batch["labels"] = generate_labels_with_ordered_latent_template(
+        batch["input_ids"], answer_start_token_pattern, pad_token_idx,
+        int(latent_start_idx), int(latent_end_idx), latent_pad_token_ids, latent_ce_ratio=0,
     )
-    batch["labels"] = labels
-
-    image_out_mask = mask_latent_output_tokens_all_segments(
-        batch["input_ids"], latent_start_idx, latent_end_idx, latent_token_idx
+    batch["image_out_mask"] = mask_latent_output_tokens_ordered_segments(
+        batch["input_ids"], latent_start_idx, latent_end_idx, latent_pad_token_ids
     )
-    batch["image_out_mask"] = image_out_mask
-        # Add user_image_inputs and assistant_image_inputs to batch
     batch["user_image_inputs"] = user_image_inputs
     batch["assistant_image_inputs"] = assistant_image_inputs
     return batch
 
-def collate_fn_stage2(examples, processor, args):
-    #读取数据，替换tab,<|vision_start|>替换为<|latent_start|>
+
+def collate_fn_stage2_new(examples, processor, args):
     texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
     texts = [place_input_image(t) for t in texts]
     texts = [place_output_image(t) for t in texts]
     texts = replace_visual_spectial_tokens(texts)
-    #提取需要处理的图片
+
     image_inputs, _ = process_vision_info(examples)
-    #遍历所有的对话数据，把“Assistant（助手）”回复内容里的图片全部删掉，只保留文本；而“User（用户）”输入的内容保持不变。
     user_examples = remove_assistant_images(examples)
     user_text = [processor.apply_chat_template(example, tokenize=False) for example in user_examples]
     user_text = replace_visual_spectial_tokens(user_text)
-    #提取user的图片，也就是输入图片
     user_image_inputs, _ = process_vision_info(user_examples)
-    #用processor处理文字和图片，使用的是
     user_batch = processor(text=user_text, images=user_image_inputs, return_tensors="pt", padding=True)
 
-    assistant_examples = remove_user_images(examples)
-    assistant_text = [processor.apply_chat_template(example, tokenize=False) for example in assistant_examples]
-    assistant_text = replace_visual_spectial_tokens(assistant_text)
-    assistant_image_inputs, _ = process_vision_info(assistant_examples)
-    assistant_batch = processor(text=assistant_text, images=assistant_image_inputs, return_tensors="pt", padding=True)
-
     batch = processor(text=texts, images=image_inputs, return_tensors="pt", padding=True)
-    
-    if 'pixel_values' in user_batch:
-        batch['pixel_values'] = user_batch['pixel_values']
-        batch['image_grid_thw'] = user_batch['image_grid_thw']
-    
-    if 'pixel_values' in assistant_batch:
-        batch['pixel_values_latent'] = assistant_batch['pixel_values']
-        batch['image_grid_thw_latent'] = assistant_batch['image_grid_thw']
+    if "pixel_values" in user_batch:
+        batch["pixel_values"] = user_batch["pixel_values"]
+        batch["image_grid_thw"] = user_batch["image_grid_thw"]
 
-    latent_token_idx = processor.tokenizer("<|latent_pad|>", return_tensors="pt")["input_ids"][0,0].item()
-    latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0,0].item()
-    latent_end_idx   = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0,0].item()
-    pad_token_idx    = processor.tokenizer("<|endoftext|>", return_tensors="pt")["input_ids"][0,0].item()
+    latent_pad_token_ids = get_ordered_latent_pad_token_ids(processor.tokenizer)
+    latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0, 0].item()
+    latent_end_idx = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0, 0].item()
+    pad_token_idx = processor.tokenizer("<|endoftext|>", return_tensors="pt")["input_ids"][0, 0].item()
 
-    new_input_ids, new_attention_mask = process_batch(
+    ordered_pattern = build_ordered_latent_pad_pattern(latent_pad_token_ids)
+    batch["input_ids"], batch["attention_mask"] = process_batch_with_latent_pattern(
         batch["input_ids"], batch["attention_mask"],
-        start_token=latent_start_idx, end_token=latent_end_idx,
-        replacement_token=latent_token_idx, replacement_length=args.latent_size,
-        pad_token=pad_token_idx
+        start_token=latent_start_idx,
+        end_token=latent_end_idx,
+        replacement_pattern=ordered_pattern,
+        pad_token=pad_token_idx,
     )
-    batch["input_ids"] = new_input_ids
-    batch["attention_mask"] = new_attention_mask
-    
+
     answer_start_token_pattern = processor.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0]
-
-    labels = generate_labels_with_latent_template(
-        batch["input_ids"],
-        answer_start_token_pattern,
-        pad_token_idx,
-        int(latent_start_idx),
-        int(latent_end_idx),
-        int(latent_token_idx),
-        latent_ce_ratio=0.1,
+    batch["labels"] = generate_labels_with_ordered_latent_template(
+        batch["input_ids"], answer_start_token_pattern, pad_token_idx,
+        int(latent_start_idx), int(latent_end_idx), latent_pad_token_ids, latent_ce_ratio=0,
     )
-    batch["labels"] = labels
-
-    image_out_mask = mask_latent_output_tokens_all_segments(
-        batch["input_ids"], latent_start_idx, latent_end_idx, latent_token_idx
-    )
-    batch["image_out_mask"] = image_out_mask
-        # Add user_image_inputs and assistant_image_inputs to batch
-    batch["user_image_inputs"] = user_image_inputs
-    batch["assistant_image_inputs"] = assistant_image_inputs
     return batch
-    
 
-# ==============================================================
-# Main Training Function
-# ==============================================================
-def main_train():
+
+def main_train_new():
     seed_everything(seed=42)
     args = get_args()
 
@@ -213,51 +182,47 @@ def main_train():
     cache_dir = args.cache_dir
     os.environ['HF_HOME'] = cache_dir
 
-    if args.stage in ['stage1']: 
-        
+    if args.stage == "stage1":
         logging.info(f"Loading processor from: {args.model}")
         processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)
-        #new_tokens = ["<|latent_pad_1|>", "<|latent_pad_2|>", "<|latent_pad_3|>", "<|latent_pad_4|>", "<|latent_start|>", "<|latent_end|>"]
-        new_tokens = ["<|latent_pad|>", "<|latent_start|>", "<|latent_end|>"]
-        processor.tokenizer.add_tokens(new_tokens, special_tokens=True)
-
+        processor.tokenizer.add_tokens(
+            ["<|latent_pad_1|>", "<|latent_pad_2|>", "<|latent_pad_3|>", "<|latent_pad_4|>", "<|latent_start|>", "<|latent_end|>"],
+            special_tokens=True,
+        )
         logging.info(f"Loading model (Stage 1) from: {args.model}")
         model_path = args.model
         config = Qwen2_5_VLConfig.from_pretrained(model_path, cache_dir=cache_dir, trust_remote_code=True)
         grad_checkpointing = True
-    
-    if args.stage in ['stage2']: 
+    else:
         logging.info(f"Loading processor from: {args.load_model_path}")
         processor = AutoProcessor.from_pretrained(args.load_model_path, cache_dir=cache_dir, trust_remote_code=True)
-        
-        logging.info(f"Loading model (Stage 2) from: {args.load_model_path}")
         model_path = args.load_model_path
+        logging.info(f"Loading model (Stage 2) from: {args.load_model_path}")
         config = Qwen2_5_VLConfig.from_pretrained(model_path, trust_remote_code=True)
         grad_checkpointing = False
-    
+
+    latent_pad_token_ids = get_ordered_latent_pad_token_ids(processor.tokenizer)
+    config.latent_token_id = int(latent_pad_token_ids[0])
+    config.latent_token_ids = [int(x) for x in latent_pad_token_ids]
+    config.latent_start_id = int(processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0, 0].item())
+    config.latent_end_id = int(processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0, 0].item())
     config.compress_strategy = args.compress_strategy
     config.latent_size = args.latent_size
     config.stage = args.stage
 
-    latent_token_idx = processor.tokenizer("<|latent_pad|>", return_tensors="pt")["input_ids"][0,0].item()
-    latent_start_idx = processor.tokenizer("<|latent_start|>", return_tensors="pt")["input_ids"][0,0].item()
-    latent_end_idx   = processor.tokenizer("<|latent_end|>", return_tensors="pt")["input_ids"][0,0].item()
-    config.latent_token_id = int(latent_token_idx)
-    config.latent_start_id = int(latent_start_idx)
-    config.latent_end_id   = int(latent_end_idx)
-    
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         model_path,
         config=config,
         torch_dtype=torch.bfloat16,
         attn_implementation="flash_attention_2",
-        cache_dir=cache_dir if args.stage == 'stage1' else None,
-        trust_remote_code=True
+        cache_dir=cache_dir if args.stage == "stage1" else None,
+        trust_remote_code=True,
     )
-    if args.stage in ['stage1']: model.resize_token_embeddings(len(processor.tokenizer))
+    if args.stage == "stage1":
+        model.resize_token_embeddings(len(processor.tokenizer))
 
-    for param in model.visual.parameters():
-        param.requires_grad = False
+    for p in model.visual.parameters():
+        p.requires_grad = False
     
     if torch.cuda.is_available():
         # accelerate/torchrun 会注入 LOCAL_RANK；单卡/普通运行通常没有
@@ -269,21 +234,18 @@ def main_train():
             torch.cuda.set_device(local_rank)
             
     logging.info(f"Moving model to CUDA device: {torch.cuda.current_device()} ...")
-    
 
     preprocess_function = task_preporcess_config[args.task]
     train_dataset = load_jsonl_dataset(args.data_path)
     train_dataset = [preprocess_function(sample) for sample in train_dataset]
-
     
     if args.stage in ['stage1']:
-        CustomTrainer = CustomTrainerStage1
-        collate_fn = collate_fn_stage1
+        CustomTrainer = CustomTrainerStage1New
+        collate_fn = collate_fn_stage1_new
     else:
-        CustomTrainer = CustomTrainerStage2
-        collate_fn = collate_fn_stage2
-    
-        
+        CustomTrainer = CustomTrainerStage2New
+        collate_fn = collate_fn_stage2_new
+
     collate_fn = partial(collate_fn, processor=processor, args=args)
 
     peft_config = None
@@ -375,5 +337,6 @@ def main_train():
         
     logging.info("finish。")
 
+
 if __name__ == "__main__":
-    main_train()
+    main_train_new()
