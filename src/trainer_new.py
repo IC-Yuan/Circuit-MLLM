@@ -1,4 +1,5 @@
 from trl import SFTTrainer
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -13,7 +14,20 @@ import numpy as np
 import cv2
 from transformers import AutoImageProcessor, AutoModel
 import logging
+from pathlib import Path
 from DeepLSD.deeplsd.models.deeplsd_inference import DeepLSD
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _configured_path(env_name: str, default: Path) -> str:
+    path = Path(os.environ.get(env_name, str(default))).expanduser()
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"{env_name} does not point to a file: {path}. "
+            "See .env.example and scripts/download_expert_weights.sh."
+        )
+    return str(path)
 # from visualize_expert_features import visualize_expert_features  
 
 try:
@@ -362,14 +376,20 @@ class CustomTrainerStage1New(SFTTrainer):
     
     def get_hawp_model(self, device='cuda'):
         # Load HAWP model configuration
-        cfg_path = '/data/jydeng/latent_visual/circuit_mllm/hawp/hawp/ssl/config/hawpv3.yaml'
+        cfg_path = _configured_path(
+            "HAWP_CONFIG_PATH",
+            PROJECT_ROOT / "hawp/hawp/ssl/config/hawpv3.yaml",
+        )
         model_config.merge_from_file(cfg_path)
         
         # Create and load HAWP model
         model = MODELS['HAWP'](model_config, gray_scale=True)
         model = model.eval().to(device)
         
-        weight_path = '/data/share/JYD/weights/hawp/hawpv3-imagenet-03a84.pth'
+        weight_path = _configured_path(
+            "HAWP_WEIGHTS_PATH",
+            PROJECT_ROOT / "hawp/checkpoints/hawpv3-imagenet-03a84.pth",
+        )
         state_dict = torch.load(weight_path, map_location='cpu')
         model.load_state_dict(state_dict)
         
@@ -974,7 +994,10 @@ class CustomTrainerStage1New(SFTTrainer):
                     'merge': False, 'filtering': True, 'grad_thresh': 3, 'grad_nfa': True,
                 }
             }
-            ckpt_path = '/data/share/JYD/weights/deeplsd/deeplsd_md.tar'
+            ckpt_path = _configured_path(
+                "DEEPLSD_WEIGHTS_PATH",
+                PROJECT_ROOT / "DeepLSD/weights/deeplsd_md.tar",
+            )
             ckpt = torch.load(str(ckpt_path), map_location='cpu', weights_only=False)
             net = DeepLSD(conf)
             net.load_state_dict(ckpt['model'])
@@ -999,11 +1022,13 @@ class CustomTrainerStage1New(SFTTrainer):
         # --- C. DINOv2 (Semantic) ---
         # 使用缓存的 DINOv2 模型和处理器
         if self._dinov2_processor_cache is None:
-            self._dinov2_processor_cache = AutoImageProcessor.from_pretrained('/data/share/JYD/weights/dinov2-giant')
+            dinov2_model_id = os.environ.get("DINOV2_MODEL", "facebook/dinov2-giant")
+            self._dinov2_processor_cache = AutoImageProcessor.from_pretrained(dinov2_model_id)
         dinov2_processor = self._dinov2_processor_cache
         
         if self._dinov2_model_cache is None or next(self._dinov2_model_cache.parameters()).device != device:
-            dinov2_model = AutoModel.from_pretrained('/data/share/JYD/weights/dinov2-giant')
+            dinov2_model_id = os.environ.get("DINOV2_MODEL", "facebook/dinov2-giant")
+            dinov2_model = AutoModel.from_pretrained(dinov2_model_id)
             dinov2_model = dinov2_model.to(device).eval()
             self._dinov2_model_cache = dinov2_model
         else:
@@ -1019,7 +1044,7 @@ class CustomTrainerStage1New(SFTTrainer):
         # if visual == 1:
         #     try:
         #         step = getattr(self.state, 'global_step', None) if hasattr(self, 'state') else None
-        #         save_dir = "/data/jydeng/latent_visual/circuit_mllm/expert_visualizations"
+        #         save_dir = str(PROJECT_ROOT / "expert_visualizations")
         #         visualize_expert_features(
         #             original_images=inputs['assistant_image_inputs'],
         #             hawp_features_list=hawp_user_features_list,

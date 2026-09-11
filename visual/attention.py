@@ -10,11 +10,11 @@ from PIL import Image, ImageFilter
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
 
 # ========== 测试配置与可视化参数 ==========
-MODEL_DIR = "/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_16_sequence_06/checkpoint-1560"
-# IMAGE_PATH = "/data/jydeng/circuit_clip/amsbench/AMSBench_circuit_mllm/img/04142.png"
-# QUESTION = "What is connected to R?"
-IMAGE_PATH = "/data/jydeng/circuit_clip/amsbench/AMSBench_circuit_mllm/img/04023.png"
-QUESTION = "What is connected to C1?"
+MODEL_DIR = os.environ.get("MODEL_DIR", "")
+# QUESTION = "What is connected to R?\nSelect all that apply.\nA. D1\nB. D2\nOptions:\nA. D1\nB. D2"
+# QUESTION = "What is connected to C1?"
+IMAGE_PATH = os.environ.get("IMAGE_PATH", "")
+QUESTION = "What is connected to RD?"
 
 image_filename = os.path.basename(IMAGE_PATH)  # 提取文件名，例如 "04142.png"
 image_number = os.path.splitext(image_filename)[0]  # 去掉扩展名，得到 "04142"
@@ -295,7 +295,9 @@ def main():
     plt.tight_layout()
 
     # 将图片保存时加上原始图片的序号
-    save_path = f"./circuit_hidden_state_to_image_with_edge_soften_{image_number}.png"
+    save_dir = os.environ.get("VISUAL_OUTPUT_DIR", "./outputs/visual")
+    os.makedirs(save_dir, exist_ok=True)
+    save_path = os.path.join(save_dir, f"circuit_hidden_state_to_image_{image_number}_sequence.png")
     plt.savefig(save_path, dpi=200, bbox_inches="tight")
 
     print("=" * 60)

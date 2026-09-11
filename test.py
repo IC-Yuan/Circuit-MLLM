@@ -25,8 +25,8 @@ ACTION_MAP = {
 }
 
 # 请根据实际路径修改以下两个常量
-BASE_MODEL_ID = ""   # 例如: "/path/to/Qwen2.5-VL-7B-Instruct"
-BASE_DATASET_DIR = "" # 例如: "/data/circuit_clip/amsbench/AMSBench/Connection_Identification_Task/imgs"
+BASE_MODEL_ID = os.environ.get("BASE_MODEL_ID", "Qwen/Qwen2.5-VL-7B-Instruct")
+BASE_DATASET_DIR = os.environ.get("CIRCUIT_EVAL_IMAGE_ROOT", "")
 
 
 def get_eval_args():

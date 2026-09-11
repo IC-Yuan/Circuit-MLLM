@@ -10,8 +10,8 @@ from qwen_vl_utils import process_vision_info
 
 # ================= 配置区域 =================
 device = "cuda"
-model_path = "/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
-image_path = "/data/jydeng/circuit_clip/amsbench/AMSBench_circuit_mllm/org/new/04142.png"
+model_path = os.environ.get("MODEL_DIR", "Qwen/Qwen2.5-VL-7B-Instruct")
+image_path = os.environ.get("IMAGE_PATH", "")
 
 MAX_PIXELS = 1024 * 38 * 38 
 question_text = "What is connected to R?"

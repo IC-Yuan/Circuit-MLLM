@@ -52,6 +52,10 @@ def get_args():
     )
     parser.add_argument("--helper_group_L", type=int, default=256,help="")
     parser.add_argument(
+        "--mask_noise_ratio", type=float, default=0.0,
+        help="Probability and strength of topology-mask perturbation during stage 1."
+    )
+    parser.add_argument(
         "--latent_num_segments_train", type=int, default=8,
         help="Stage-2"
     )

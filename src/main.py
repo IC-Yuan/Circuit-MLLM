@@ -217,7 +217,6 @@ def main_train():
         
         logging.info(f"Loading processor from: {args.model}")
         processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)
-        #new_tokens = ["<|latent_pad_1|>", "<|latent_pad_2|>", "<|latent_pad_3|>", "<|latent_pad_4|>", "<|latent_start|>", "<|latent_end|>"]
         new_tokens = ["<|latent_pad|>", "<|latent_start|>", "<|latent_end|>"]
         processor.tokenizer.add_tokens(new_tokens, special_tokens=True)
 
@@ -338,6 +337,7 @@ def main_train():
             image_pool_k=getattr(args, "image_pool_k", 8),
             helper_group_L=getattr(args, "helper_group_L", 256),
             ce_weight=getattr(args, "ce_weight", 1.0),
+            mask_noise_ratio=getattr(args, "mask_noise_ratio", 0.0),
         )
     elif args.stage in ['stage2']:
         trainer = CustomTrainer(

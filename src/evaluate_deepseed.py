@@ -25,7 +25,7 @@ ACTION_MAP = {
 
 
 BASE_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"  
-BASE_DATASET_DIR = '/mnt/public/users/dongshuai/LVR/ILVR_PUB/COMT'
+BASE_DATASET_DIR = os.environ.get("CIRCUIT_DATA_ROOT", "")
 
 
 def get_eval_args():

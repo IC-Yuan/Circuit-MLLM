@@ -1,45 +1,69 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-export HF_HOME="/data/jydeng/hugging_face_project/huggingface"
-export TOKENIZERS_PARALLELISM=false
-export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-export MASTER_PORT=29501
-export NCCL_P2P_DISABLE=1
-export NCCL_IB_DISABLE=1
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "${PROJECT_ROOT}/.env" ]]; then
+  set -a
+  source "${PROJECT_ROOT}/.env"
+  set +a
+fi
+cd "${PROJECT_ROOT}"
 
-export HF_HUB_OFFLINE=1
-unset CUDA_VISIBLE_DEVICES
+: "${CIRCUIT_DATA_ROOT:?Set CIRCUIT_DATA_ROOT in .env or the environment}"
 
-MODEL_NAME="/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
-TASK_NAME="zebra-cot"
-EPOCHS=15
-GRAD_ACCUM_STEPS=8
-LATENT_SIZE=6
-CE_WEIGHT=1
-SIM_WEIGHT=0.6
-WARM_UP_STEPS=100
-SAVE_STEPS=200
-#DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence/combine/merged_5000_rl.jsonl"
-DATA_PATH="/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16/combine/merged_5000_rl.jsonl"
-SAVE_MODEL_PATH="/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_24_sequence_circuit_expert_06_visual"
-LOG_FILE="/data/jydeng/latent_visual/circuit_mllm/logs/circuit/train_02_24_sequence_circuit_expert_06_visual.log"
+export HF_HOME="${HF_HOME:-${PROJECT_ROOT}/.cache/huggingface}"
+export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
+export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
+export NCCL_P2P_DISABLE="${NCCL_P2P_DISABLE:-1}"
+export NCCL_IB_DISABLE="${NCCL_IB_DISABLE:-1}"
+export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-0}"
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
+export PYTHONPATH="${PROJECT_ROOT}:${PYTHONPATH:-}"
 
+export HAWP_CONFIG_PATH="${HAWP_CONFIG_PATH:-${PROJECT_ROOT}/hawp/hawp/ssl/config/hawpv3.yaml}"
+export HAWP_WEIGHTS_PATH="${HAWP_WEIGHTS_PATH:-${PROJECT_ROOT}/hawp/checkpoints/hawpv3-imagenet-03a84.pth}"
+export DEEPLSD_WEIGHTS_PATH="${DEEPLSD_WEIGHTS_PATH:-${PROJECT_ROOT}/DeepLSD/weights/deeplsd_md.tar}"
+export DINOV2_MODEL="${DINOV2_MODEL:-facebook/dinov2-giant}"
 
-mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"
+MODEL_NAME="${MODEL_NAME:-Qwen/Qwen2.5-VL-7B-Instruct}"
+TASK_NAME="${TASK_NAME:-zebra-cot}"
+EPOCHS="${EPOCHS:-15}"
+GRAD_ACCUM_STEPS="${GRAD_ACCUM_STEPS:-8}"
+LATENT_SIZE="${LATENT_SIZE:-4}"
+CE_WEIGHT="${CE_WEIGHT:-1.0}"
+SIM_WEIGHT="${SIM_WEIGHT:-0.6}"
+MASK_NOISE_RATIO="${MASK_NOISE_RATIO:-0.0}"
+WARM_UP_STEPS="${WARM_UP_STEPS:-100}"
+SAVE_STEPS="${SAVE_STEPS:-200}"
+DATA_PATH="${DATA_PATH:-${CIRCUIT_DATA_ROOT}/combine/merged_5000_rl.jsonl}"
+OUTPUT_ROOT="${OUTPUT_ROOT:-${PROJECT_ROOT}/outputs}"
+SAVE_MODEL_PATH="${SAVE_MODEL_PATH:-${OUTPUT_ROOT}/circuit_mllm}"
+LOG_FILE="${LOG_FILE:-${OUTPUT_ROOT}/logs/circuit_mllm.log}"
+MASTER_PORT="${MASTER_PORT:-29501}"
 
+for required_file in "${DATA_PATH}" "${HAWP_CONFIG_PATH}" "${HAWP_WEIGHTS_PATH}" "${DEEPLSD_WEIGHTS_PATH}"; do
+  if [[ ! -f "${required_file}" ]]; then
+    echo "Required file not found: ${required_file}" >&2
+    echo "Review .env.example and run scripts/download_expert_weights.sh." >&2
+    exit 1
+  fi
+done
 
-NUM_PROCESSES=${NUM_PROCESSES:-$(python - <<'PY'
+mkdir -p "${SAVE_MODEL_PATH}" "$(dirname "${LOG_FILE}")" "${HF_HOME}"
+
+NUM_PROCESSES="${NUM_PROCESSES:-$(python - <<'PY'
 try:
     import torch
     print(torch.cuda.device_count() or 1)
 except Exception:
     print(1)
 PY
-)}
-echo "Using ${NUM_PROCESSES} processes"
+)}"
 
-CUDA_VISIBLE_DEVICES="0,1,2,4,5,6,7" accelerate launch \
+echo "Launching Circuit-MLLM training with ${NUM_PROCESSES} process(es)"
+accelerate launch \
+  --num_processes "${NUM_PROCESSES}" \
+  --main_process_port "${MASTER_PORT}" \
   src/main.py \
   --model "${MODEL_NAME}" \
   --epochs "${EPOCHS}" \
@@ -52,9 +76,9 @@ CUDA_VISIBLE_DEVICES="0,1,2,4,5,6,7" accelerate launch \
   --latent_size "${LATENT_SIZE}" \
   --ce_weight "${CE_WEIGHT}" \
   --sim_weight "${SIM_WEIGHT}" \
+  --mask_noise_ratio "${MASK_NOISE_RATIO}" \
   --save_model_path "${SAVE_MODEL_PATH}" \
   --cache_dir "${HF_HOME}" \
-  --save_steps "${SAVE_STEPS}" \
+  --save_steps "${SAVE_STEPS}"
 
-#--use_lora \
-echo "training finished, save model to ${SAVE_MODEL_PATH}"
+echo "Training finished. Model saved to ${SAVE_MODEL_PATH}"

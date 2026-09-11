@@ -2,10 +2,8 @@ from PIL import Image
 import os
 import numpy as np
 
-#TRAIN_IMAGE_ROOT = "/data/jydeng/latent_visual/ILVR/data"
-TRAIN_IMAGE_ROOT = "/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence_mask_change_02_16"
-#TRAIN_IMAGE_ROOT = "/data/jydeng/circuit_clip/ams/QA_dataset/latent_visual_org_image_sequence"
-TEST_IMAGE_ROOT  = ""
+TRAIN_IMAGE_ROOT = os.environ.get("CIRCUIT_DATA_ROOT", "")
+TEST_IMAGE_ROOT = os.environ.get("CIRCUIT_TEST_DATA_ROOT", TRAIN_IMAGE_ROOT)
 
 # ====== Utility Functions ======
 def _to_list(x):
@@ -16,7 +14,14 @@ def _to_list(x):
 def _resolve_path(root: str, p: str) -> str:
     if not isinstance(p, str):
         raise ValueError(f"Expected string path, got: {type(p)}")
-    return p if os.path.isabs(p) else os.path.join(root, p)
+    if os.path.isabs(p):
+        return p
+    if not root:
+        raise ValueError(
+            "A relative data path was provided, but CIRCUIT_DATA_ROOT is not set. "
+            "Set it in .env or pass absolute paths in the JSONL file."
+        )
+    return os.path.join(root, p)
 
 def _assert_exists(p: str):
     if not os.path.exists(p):

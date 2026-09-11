@@ -1,1 +1,18 @@
 circuit/
+
+# Local configuration and generated artifacts
+.env
+.cache/
+outputs/
+logs/
+*.log
+**/__pycache__/
+*.py[cod]
+benchresults/MMbench/
+benchresults/report/
+visual/circuit-mllm/
+visual/ilvr/
+visual/mirage/
+
+# Local presentation used to prepare README assets
+/演讲PPT.pptx

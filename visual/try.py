@@ -6,8 +6,8 @@ import os
 # 这会将物理卡 3 映射为逻辑卡 0，后续模型加载会自动跑到这张卡上
 os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 # ========== 直接在这里写死测试配置 ==========
-MODEL_DIR = "/data/jydeng/latent_visual/circuit_mllm/circuit/output/02_16_sequence_06/checkpoint-1560"
-IMAGE_PATH = "/data/jydeng/circuit_clip/amsbench/AMSBench_circuit_mllm/img/04142.png"
+MODEL_DIR = os.environ.get("MODEL_DIR", "")
+IMAGE_PATH = os.environ.get("IMAGE_PATH", "")
 QUESTION = "What is connected to R?"
 # ===========================================
 

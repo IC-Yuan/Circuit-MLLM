@@ -19,8 +19,8 @@ except Exception:
     extract_boxed_content = None
 
 # ========== 确认以下两个路径正确 ==========
-BASE_MODEL_ID = "/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
-BASE_DATASET_DIR = '/data/jydeng/circuit_clip/amsbench/AMSBench/Element_Classification_Task/imgs'
+BASE_MODEL_ID = os.environ.get("BASE_MODEL_ID", "Qwen/Qwen2.5-VL-7B-Instruct")
+BASE_DATASET_DIR = os.environ.get("CIRCUIT_EVAL_IMAGE_ROOT", "")
 # ===========================================
 
 
@@ -85,12 +85,16 @@ def _resolve_image_paths(image_input: Union[str, List[str]]) -> List[str]:
     if isinstance(image_input, str):
         p = image_input
         if not os.path.isabs(p):
+            if not BASE_DATASET_DIR:
+                raise ValueError("Set CIRCUIT_EVAL_IMAGE_ROOT for relative image paths.")
             p = os.path.join(BASE_DATASET_DIR, p)
         return [p]
     if isinstance(image_input, list):
         outs = []
         for p in image_input:
             if not os.path.isabs(p):
+                if not BASE_DATASET_DIR:
+                    raise ValueError("Set CIRCUIT_EVAL_IMAGE_ROOT for relative image paths.")
                 p = os.path.join(BASE_DATASET_DIR, p)
             outs.append(p)
         return outs

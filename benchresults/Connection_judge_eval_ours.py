@@ -3,9 +3,11 @@ import re
 import json
 import argparse
 import logging
+import random
 import time
 from typing import List, Dict, Any, Union
 
+import numpy as np
 import torch
 from PIL import Image
 from transformers import (
@@ -19,8 +21,8 @@ except Exception:
     extract_boxed_content = None
 
 # ========== 确认以下两个路径正确 ==========
-BASE_MODEL_ID = "/data/jydeng/LLM/circuit_llm_qwen/Qwen2.5-VL-7B-Instruct"
-BASE_DATASET_DIR = '/data/jydeng/circuit_clip/amsbench/AMSBench_circuit_mllm/Connection_Identification_Task_ours/img'
+BASE_MODEL_ID = os.environ.get("BASE_MODEL_ID", "Qwen/Qwen2.5-VL-7B-Instruct")
+BASE_DATASET_DIR = os.environ.get("CIRCUIT_EVAL_IMAGE_ROOT", "")
 # ===========================================
 
 
@@ -39,7 +41,19 @@ def get_eval_args():
     parser.add_argument("--max_new_tokens", type=int, default=64)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top_p", type=float, default=1.0)
+    parser.add_argument("--seed", type=int, default=1234,
+                        help="Random seed used for Python, NumPy, and PyTorch.")
     return parser.parse_args()
+
+
+def set_random_seed(seed: int):
+    """Set random seeds across common libraries for reproducible evaluation."""
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
 
 
 def load_processor(model_dir: str, cache_dir: str):
@@ -85,12 +99,16 @@ def _resolve_image_paths(image_input: Union[str, List[str]]) -> List[str]:
     if isinstance(image_input, str):
         p = image_input
         if not os.path.isabs(p):
+            if not BASE_DATASET_DIR:
+                raise ValueError("Set CIRCUIT_EVAL_IMAGE_ROOT for relative image paths.")
             p = os.path.join(BASE_DATASET_DIR, p)
         return [p]
     if isinstance(image_input, list):
         outs = []
         for p in image_input:
             if not os.path.isabs(p):
+                if not BASE_DATASET_DIR:
+                    raise ValueError("Set CIRCUIT_EVAL_IMAGE_ROOT for relative image paths.")
                 p = os.path.join(BASE_DATASET_DIR, p)
             outs.append(p)
         return outs
@@ -265,6 +283,8 @@ def run_one_example(
 def main():
     args = get_eval_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    set_random_seed(args.seed)
+    logging.info(f"Using random seed: {args.seed}")
 
     logging.info(f"Loading model from: {args.model_dir}")
     model = load_model(args.model_dir, args.cache_dir)
