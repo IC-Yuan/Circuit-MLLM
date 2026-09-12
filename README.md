@@ -21,17 +21,9 @@ Circuit-MLLM is a latent-space visual reasoning framework for circuit schematic 
 
 ## Timeline
 
-- **2025-12-05**: Created the project repository and started organizing the Circuit-MLLM codebase.
-- **2026-02-17 – 2026-02-18**: Added the first training, evaluation, and experiment materials.
-- **2026-06-30**: Updated the project documentation and public repository materials.
 - **2026-09-11**: Reorganized the public release with reproducible path configuration, launch scripts, and architecture/result figures.
 - **2026-09-13**: Added the staged-release note and project contact information.
-
-## Coming Soon
-
-- Clean up and selectively release the remaining core topology-guided training implementation.
-- Add finalized dataset, checkpoint, and expert-weight instructions where redistribution is permitted.
-- Provide a compact end-to-end reproduction recipe and updated benchmark results.
+- **Coming soon**: Clean up and selectively release the remaining core topology-guided training implementation, followed by finalized dataset/checkpoint instructions and a compact end-to-end reproduction recipe.
 
 ## Overview
 
