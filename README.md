@@ -19,19 +19,19 @@ Circuit-MLLM is a latent-space visual reasoning framework for circuit schematic 
 
 > Repository status: training and evaluation code is available. Dataset and trained-checkpoint download links will be added when the public artifacts are finalized.
 
-## Release Timeline
+## Timeline
 
-The project is being released in stages so that the documentation and reproducibility materials can stabilize before the most research-sensitive implementation details are published.
+- **2025-12-05**: Created the project repository and started organizing the Circuit-MLLM codebase.
+- **2026-02-17 – 2026-02-18**: Added the first training, evaluation, and experiment materials.
+- **2026-06-30**: Updated the project documentation and public repository materials.
+- **2026-09-11**: Reorganized the public release with reproducible path configuration, launch scripts, and architecture/result figures.
+- **2026-09-13**: Added the staged-release note and project contact information.
 
-| Phase | Target | Status |
-|---|---|---|
-| Phase 0 | Project overview, architecture figures, benchmark summary, installation notes, and contact information | Available now |
-| Phase 1 | Reproducibility layer: environment template, path configuration, expert-weight setup, and evaluation launcher | Available now |
-| Phase 2 | Selected training and evaluation components, released after internal cleanup and API checks | Planned |
-| Phase 3 | Core topology-mask construction, expert-fusion, and latent-alignment implementation | Planned; release date to be announced |
-| Phase 4 | Public checkpoints and data access instructions, subject to artifact size and redistribution permissions | Planned |
+## Coming Soon
 
-Until a phase is marked available, its research implementation should not be treated as a stable public API. The repository may therefore contain documentation and runnable interfaces before all internal components are finalized.
+- Clean up and selectively release the remaining core topology-guided training implementation.
+- Add finalized dataset, checkpoint, and expert-weight instructions where redistribution is permitted.
+- Provide a compact end-to-end reproduction recipe and updated benchmark results.
 
 ## Overview
 
