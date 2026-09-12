@@ -19,6 +19,20 @@ Circuit-MLLM is a latent-space visual reasoning framework for circuit schematic 
 
 > Repository status: training and evaluation code is available. Dataset and trained-checkpoint download links will be added when the public artifacts are finalized.
 
+## Release Timeline
+
+The project is being released in stages so that the documentation and reproducibility materials can stabilize before the most research-sensitive implementation details are published.
+
+| Phase | Target | Status |
+|---|---|---|
+| Phase 0 | Project overview, architecture figures, benchmark summary, installation notes, and contact information | Available now |
+| Phase 1 | Reproducibility layer: environment template, path configuration, expert-weight setup, and evaluation launcher | Available now |
+| Phase 2 | Selected training and evaluation components, released after internal cleanup and API checks | Planned |
+| Phase 3 | Core topology-mask construction, expert-fusion, and latent-alignment implementation | Planned; release date to be announced |
+| Phase 4 | Public checkpoints and data access instructions, subject to artifact size and redistribution permissions | Planned |
+
+Until a phase is marked available, its research implementation should not be treated as a stable public API. The repository may therefore contain documentation and runnable interfaces before all internal components are finalized.
+
 ## Overview
 
 Circuit schematics contain long wires, junctions, branches, and irregular spatial layouts. Cropping can break connectivity, while ordinary patch order does not match the order used to reason through a circuit. Circuit-MLLM addresses these issues with three components:
