@@ -8,6 +8,7 @@
 Zhejiang University, Hangzhou, China
 
 [![Project](https://img.shields.io/badge/Project-Circuit--MLLM-1f6feb)](https://github.com/IC-Yuan/Circuit-MLLM)
+[![arXiv](https://img.shields.io/badge/arXiv-2609.15668-b31b1b)](https://arxiv.org/abs/2609.15668)
 [![Python](https://img.shields.io/badge/Python-3.11-3776ab)](https://www.python.org/)
 [![Backbone](https://img.shields.io/badge/Backbone-Qwen2.5--VL-8a2be2)](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct)
 
