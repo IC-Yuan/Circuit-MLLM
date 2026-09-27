@@ -172,6 +172,16 @@ type_wise_counting[_ours]
 
 Results are saved to `outputs/evaluation/<task>/` unless `OUTPUT_DIR` is set.
 
+Example connection-identification question:
+
+<p align="center">
+  <img src="assets/evaluation_connection_example.png" width="360" alt="Circuit schematic with M1, M2, M3, current source I1, and Vout">
+</p>
+
+**Question:** Which of the following are connected to the upper terminal of current source I1? Select all that apply: A. M1; B. M2; C. M3; D. Vout.
+
+**Answer:** B, C, D (M2, M3, and Vout). The corresponding evaluation record is in [examples/evaluation/connection_identification.jsonl](examples/evaluation/connection_identification.jsonl).
+
 ## Analysis
 
 Circuit-MLLM's latent attention moves from a queried root component, through connected wires, toward downstream targets. This ordering is more consistent with circuit connectivity than ordinary raster scanning.
