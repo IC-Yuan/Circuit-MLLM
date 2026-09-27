@@ -1,3 +1,0 @@
-[
-  {"summary": true, "num_samples": 600, "valid_samples": 600, "average_inference_time_sec": 1.6932797870707388, "total_inference_time_sec": 1015.9678722424433, "accuracy": 0.17666666666666667, "success": 106, "avg_precision": 0.6759021164021171, "avg_recall": 0.8527629315129328, "avg_f1": 0.7279424671189403, "avg_exact_match": 0.17666666666666667, "avg_jaccard": 0.6075095321345318}
-]

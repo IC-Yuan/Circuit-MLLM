@@ -333,11 +333,7 @@ def main_train():
             peft_config=peft_config,
             sim_weight=getattr(args, "sim_weight", 1.0),
             ema_tau=getattr(args, "ema_tau", 0.999),
-            coverage_p=getattr(args, "coverage_p", 0.9),
-            image_pool_k=getattr(args, "image_pool_k", 8),
-            helper_group_L=getattr(args, "helper_group_L", 256),
             ce_weight=getattr(args, "ce_weight", 1.0),
-            mask_noise_ratio=getattr(args, "mask_noise_ratio", 0.0),
         )
     elif args.stage in ['stage2']:
         trainer = CustomTrainer(

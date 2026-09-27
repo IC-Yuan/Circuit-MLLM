@@ -18,7 +18,7 @@ Zhejiang University, Hangzhou, China
 
 - **2026-09-11**: Reorganized the public release with reproducible path configuration, launch scripts, and architecture/result figures.
 - **2026-09-13**: Added the staged-release note.
-- **Coming soon**: Clean up and selectively release the remaining core topology-guided training implementation, followed by finalized dataset/checkpoint instructions and a compact end-to-end reproduction recipe.
+- **Coming soon**: Release topology-guided sequencing, multi-expert fusion, and additional latent training strategies, along with benchmark evaluation scripts, dataset/checkpoint links, and a compact reproduction recipe.
 
 ## Overview
 
@@ -28,11 +28,15 @@ Circuit schematics contain long wires, junctions, branches, and irregular spatia
 2. **Topology-guided sequencing.** A pixel-level topological logic mask follows the root-component, wire-path, target-component order. Valid patch features are sorted by this mask and pooled into a fixed number of latent targets.
 3. **Text-latent joint supervision.** Cross-entropy trains the surrounding text while a cosine alignment objective supervises generated latent tokens with the topology-ordered visual targets.
 
+The current public trainer includes only the baseline latent target builder, `_teacher_build_latents`. The remaining training strategies will be released later.
+
 <p align="center">
   <img src="assets/circuit_mllm_overview.png" width="92%" alt="Circuit-MLLM overall architecture">
 </p>
 
 ## Results
+
+The following tables report the full method's results from the paper.
 
 **Table 1. Performance across all Circuit-MLLM-bench task categories.**
 
@@ -62,23 +66,13 @@ pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 \
 pip install -r requirements.txt
 pip install flash-attn==2.7.4.post1 --no-build-isolation
 
-# Install the bundled, project-modified Transformers package and visual experts.
+# Install the bundled, project-modified Transformers package.
 pip install -e ./transformers
-pip install -e ./hawp
-pip install -e ./DeepLSD
 ```
-
-Download the HAWP and DeepLSD checkpoints:
-
-```bash
-bash scripts/download_expert_weights.sh
-```
-
-DINOv2 defaults to `facebook/dinov2-giant` and is downloaded through Hugging Face. Set `DINOV2_MODEL` to a local directory for offline use.
 
 ## Data
 
-Training expects one JSONL object per line. Image paths may be absolute, or relative to `CIRCUIT_DATA_ROOT`. A topology-guided example has the following shape:
+Training expects one JSONL object per line. Image paths may be absolute, or relative to `CIRCUIT_DATA_ROOT`. An example has the following shape:
 
 ```json
 {
@@ -128,49 +122,27 @@ Required settings:
 | `NUM_PROCESSES` | Number of training processes | `4` |
 | `OUTPUT_ROOT` | Checkpoints and logs | `./outputs` |
 
-Expert checkpoint paths already default to the locations created by `scripts/download_expert_weights.sh`. `.env` is ignored by Git, so machine-specific paths stay local.
+`.env` is ignored by Git, so machine-specific paths stay local.
 
 ## Training
 
-Launch topology-guided, multi-expert training with:
+The current public trainer builds latent targets from mask-selected Qwen visual features. Launch it with:
 
 ```bash
-bash run_training_circuit_sequence_circuit_expert.sh
+bash run_training_circuit.sh
 ```
 
 Important defaults are `LATENT_SIZE=4`, `SIM_WEIGHT=0.6`, batch size 1 per device, gradient accumulation 8, and DeepSpeed ZeRO-2. Override any value through `.env` or the shell:
 
 ```bash
-LATENT_SIZE=8 SIM_WEIGHT=0.4 MASK_NOISE_RATIO=0.05 \
-  bash run_training_circuit_sequence_circuit_expert.sh
+LATENT_SIZE=8 SIM_WEIGHT=0.4 bash run_training_circuit.sh
 ```
 
-The launcher writes under `OUTPUT_ROOT`, validates the expert checkpoints, and automatically resumes from the latest checkpoint in the output directory.
+The launcher writes under `OUTPUT_ROOT` and automatically resumes from the latest checkpoint in the output directory.
 
 ## Evaluation
 
-Evaluation JSONL files are grouped in one directory. Images referenced by relative paths are resolved under a separate image root:
-
-```bash
-bash scripts/evaluate.sh \
-  connection_identification_ours \
-  /path/to/circuit-mllm-checkpoint \
-  /path/to/evaluation-jsonl-directory \
-  /path/to/evaluation-images \
-  0
-```
-
-Supported task names are:
-
-```text
-connection_identification[_ours]
-connection_judge[_ours]
-element_classification[_ours]
-total_counting[_ours]
-type_wise_counting[_ours]
-```
-
-Results are saved to `outputs/evaluation/<task>/` unless `OUTPUT_DIR` is set.
+Benchmark evaluation code will be added in a future release.
 
 Example connection-identification question:
 

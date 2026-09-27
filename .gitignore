@@ -8,8 +8,6 @@ logs/
 *.log
 **/__pycache__/
 *.py[cod]
-benchresults/MMbench/
-benchresults/report/
 visual/circuit-mllm/
 visual/ilvr/
 visual/mirage/

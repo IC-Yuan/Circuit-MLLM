@@ -20,11 +20,6 @@ export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-0}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export PYTHONPATH="${PROJECT_ROOT}:${PYTHONPATH:-}"
 
-export HAWP_CONFIG_PATH="${HAWP_CONFIG_PATH:-${PROJECT_ROOT}/hawp/hawp/ssl/config/hawpv3.yaml}"
-export HAWP_WEIGHTS_PATH="${HAWP_WEIGHTS_PATH:-${PROJECT_ROOT}/hawp/checkpoints/hawpv3-imagenet-03a84.pth}"
-export DEEPLSD_WEIGHTS_PATH="${DEEPLSD_WEIGHTS_PATH:-${PROJECT_ROOT}/DeepLSD/weights/deeplsd_md.tar}"
-export DINOV2_MODEL="${DINOV2_MODEL:-facebook/dinov2-giant}"
-
 MODEL_NAME="${MODEL_NAME:-Qwen/Qwen2.5-VL-7B-Instruct}"
 TASK_NAME="${TASK_NAME:-zebra-cot}"
 EPOCHS="${EPOCHS:-15}"
@@ -32,22 +27,19 @@ GRAD_ACCUM_STEPS="${GRAD_ACCUM_STEPS:-8}"
 LATENT_SIZE="${LATENT_SIZE:-4}"
 CE_WEIGHT="${CE_WEIGHT:-1.0}"
 SIM_WEIGHT="${SIM_WEIGHT:-0.6}"
-MASK_NOISE_RATIO="${MASK_NOISE_RATIO:-0.0}"
 WARM_UP_STEPS="${WARM_UP_STEPS:-100}"
 SAVE_STEPS="${SAVE_STEPS:-200}"
 DATA_PATH="${DATA_PATH:-${CIRCUIT_DATA_ROOT}/combine/merged_5000_rl.jsonl}"
 OUTPUT_ROOT="${OUTPUT_ROOT:-${PROJECT_ROOT}/outputs}"
-SAVE_MODEL_PATH="${SAVE_MODEL_PATH:-${OUTPUT_ROOT}/circuit_mllm}"
-LOG_FILE="${LOG_FILE:-${OUTPUT_ROOT}/logs/circuit_mllm.log}"
+SAVE_MODEL_PATH="${SAVE_MODEL_PATH:-${OUTPUT_ROOT}/circuit_baseline}"
+LOG_FILE="${LOG_FILE:-${OUTPUT_ROOT}/logs/circuit_baseline.log}"
 MASTER_PORT="${MASTER_PORT:-29501}"
 
-for required_file in "${DATA_PATH}" "${HAWP_CONFIG_PATH}" "${HAWP_WEIGHTS_PATH}" "${DEEPLSD_WEIGHTS_PATH}"; do
-  if [[ ! -f "${required_file}" ]]; then
-    echo "Required file not found: ${required_file}" >&2
-    echo "Review .env.example and run scripts/download_expert_weights.sh." >&2
-    exit 1
-  fi
-done
+if [[ ! -f "${DATA_PATH}" ]]; then
+  echo "Training JSONL not found: ${DATA_PATH}" >&2
+  echo "Set DATA_PATH and CIRCUIT_DATA_ROOT in .env." >&2
+  exit 1
+fi
 
 mkdir -p "${SAVE_MODEL_PATH}" "$(dirname "${LOG_FILE}")" "${HF_HOME}"
 
@@ -76,7 +68,6 @@ accelerate launch \
   --latent_size "${LATENT_SIZE}" \
   --ce_weight "${CE_WEIGHT}" \
   --sim_weight "${SIM_WEIGHT}" \
-  --mask_noise_ratio "${MASK_NOISE_RATIO}" \
   --save_model_path "${SAVE_MODEL_PATH}" \
   --cache_dir "${HF_HOME}" \
   --save_steps "${SAVE_STEPS}"

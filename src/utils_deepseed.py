@@ -33,8 +33,6 @@ def get_args():
     parser.add_argument("--warm_up_steps", type=int, default=10)
     parser.add_argument("--sim_weight", type=float, default=1.0)
     parser.add_argument("--ema_tau", type=float, default=0.999)
-    parser.add_argument("--coverage_p", type=float, default=0.9)
-    parser.add_argument("--image_pool_k", type=int, default=8)  
     parser.add_argument("--latent_ce_ratio", type=float, default=0.0, help="stage2")
     parser.add_argument("--use_lora", action="store_true", help="")
     parser.add_argument("--lora_r", type=int, default=32)
@@ -49,11 +47,6 @@ def get_args():
         type=str,
         default=None,
         help="Path to a specific checkpoint to resume training from. If None, training starts from scratch."
-    )
-    parser.add_argument("--helper_group_L", type=int, default=256,help="")
-    parser.add_argument(
-        "--mask_noise_ratio", type=float, default=0.0,
-        help="Probability and strength of topology-mask perturbation during stage 1."
     )
     parser.add_argument(
         "--latent_num_segments_train", type=int, default=8,
