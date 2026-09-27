@@ -190,22 +190,6 @@ Circuit-MLLM's latent attention moves from a queried root component, through con
   <img src="assets/latent_shift_analysis.png" width="92%" alt="Latent-space visual shift analysis">
 </p>
 
-## Repository Structure
-
-```text
-Circuit-MLLM/
-├── src/                 # data processing, training entry point, custom trainers
-├── benchresults/        # task-specific evaluation implementations
-├── configs/             # DeepSpeed configurations
-├── hawp/                # HAWP expert source
-├── DeepLSD/             # DeepLSD expert source
-├── transformers/        # project-modified Transformers source
-├── scripts/             # weight download and unified evaluation launchers
-├── assets/              # README figures
-├── .env.example         # reproducible local path template
-└── run_training_circuit_sequence_circuit_expert.sh
-```
-
 ## Acknowledgements
 
 This repository builds on [Qwen2.5-VL](https://github.com/QwenLM/Qwen2.5-VL), [Transformers](https://github.com/huggingface/transformers), [HAWP](https://github.com/cherubicXN/hawp), [DeepLSD](https://github.com/cvg/DeepLSD), [ILVR](https://github.com/UMass-Embodied-AGI/), and [Mirage](https://github.com/UMass-Embodied-AGI/Mirage). We thank the authors of these projects.
