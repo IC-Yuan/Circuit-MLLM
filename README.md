@@ -34,29 +34,17 @@ Circuit schematics contain long wires, junctions, branches, and irregular spatia
 
 ## Results
 
-On Circuit-MLLM-bench, the 7B Circuit-MLLM model reaches an overall average score of **76.20** across five task categories.
-
-| Model | Size | Total Count Acc. | Type Count Acc. | Element Class Acc. | Connection Judge Acc. | Connection ID F1 | Connection ID EMR | Avg. |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Qwen2.5-VL | 7B | 21.06 | 48.40 | 83.55 | 55.92 | 65.53 | 15.20 | 48.28 |
-| Qwen3-VL | 32B | 49.63 | 60.00 | 92.95 | 58.59 | 82.02 | 42.90 | 64.35 |
-| GPT-4o | - | 42.01 | 60.08 | **97.40** | 58.50 | 78.68 | 36.30 | 62.16 |
-| Circuit-MLLM | 7B | **75.87** | **65.10** | **97.40** | **72.60** | **88.90** | **57.30** | **76.20** |
-
-Accuracy is used for single-choice and counting tasks. F1 and exact-match ratio (EMR) are used for multiple-response connection identification. The full comparison and difficulty breakdown are shown below.
+**Table 1. Performance across all Circuit-MLLM-bench task categories.**
 
 <p align="center">
   <img src="assets/benchmark_results.png" width="92%" alt="Circuit-MLLM-bench results">
 </p>
 
-<details>
-<summary>Topology task results by difficulty</summary>
+**Table 2. Performance on topology analysis tasks by difficulty.**
 
 <p align="center">
   <img src="assets/topology_results.png" width="92%" alt="Topology task results by difficulty">
 </p>
-
-</details>
 
 ## Installation
 
