@@ -190,13 +190,16 @@ This repository builds on [Qwen2.5-VL](https://github.com/QwenLM/Qwen2.5-VL), [T
 
 ## Citation
 
-The paper citation will be added when the manuscript is publicly available. For now, please cite this repository:
+Please cite the paper:
 
 ```bibtex
 @misc{deng2026circuitmllm,
   title  = {Circuit-MLLM: Topological Logic-Guided Latent-Space Visual Reasoning for Circuit Schematic Understanding},
   author = {Deng, Jinyuan and Jiang, Yuqi and Huang, Wenjing and Li, Xin and Sun, Qi and Zhuo, Cheng},
   year   = {2026},
-  url    = {https://github.com/IC-Yuan/Circuit-MLLM}
+  eprint = {2609.15668},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url    = {https://arxiv.org/abs/2609.15668}
 }
 ```
