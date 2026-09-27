@@ -132,7 +132,7 @@ Expert checkpoint paths already default to the locations created by `scripts/dow
 
 ## Training
 
-The main topology-guided, multi-expert configuration is:
+Launch topology-guided, multi-expert training with:
 
 ```bash
 bash run_training_circuit_sequence_circuit_expert.sh
@@ -145,13 +145,7 @@ LATENT_SIZE=8 SIM_WEIGHT=0.4 MASK_NOISE_RATIO=0.05 \
   bash run_training_circuit_sequence_circuit_expert.sh
 ```
 
-An alternative launcher with the original latent-size and schedule defaults is also provided:
-
-```bash
-bash run_training_circuit.sh
-```
-
-Both launchers write under `OUTPUT_ROOT` and automatically resume from the latest checkpoint in the output directory. The main launcher additionally validates all expert checkpoints before starting.
+The launcher writes under `OUTPUT_ROOT`, validates the expert checkpoints, and automatically resumes from the latest checkpoint in the output directory.
 
 ## Evaluation
 
