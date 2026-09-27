@@ -7,22 +7,16 @@
 **Jinyuan Deng, Yuqi Jiang, Wenjing Huang, Xin Li, Qi Sun, and Cheng Zhuo**<br>
 Zhejiang University, Hangzhou, China
 
-Contact: [12447016@zju.edu.cn](mailto:12447016@zju.edu.cn)
-
 [![Project](https://img.shields.io/badge/Project-Circuit--MLLM-1f6feb)](https://github.com/IC-Yuan/Circuit-MLLM)
 [![Python](https://img.shields.io/badge/Python-3.11-3776ab)](https://www.python.org/)
 [![Backbone](https://img.shields.io/badge/Backbone-Qwen2.5--VL-8a2be2)](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct)
 
 </div>
 
-Circuit-MLLM is a latent-space visual reasoning framework for circuit schematic understanding. It teaches an MLLM to follow circuit topology instead of raster-scan order by combining circuit-specific visual experts, pixel-level topological supervision, and interleaved text-latent training.
-
-> Repository status: training and evaluation code is available. Dataset and trained-checkpoint download links will be added when the public artifacts are finalized.
-
 ## Timeline
 
 - **2026-09-11**: Reorganized the public release with reproducible path configuration, launch scripts, and architecture/result figures.
-- **2026-09-13**: Added the staged-release note and project contact information.
+- **2026-09-13**: Added the staged-release note.
 - **Coming soon**: Clean up and selectively release the remaining core topology-guided training implementation, followed by finalized dataset/checkpoint instructions and a compact end-to-end reproduction recipe.
 
 ## Overview
@@ -239,7 +233,3 @@ The paper citation will be added when the manuscript is publicly available. For 
   url    = {https://github.com/IC-Yuan/Circuit-MLLM}
 }
 ```
-
-## Contact
-
-Questions about the code or reproduction can be sent to [12447016@zju.edu.cn](mailto:12447016@zju.edu.cn).
