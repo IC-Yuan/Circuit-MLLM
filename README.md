@@ -126,7 +126,9 @@ Required settings:
 
 ## Training
 
-The current public trainer builds latent targets from mask-selected Qwen visual features. Launch it with:
+**The current public release provides only standard latent-space training (Baseline).**
+
+It builds latent targets from mask-selected Qwen visual features. Launch it with:
 
 ```bash
 bash run_training_circuit.sh
