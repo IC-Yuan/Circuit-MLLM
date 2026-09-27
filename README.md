@@ -34,11 +34,7 @@ Circuit schematics contain long wires, junctions, branches, and irregular spatia
 3. **Text-latent joint supervision.** Cross-entropy trains the surrounding text while a cosine alignment objective supervises generated latent tokens with the topology-ordered visual targets.
 
 <p align="center">
-  <img src="assets/circuit_knowledge_mining.png" width="92%" alt="Latent-space circuit knowledge mining mechanism">
-</p>
-
-<p align="center">
-  <img src="assets/topology_guided_sequencing.png" width="92%" alt="Topology-guided sequencing strategy">
+  <img src="assets/circuit_mllm_overview.png" width="92%" alt="Circuit-MLLM overall architecture">
 </p>
 
 ## Results
